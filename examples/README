@@ -1,0 +1,10 @@
+Joshfire framework examples
+---------------------------
+
+Checkout http://framework.joshfire.com/examples for online demos.
+
+You can use most examples directly in your browser with file:///example/index.ADAPTER.html
+
+You can also serve them on the local port 10000 with: 
+
+$ node server.js
