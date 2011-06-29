@@ -4,7 +4,7 @@ import os,shutil
 import re
 import sys
 import time
-import datetime, dateutil
+import datetime
 
 
 sys.path.append("build")
