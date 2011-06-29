@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video list</title>
+    <script data-main="../" src="../joshfire/adapters/ios/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/videolist.iphone.css" media="screen" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0" /> 
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="appletouch-icon"/>
+  </head>
+  <body>
+    <header>
+      <h1 class="article_title">Videolist - iOS</h1>
+    </header>
+    <div id="splashscreen">TED</div>
+      <script>
+      require({
+        urlArgs: 'bust=' +  (new Date()).getTime()
+      },['src/app.ios'], function(VideoApp) {
+        window._app = new VideoApp();
+      });      
+    </script>
+  </body>
+</html>

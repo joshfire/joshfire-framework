@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset={+IO.encoding+}" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		{! Link.base = "../"; /* all generated links will be relative to this */ !}
+		<title>{+JSDOC.opt.D.projectTitle+} 
+                <if test="JSDOC.opt.D.version">v.{+JSDOC.opt.D.version+}</if>
+                : {+data.alias+} : JsDoc Reference</title>
+
+		<style type="text/css">
+			{+include("static/default.css")+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		{+include("static/header.html")+}
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+            <h3 class="projectTitle">{+JSDOC.opt.D.projectTitle+} 
+                <if test="JSDOC.opt.D.version">v.{+JSDOC.opt.D.version+}</if>
+            </h3>
+            <div class="toplinks">{+new Link().toFile("index.html").withText("Class Index")+}
+| {+new Link().toFile("files.html").withText("File Index")+}</div>
+            <if test="JSDOC.opt.D.imageFile">
+                <img src="../{+JSDOC.opt.D.imageFile+}">
+            </if>
+			<!-- begin publish.classesIndex -->
+			{+publish.classesIndex+}
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				{!
+					var classType = "";
+					
+					if (data.isBuiltin()) {
+						classType += "Built-In ";
+					}
+					
+					if (data.isNamespace) {
+						if (data.is('FUNCTION')) {
+							classType += "Function ";
+						}
+						classType += "Namespace ";
+					}
+					else {
+						classType += "Class ";
+					}
+				!}
+				{+classType+}{+data.alias+}
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+            <dl class="detailList">
+            
+                <if test="data.author">
+                    <dt>Author:</dt> 
+                    <dd>{+data.author+}</dd>
+                </if>
+                
+                <if test="data.version">
+                    <dt>Version:</dt> 
+                    <dd>{+data.version+}</dd>
+                </if>
+                
+                <if test="data.augments.length">
+                    <dt>Extends:</dt> 
+                    <dd>{+
+                            data.augments
+                            .sort()
+                            .map(
+                                function($) { return new Link().toSymbol($); }
+                            )
+                            .join(", ")
+                    +}</dd>
+                </if>
+                
+                <if test="data.requires.length">
+                    <dt>Requires:</dt>
+                    <for each="item" in="data.requires">
+                        <dd class="{+$item_last?'':'tight'+}">{+ resolveLinks(item) +}</dd>
+                    </for>
+                </if>
+                
+                <if test="!data.isBuiltin()">
+                    <dt>Defined in:</dt>
+                    <dd>{+new Link().toSrc(data.srcFile)+}</dd>
+                </if>
+            
+                <if test="data.see.length">
+                    <dt>See:</dt>
+                    <for each="item" in="data.see">
+                        <dd>{+ new Link().toSymbol(item) +}</dd>
+                    </for>
+                </if>
+            </dl>
+
+            <p class="description">
+				{+resolveLinks(data.classDesc)+}
+			</p>
+            
+            <if test="data.example.length">
+				<for each="example" in="data.example">
+                    <pre class="code">{+makeExample(example)+}</pre>
+				</for>
+            </if>
+
+<!-- ============================== constructor summary ==================== -->			
+			<if test="!data.isBuiltin() && data.is('CONSTRUCTOR')">
+            <h2>Constructor</h2>
+                <div class="fixedFont">
+                    <b>{+ new Link().toSymbol(data.alias).inner('constructor')+}</b><if test="classType != 'Namespace '">{+ makeSignature(data.params) +}</if>
+                </div>
+                <div class="description">
+                    <if test="data.isPrivate">
+                        <span class="attributes private">[private]</span>
+                    </if>
+                    <if test="data.isInner">
+                        <span class="attributes inner">[inner]</span>
+                    </if>
+                    {+resolveLinks(summarize(data.desc))+}
+                </div>
+			</if>
+            
+            
+{!
+/** Filter: Determine whether this item is static */
+function staticFilter($){return $.isStatic && !$.isNamespace}
+
+/** Filter: Determine whether this item is not static */
+function notStaticFilter($){return !$.isStatic && !$.isNamespace}
+
+/** Filter: Determine whether this item is inherited */
+function inheritedFilter($){return $.memberOf != data.alias}
+
+/** Filter: Determine whether this item is not inherited */
+function notInheritedFilter($){return $.memberOf == data.alias}
+!}
+
+<!-- ============================== static properties summary ===================== -->
+			<if test="data.properties.length">
+				{! var staticProperties = data.properties.filter(staticFilter).sort(makeSortby("name")); !}
+				<if test="staticProperties.length">
+                    <h2>Static Fields</h2>
+                    {+doTemplate('membertable.tmpl', {
+                        type:'Field', 
+                        members:staticProperties,
+                        alias: data.alias
+                    })+}
+				</if>
+			</if>
+
+<!-- ============================== static methods summary ======================== -->
+			<if test="data.methods.length">
+				{! var staticMethods = data.methods.filter(staticFilter).sort(makeSortby("name")); !}
+				<if test="staticMethods.length">
+                    <h2>Static Methods</h2>
+                    {+doTemplate('membertable.tmpl', {
+                        type:'Method', 
+                        members:staticMethods,
+                        alias: data.alias
+                    })+}
+				</if>
+			</if>
+
+
+<!-- ============================== instance properties summary ===================== -->
+			<if test="data.properties.length">
+				{! var instanceProperties = data.properties.filter(notStaticFilter).sort(makeSortby("name")); !}
+				<if test="instanceProperties.length">
+                    <h2>Fields</h2>
+                    {+doTemplate('membertable.tmpl', {
+                        type:'Field', 
+                        members:instanceProperties,
+                        alias: data.alias
+                    })+}
+				</if>
+			</if>
+
+<!-- ============================== instance methods summary ======================== -->
+			<if test="data.methods.length">
+				{! var instanceMethods = data.methods.filter(notStaticFilter).sort(makeSortby("name")); !}
+				<if test="instanceMethods.length">
+                    <h2>Methods</h2>
+                    {+doTemplate('membertable.tmpl', {
+                        type:'Method', 
+                        members:instanceMethods,
+                        alias: data.alias
+                    })+}
+				</if>
+			</if>
+            
+<!-- ============================== events summary ======================== -->
+			<if test="data.events.length">
+				{! var events = data.events.filter(function($){return !$.isNamespace}).sort(makeSortby("name")); !}
+				<if test="events.length">
+                    <h2>Events</h2>
+                    {+doTemplate('membertable.tmpl', {
+                        type:'Event', 
+                        members:events,
+                        alias: data.alias
+                    })+}
+                </if>
+			</if>
+
+<!-- ============================== constructor details ==================== -->		
+			<if test="!data.isBuiltin() && (data.isNamespace || data.is('CONSTRUCTOR'))">
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					{+classType+}Detail
+				</div>
+				
+				<div class="fixedFont membername">
+						<b>{+ data.alias +}</b><if test="classType != 'Namespace '">{+ makeSignature(data.params) +}</if>
+				</div>
+                
+                <if test="data.isPrivate||data.isInner">
+                <div class="description">
+                    <if test="data.isPrivate">
+                        <span class="attributes private">[private]</span>
+                    </if>
+                    <if test="data.isInner">
+                        <span class="attributes inner">[inner]</span>
+                    </if>
+                </div>
+                </if>
+				
+                <if test="data.params.length">
+                    {+doTemplate("params.tmpl", data.params)+}
+                </if>
+                
+                <dl class="detailList">
+					<if test="data.deprecated">
+						<dt>Deprecated:</dt>
+						<dd>{+resolveLinks(data.deprecated)+}</dd>
+					</if>
+					<if test="data.since">
+						<dt>Since:</dt>
+                        <dd>{+ data.since +}</dd>
+					</if>
+					<if test="data.exceptions.length">
+						<dt>Throws:</dt>
+						<for each="item" in="data.exceptions">
+							<dd>
+                                <if test="item.type"><span class="datatype">{{+new Link().toSymbol(item.type)+}}</span></if> {+resolveLinks(item.desc)+}
+                            </dd>
+						</for>
+					</if>
+					<if test="data.returns.length">
+						<dt>Returns:</dt>
+						<for each="item" in="data.returns">
+                            <dd><if test="item.type"><span class="datatype">{{+new Link().toSymbol(item.type)+}}</span></if> {+resolveLinks(item.desc)+}</dd>
+						</for>
+					</if>
+                </dl>
+
+			</div>
+			</if>
+
+<!-- ============================== static field details ========================== -->		
+			<if test="defined(staticProperties) && staticProperties.length">
+                {! var ownStaticProperties = staticProperties.filter(notInheritedFilter); !}
+				<if test="ownStaticProperties.length">
+                    <div class="sectionTitle">Static Field Details</div>
+                    {+doTemplate('memberdetail.tmpl', {
+                        members: ownStaticProperties,
+                        srcFile: data.srcFile
+                    })+}
+				</if>
+			</if>
+
+<!-- ============================== static method details ========================= -->		
+			<if test="defined(staticMethods) && staticMethods.length">
+                {! var ownStaticMethods = staticMethods.filter(notInheritedFilter); !}
+				<if test="ownStaticMethods.length">
+                    <div class="sectionTitle">Static Method Details</div>
+                    {+doTemplate('memberdetail.tmpl', {
+                        members: ownStaticMethods,
+                        srcFile: data.srcFile
+                    })+}
+				</if>
+			</if>
+            
+<!-- ============================== instance field details ========================== -->		
+			<if test="defined(instanceProperties) && instanceProperties.length">
+                {! var ownInstanceProperties = instanceProperties.filter(notInheritedFilter); !}
+				<if test="ownInstanceProperties.length">
+                    <div class="sectionTitle">Field Details</div>
+                    {+doTemplate('memberdetail.tmpl', {
+                        members: ownInstanceProperties,
+                        srcFile: data.srcFile
+                    })+}
+				</if>
+			</if>
+
+<!-- ============================== static method details ========================= -->		
+			<if test="defined(instanceMethods) && instanceMethods.length">
+                {! var ownInstanceMethods = instanceMethods.filter(notInheritedFilter); !}
+				<if test="ownInstanceMethods.length">
+                    <div class="sectionTitle">Method Details</div>
+                    {+doTemplate('memberdetail.tmpl', {
+                        members: ownInstanceMethods,
+                        srcFile: data.srcFile
+                    })+}
+				</if>
+			</if>
+			
+<!-- ============================== event details ========================= -->		
+			<if test="defined(events) && events.length">
+                {! var ownEvents = events.filter(notInheritedFilter); !}
+				<if test="ownEvents.length">
+                    <div class="sectionTitle">Events</div>
+                    {+doTemplate('memberdetail.tmpl', {
+                        members: ownEvents,
+                        srcFile: data.srcFile
+                    })+}
+				</if>
+			</if>
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			<if test="JSDOC.opt.D.copyright">&copy;{+JSDOC.opt.D.copyright+}<br /></if>
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> {+JSDOC.VERSION+} on {+new Date()+}
+		</div>
+	</body>
+</html>

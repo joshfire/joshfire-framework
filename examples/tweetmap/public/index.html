@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tweet map</title>
+    <link rel="stylesheet" href="css/tweetmap.css" />
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
+    </script>
+    <script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"></script>
+<!--    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script> 
+    <script src="js/jquery.lettering-0.6.1.min.js"></script> -->
+    </head>
+  <body>
+  <header>
+    <h1 class="article_title">Tweet Map</h1>
+    <!-- <h2>Tweets, on a map</h2> -->
+  </header>
+  <script>
+    require({
+      urlArgs: "bust=" +  (new Date()).getTime()
+    },["src/app.web"],function(TweetMap) {
+      window._app = new TweetMap();
+    });
+  </script>
+  </body>
+</html>

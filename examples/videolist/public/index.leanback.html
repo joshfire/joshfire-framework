@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video list</title>
+    <script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"></script>
+    <link rel="stylesheet" href="../export/leanback-browser.css" media="screen" />
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div id="splashscreen">TED</div>
+      <script>
+      require({
+        urlArgs: 'bust=' +  (new Date()).getTime()
+      },['src/app'], function(VideoApp) {
+        window._app = new VideoApp();
+      });      
+    </script>
+  </body>
+</html>

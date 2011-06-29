@@ -1,0 +1,32 @@
+Joshfire docs
+-------------
+
+Doc is available online at http://framework.joshfire.com/doc/
+
+This README describes doc guidelines and how to contribute
+
+
+How to launch
+-------------
+
+Checkout https://github.com/joshfire/www-joshfire next to your joshfire install, 
+go in the www-joshfire directory and launch the local server with:
+
+$ fab serve
+
+You should be able to go at http://localhost:40009/doc/ and test your changes
+
+JS API auto-generated doc :
+$ fab jsdoc
+result goes in docs/api/
+
+Doc guidelines
+--------------
+
+ - Stay concise! Omit needless words.
+ - Never use "we" or "us", always take a neutral tone
+ - Use "Joshfire" or "the framework"
+
+ 
+
+Thanks for contributing!

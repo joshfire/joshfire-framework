@@ -1,0 +1,334 @@
+<h1>User Interface</h1>
+
+<h2>Basics</h2>
+
+<p>The user interface is described by <u>one</u> JSON tree, the framework will adapt the components to the platform you'll run you app on : Web, iOS, Android, Samsung TV, …</p>
+
+<p>This tree defines every component the user is going to see or interact with : panels, lists, buttons, videos, and so on…</p>
+
+<p>You've got a set of options to set the behavior of your UI components: autoInsert, autoShow, showOnFocus, hideOnBlur <a>[link here]</a></p>
+
+<p>Everything is event driven, so you have the ability to listen to any of the following events: insert, focus, select, show, hide. <a>[link here]</a></p>
+
+<h2>Navigation</h2>
+
+<p>Navigation inside your app is controlled by the <a href="/doc/api/symbols/utils_grid.html">grid util</a>.</p>
+
+<h2>UI Tree design</h2>
+
+<p>First, you need to extend the <a href="/doc/api/symbols/tree.ui.html">UI Tree class</a>.</p>
+
+<pre><code class="javascript">
+Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class,UITree) {
+  return Class(UITree, {
+   
+   buildTree: function() {
+  ...
+  return [{uielement}, {uielement},....]
+</code></pre>
+  
+<p>Each UI element in you tree needs at least two properties:</p>
+
+<ul>
+  <li>id: used to build the paths. Must be unique within a branch</li>
+  <li>type: a string, referencing one of the <a href="/doc/userinterface/availablecomponents">available components.</a></li>
+</ul>
+
+<p>Many UI elements also need a few display properties to be described : label, content, .. [..++precision..]</p>
+
+<p>This dead simple UI tree will show an 'OK' button and an 'Hello World' panel.</p>
+
+<pre><code>
+return [
+  {
+    id:'mybutton',
+    type:'button',
+    label:'OK'
+  },
+  {
+    id:'mypanel',
+    type:'panel',
+    content:'Hello World'
+  }
+}
+];  
+</code></pre>
+
+<p>Your UI tree can be nested, an UI element can have one or many children, of any type. Useful for panels or lists. There is two ways to define the children of your UI element</p>
+
+<p>1) Static</p>
+<pre><code class="javascript">
+  {
+    id:'mypanel',
+    type:'panel',
+    children:[
+      {id:'childpanel1', type:'panel', content:'First'},
+      {id:'childpanel2', type:'panel', content:'Second'}
+    ]
+  }
+</code></pre>
+
+<p>Bind to data root</p>
+<pre><code class="javascript">
+  /* ... UI Tree ... */
+  return [{
+    id:'mypanel',
+    type:'panel',
+    children:[{id:'mylist', type:'list', dataPath:'/contacts'}]
+  }];
+  /* ... Data Tree ... */
+  return [{
+    id:'contacts',
+    items:[{id:'1', label:'John'}, {id:'2', label:'Paul'}, {id:'3', label:'Peter'}]
+  }];
+</code></pre>
+
+<!-- fixme  --> <p><a>Click here for details regarding advanced binding between UI &amp; data trees</a></p>
+
+<h2>Binding an UI element to the data tree</h2>
+
+<p>An UI element can initialize or synchronize itself with your data tree.</p>
+
+<h3>dataPath</h3>
+
+<p>Specify a dataPath, and your element will be initialed with the corresponding data, and refresh itself whenever the data change.</p>
+
+<pre><code class="javascript">
+  /* ... UI Tree ... */
+  return [{
+    id:'mypanel',
+    type:'panel',
+    children:[{id:'mylist', type:'list', dataPath:'/contacts'}]
+  }];
+  /* ... Data Tree ... */
+  return [{
+    id:'contacts',
+    items:[{id:'1', label:'John'}, {id:'2', label:'Paul'}, {id:'3', label:'Peter'}]
+  }];
+</code></pre>
+
+<h4>uiDataMaster</h4>
+
+<p>uiDataMaster is the path of another  ui element you want to listen to. Whenever it gets selected, the dataPath of your element gets changed accordingly.</p>
+
+<pre><code class="javascript">
+  /* ... UI Tree ... */
+   return [
+  {
+    id:'navigation', 
+    type:'list', 
+    autoShow:true,
+    itemInnerTemplate:'<%=item.label%>',
+    dataPath:'/categories'
+  },
+  {
+    id:'subnav', 
+    type:'list', 
+    itemInnerTemplate:'<%=item.label%>',
+    uiDataMaster:'/navigation'
+  }
+  ];
+    
+    /* ... Data Tree ... */
+    return [
+     {
+          id:'categories',
+          children:[
+            {id:1, label:'Politics', children:[
+          {id:11, label:'France'},
+          {id:12, label:'US'},
+          {id:13, label:'UK'}
+        ]},
+            {id:2, label:'Culture', children:[
+          {id:21, label:'Books'},
+          {id:22, label:'Movies'},
+          {id:23, label:'Shows'}
+        ]},
+            {id:3, label:'Sports', children:[
+          {id:31, label:'Football'},
+          {id:32, label:'Tennis'},
+          {id:33, label:'Rugby'}
+        ]},
+          ]
+        }
+    ];
+</code></pre>
+
+<h2>Binding a ui element to another</h2>
+
+<h3>uiMaster</h3>
+
+<p>Used by the <a href="doc/uielement/panelmanager.html">Panel Manager</a> component. In your UI element definition, specify a valid path as uiMaster, and your element will listen to events fired on its master.</p>
+
+<h2>Templating</h2>
+
+<p><i>Note: Most of your styling should be done using css.</i></p>
+
+<p>Each UI Element has a default template, that you can overwrite to change the html structure.</p>
+
+<p>We're using the <a href="http://documentcloud.github.com/underscore/#template" target="_blank"><strong>underscore.js templating</strong> syntax</a>, so you can use &lt;% ... %&gt; tags to insert javascript to be interpreted in your templates.</p>
+
+<p>Depending on the element complexity, different templates can be instantiated:</p>
+
+<ul>
+  <li><strong>template:</strong> Basic template of the element, with its html id, and css class. Do not mess too much with that one ! Don't forget the id, it will spare you a lot of problems </li>
+  <li><strong>loadingTemplate:</strong> Displayed during loading. Defaults to 'Loading...'</li>
+  <li><strong>innerTemplate:</strong> Describes the inner structure of the element</li>
+  <li><strong>itemTemplate</strong>: Used by lists. Describes the wrapper of the child items (&l;&gt;<%=itemInnerTemplate%>&lt;/ul&gt;)</li>
+  <li><strong>itemInnerTemplate:</strong> Used by lists, its the structure of each of the child items (&lt;li&gt;whatever&lt;/li&gt;)</li>
+</ul>
+
+<h2>Options</h2>
+
+<p>You also have a handful of options that let you customize the way your elements will behave. The more important are:</p>
+
+<ul>
+  <li><strong>autoInsert:</strong> If false, the element won't be inserted in the DOM on app init. Defaults to true</li>
+  <li><strong>showOnFocus:</strong>If true, the element will be automatically shown when gaining focus. Defaults to true</li>  
+  <li><strong>hideOnBlur:</strong>If true, the element will be automatically hidden when losing focus. Defaults to true</li>  
+</ul>
+
+<!-- fixme  --><p><a href="/doc/api/symbols/symbols/uielement.html">Click here</a> for details on the available options<br /></p>
+
+<h2>Events</h2>
+
+<p>You have the ability to plug yourself and do whatever you need when any event is fired on a specific UI element. Just declare a on[eventName] function, such as follow:</p>
+
+<pre><code class="javascript">
+/* ... UI Tree ... */
+ return [
+{
+  id:'navigation', 
+  type:'list', 
+  autoShow:true,
+  itemInnerTemplate:'<%=item.label%>',
+  dataPath:'/categories',
+  onShow:function(){
+    //list is being shown
+  },
+  onFocus:function(){
+    //focus has been gained by this list
+  },
+  onSelect:function(){
+    //List is selected: Mouse click, tv remote action, smartphone touch
+  },
+  onHide:function(){
+    //list is being hidden
+  }
+},
+{
+  id:'subnav', 
+  type:'list', 
+  itemInnerTemplate:'<%=item.label%>',
+  uiDataMaster:'/navigation'
+}
+];
+</code></pre>
+
+<!-- fixme  --><p><a href="/doc/api/symbols/symbols/uielement.html">Click here</a> for a complete list of the events you may encounter.</p>
+
+<!-- fixme  --><h2 id="availablecomponents">Available components</h2>
+
+<h3>Panel</h3>
+
+<p>This is the basic component. In fact you app will be inserted in a Panel.</p>
+
+<p>Initialize it with <code>{content:'Whatever <b>html</b> you want'}</code> or <code>{innerTemplate:function (){...}}</code></p>
+
+<p>A Panel is a container, that you'll mainly use to wrap around other UI elements.</p>
+
+<a href="/doc/api/uielement/panel">Click for details</a><br />
+
+<h3>Panel Manager</h3>
+
+<p>The Panel Manager component is used as a view switcher.</p>
+
+<p>It listens to event from a parent UI element (<code>{uiMaster:'/parent/path'}</code>), and show one of its children at a time.</p>
+
+<p>In the following pattern, we have a panel manager listening to a menu list.</p>
+
+<p>When one item of the menu is selected, the panel shows the appropriate child panel, hiding every other.</p>
+
+<img src="../panelmanager.png" style="width:900px" />
+
+<pre><code class="javascript">
+return [
+{
+  id:'menu',
+  type:'list',
+  data:[
+    {id:'panel1', label:'item #1'},
+    {id:'panel2', label:'item #2'}
+  ]
+},
+{
+  id:'panelmgr',
+  type:'panel.manager',
+  uiMaster:'/menu',
+  children:[
+    {
+      id:'panel1',
+      type:'panel',
+      content:'Panel #1'
+    },
+    {
+      id:'panel2',
+      type:'panel',
+      content:'Panel #2'
+    }
+  ]
+}
+];  
+</code></pre>
+
+<a href="/doc/api/uielement/panelmanager">Click for details</a>
+
+<h3>List</h3>
+
+<p>Well, this is a list of items.</p>
+
+<p>In a browser, it will be anything from a dead-simple UL/LI to whatever you want (tweaking itemTemplate &amp; itemInnerTemplate).</p>
+
+<p>On smartphone, it will be native-looking scrollinglist, using <a target="_blank" href="http://cubiq.org/iscroll-4">iScroll</a>.</p>
+
+<p><a target="_blank" href="http://joehewitt.github.com/scrollability/">Scrollability</a> is on the way for the iOS adapter</p>
+
+<p><a href='/doc/api/uielements/list'>Click for details</a></p>
+
+<h3>Button</h3>
+
+<p>Basically, a classic <code>&lt;input type='button' /></code>, with a native fallback on mobile devices</p>
+
+<p><a href="/doc/api/uielement/button">Click for details</a></p>
+
+<h3>Video MediaElement</h3>
+
+<p>Your media player, html5, flash, ... the most suited on the platform you run your app</p>
+
+<p><a href="/doc/api/uielement/video">Click for details</a></p>
+
+<h3>Video</h3>
+
+<p>Video in a new window</p>
+
+<p><a href="/doc/api/uielement/videopopup">Click for details</a></p>
+
+<h3>MediaControls</h3>
+
+<p>Your media controls: play, pause, stop, forward, …</p>
+
+<p>Not implemented in ios adapter, as we're using the native video player, which comes with its own controls.</p>
+
+<p><a href="/doc/api/uielement/video">Click for details</a></p>
+
+<h3>Map</h3>
+
+<p>Actually the Map component is a abstraction of the Google Maps API.</p>
+
+<p>It uses the <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html", target="_blank">Google Maps Javascript API V3</a>, with a fallback on the <a href="http://code.google.com/apis/maps/documentation/staticmaps/" target="_blank">Google Static Maps API</a> if needed.</p>
+
+<p>You're able to control the positioning of the map, the zoom level, ... and of course to pin point your data.</p>
+
+<p>If you want to use an adapter for an other maps provider (Bing Maps, OpenStreet Maps, ..), feel free to contribute ! [link github]</p>
+
+<p><a href="/doc/api/uielement/map">Click for details</a></p>

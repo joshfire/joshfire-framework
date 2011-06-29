@@ -1,0 +1,20 @@
+<h1>Performance</h1>
+
+<p>The following are guidelines to optimize performance.</p>
+
+<h2>Use production mode</h2>
+
+<p>This is obvious but every application going into production should use the <a href="/develop/buildtools">Build Tools</a>
+to minify and compress its code.</p>
+
+<h2>Use a profiler</h2>
+
+<p>If you feel your application is slow you have to identify bottlenecks. The Chromium Profiler is a good tool to do
+so, you should look at the code that takes most time to execute, optimize it, then start again...</p>
+
+<h2>Mobile lists: keep the DOM simple</h2>
+
+<p>One-finger scrolling on smartphones is currently done with JavaScript. Even if in a few
+ years most smartphones will support it natively via CSS, it is still one of the biggest potential pitfalls
+ for a HTML5 application on smartphones. To improve performance in these lists, you should try to keep
+ their DOM as simple as possible</p>

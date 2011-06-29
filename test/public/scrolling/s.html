@@ -1,0 +1,215 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<title>Scrollability</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" /> 
+<meta name="apple-mobile-web-app-status-bar-style" content="black" /> 
+<style type="text/css">
+
+html {
+    overflow: hidden;
+    background: #333;
+    font-family: Helvetica;
+}
+
+#container {
+    position: absolute;
+    left: 0;
+    top: 24px;
+    bottom: 24px;
+    width: 320px;
+    background: #fff;
+    overflow: hidden;
+}
+
+#page {
+    -webkit-transform: translate3d(0,0,0);
+}
+    
+.item {
+    position: relative;
+    top: -1px;
+    border-top: 1px solid #ccc;
+    padding: 9px 12px;
+    font: 21px Helvetica;
+    font-weight: bold;
+    background: #fff;
+}
+
+.item:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+.bar {
+    position: absolute;
+    background: #222;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    padding: 5px 0;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.bar.top {
+    top: 0;
+    border-bottom: 1px solid #000;
+}
+
+.bar.bottom {
+    bottom: 0;
+}
+
+/*.item.touched {
+    color: #fff;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #028AF3),
+        color-stop(1, #005DE6)
+    );
+}*/
+
+</style>
+
+<script type="text/javascript" src="scrollability.js"></script>
+
+<script language="javascript">
+
+var names = [
+"Arnulfo Heriberto Hao",
+"Elbert Murray Heartsill",
+"Danny Fred Querido",
+"Boris Hobert Cregger",
+"Clifton Brady Laurance",
+"Homer Jay Telch",
+"Lawrence Lloyd Barrus",
+"Shannon Isaias Plate",
+"Odis Raul Insley",
+"Marion Ben Nhatsavang",
+"Dong Brent Mcwilson",
+"Chong Jarrod Hinderman",
+"Eric Reyes Caffie",
+"Junior Newton Dagan",
+"Cleo Maynard Gutirrez",
+"Cruz Rey Misiewicz",
+"Jeremy Nelson Bew",
+"Doug Buster Maclead",
+"Zachariah Martin Colo",
+"Nathaniel Houston Berneri",
+"Clement Laverne Vrana",
+"Kermit Jeffery Left",
+"Davis Margarito Koran",
+"Booker Wallace Primavera",
+"Prince Enrique Pulice",
+"Johnathon Minh Inciong",
+"Stan Tony Calaycay",
+"Owen Sang Tugade",
+"Charlie Melvin Veloso",
+"August Galen Kathel",
+"Dominique Marc Sitterson",
+"Mitchell Isaiah Chareunrath",
+"Luther Avery Fekety",
+"Myles Doug Strohl",
+"Reuben Bob Holoman",
+"Eloy Erwin Kendrick",
+"Alec Bernard Hitz",
+"Jessie Oswaldo Shamir",
+"Jamison Seymour Nighman",
+"Garret Chester Robasciotti",
+"Clifford Samuel Sokoloff",
+"Carlton Jamel Mcentee",
+"Blair Titus Lennertz",
+"Barton Edmund Payn",
+"Ed Williams Faltin",
+"Leonardo Kent Trimarchi",
+"Lon Esteban Samrah",
+"Mike Alfonzo Alaniz",
+"George Gil Domnick",
+"Lemuel Lesley Cerventez",
+"Arnulfo Heriberto Hao",
+"Elbert Murray Heartsill",
+"Danny Fred Querido",
+"Boris Hobert Cregger",
+"Clifton Brady Laurance",
+"Homer Jay Telch",
+"Lawrence Lloyd Barrus",
+"Shannon Isaias Plate",
+"Odis Raul Insley",
+"Marion Ben Nhatsavang",
+"Dong Brent Mcwilson",
+"Chong Jarrod Hinderman",
+"Eric Reyes Caffie",
+"Junior Newton Dagan",
+"Cleo Maynard Gutirrez",
+"Cruz Rey Misiewicz",
+"Jeremy Nelson Bew",
+"Doug Buster Maclead",
+"Zachariah Martin Colo",
+"Nathaniel Houston Berneri",
+"Clement Laverne Vrana",
+"Kermit Jeffery Left",
+"Davis Margarito Koran",
+"Booker Wallace Primavera",
+"Prince Enrique Pulice",
+"Johnathon Minh Inciong",
+"Stan Tony Calaycay",
+"Owen Sang Tugade",
+"Charlie Melvin Veloso",
+"August Galen Kathel",
+"Dominique Marc Sitterson",
+"Mitchell Isaiah Chareunrath",
+"Luther Avery Fekety",
+"Myles Doug Strohl",
+"Reuben Bob Holoman",
+"Eloy Erwin Kendrick",
+"Alec Bernard Hitz",
+"Jessie Oswaldo Shamir",
+"Jamison Seymour Nighman",
+"Garret Chester Robasciotti",
+"Clifford Samuel Sokoloff",
+"Carlton Jamel Mcentee",
+"Blair Titus Lennertz",
+"Barton Edmund Payn",
+"Ed Williams Faltin",
+"Leonardo Kent Trimarchi",
+"Lon Esteban Samrah",
+"Mike Alfonzo Alaniz",
+"George Gil Domnick",
+"Lemuel Lesley Cerventez"
+];
+
+addEventListener('DOMContentLoaded', function() {
+    var container = document.getElementById('container');
+    var page = document.getElementById('page');
+	names = names.slice(0,10);
+    for (var i = 0; i < names.length*5; ++i) {
+        var item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = '<div><div class="image"><img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBggNEBUMDwgKFAwWDRYQFxUMGBoeFBgWHxUXHB8cHh4jHDIqIyUvJR4eKzssLTMyNjU4ISo9NzMwQSo3ODQBCQoKDAwNFQ8NGSkYHiIpKSkpKSkpKSkpKSkpLCkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKf/AABEIADIAMgMBIgACEQEDEQH/xAAbAAEAAwADAQAAAAAAAAAAAAAAAQcIAwUGBP/EACsQAAEDAQUHBAMAAAAAAAAAAAEAAgMEBQYHERIhMUFRYXOyEyI2gSZEcf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/xAAVEQEBAAAAAAAAAAAAAAAAAAAAQf/aAAwDAQACEQMRAD8Ao1ERBKty5OD9kWjZQtSWsrmzFkztMRZo9jngb2E8OaqJaZwl+Nt7VT5yIMzlQpKhAREQEREErTGE3xxvaqfORZnWmMJj+ON7VT5yJBmcqFJUICIiDkhhkkcI2Ruc9xDQ1gzJJ3ADmuyvBde1rMe2Kso5I3ujEjdW4gjgRszG4jguO79u1dnVMddAW+tG/UNYzadhBBHIgkK/bNxcuRa8IhtGGGOTjHWs1x582uyI+zkUGd6OknnkbDFC98r3BrWsGbiTwAWmX07bvXbdDK9vqsoXtPWaTVsHP3Py/gXzQXxwvskGalfZwly/SjLpD01ZbPsgKosS8T6q3JBG2N0VAx2bIyfc527U/rluHDqg8MVCIgIiICIiAiIgIiICIiD/2Q==" /></div></div><div class="texte"><span>'+names[i%names.length]+'</span><span> Super !</span></div>';
+        page.appendChild(item);
+        if (false && page.offsetHeight > container.offsetHeight*6) {
+            break;
+        }
+    }
+});
+
+</script>
+    
+</head>
+<body>
+    <div class="bar top">Scrollability Demo</div>
+    <div class="bar bottom">Footer</div>
+<div><div><div><div><div>    
+<div id="container">
+	
+        <div id="page" class="scrollable vertical"></div>
+	</div></div></div></div></div>
+    </div>
+</body>
+</html>

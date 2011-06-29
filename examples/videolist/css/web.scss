@@ -1,0 +1,39 @@
+@import "reset.scss";
+@import "mediacontrols.scss";
+
+body {
+    line-height: 1.2em;
+    background: #1E2124;
+    font-family: 'Maven Pro', arial,serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    text-shadow: none;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: 0em;
+    word-spacing: 0em;    
+}
+#exampleVideoList__videolist ul {
+    list-style-type:none;
+}
+#exampleVideoList__videolist li {
+    float:left;
+    display:block;
+    height:240px;
+    width:250px;
+    text-align:center;
+    cursor:pointer;
+    border:2px solid white;   
+}
+#exampleVideoList__videolist li img {
+    height:180px;
+    width:240px;
+}
+#exampleVideoList__videolist li.selected {
+    border:2px solid blue;   
+}
+
+#exampleVideoList__videolist li.focused {
+    border:2px solid red;
+}

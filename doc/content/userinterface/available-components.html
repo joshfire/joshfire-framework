@@ -1,0 +1,103 @@
+<h1>Available components</h1>
+<h2>Panel</h2>
+
+<p>This is the basic component. In fact you app will be inserted in a Panel.</p>
+
+<p>Initialize it with <code>{content:'Whatever <b>html</b> you want'}</code> or <code>{innerTemplate:function (){...}}</code></p>
+
+<p>A Panel is a container, that you'll mainly use to wrap around other UI elements.</p>
+
+<a href="/doc/api/symbols/uielements_panel.html">Click for details</a><br />
+
+<h2>Panel Manager</h2>
+
+<p>The Panel Manager component is used as a view switcher.</p>
+
+<p>It listens to event from a parent UI element (<code>{uiMaster:'/parent/path'}</code>), and show one of its children at a time.</p>
+
+<p>In the following pattern, we have a panel manager listening to a menu list.</p>
+
+<p>When one item of the menu is selected, the panel shows the appropriate child panel, hiding every other.</p>
+<img src="../img/panelmanager.png" alt="Panel manager" title="Panel manager"/>
+
+<pre><code class="javascript">
+return [
+{
+  id:'menu',
+  type:'list',
+  data:[
+    {id:'panel1', label:'item #1'},
+    {id:'panel2', label:'item #2'}
+  ]
+},
+{
+  id:'panelmgr',
+  type:'panel.manager',
+  uiMaster:'/menu',
+  children:[
+    {
+      id:'panel1',
+      type:'panel',
+      content:'Panel #1'
+    },
+    {
+      id:'panel2',
+      type:'panel',
+      content:'Panel #2'
+    }
+  ]
+}
+];  
+</code></pre>
+
+<a href="/doc/api/symbols/uielements_panelmanager.html">Click for details</a>
+
+<h2>List</h2>
+
+<p>Well, this is a list of items.</p>
+
+<p>In a browser, it will be anything from a dead-simple UL/LI to whatever you want (tweaking itemTemplate &amp; itemInnerTemplate).</p>
+
+<p>On a smartphone, it will be native-looking scrollinglist, using <a target="_blank" href="http://cubiq.org/iscroll-4">iScroll</a>, if you define your ui element with <code>scroller:true</code>. iScroll will add a &lt;div&gt; in your element to insert the scrollbar. You can style it using the <code>scrollBarClass:'yourcssclass'</code> option.</p>
+
+<p>Switching to Joe Hewitt's <a target="_blank" href="http://joehewitt.github.com/scrollability/">scrollability</a> is on the roadmap of the iOS adapter.</p>
+
+<p><a href='/doc/api/symbols/uielements_list.html'>Click for details</a></p>
+
+<h2>Button</h2>
+
+<p>Basically, a classic <code>&lt;input type='button' /></code>, with a native fallback on mobile devices</p>
+
+<p><a href="/doc/api/symbols/uielements_button.html">Click for details</a></p>
+
+<h2>Video MediaElement</h2>
+
+<p>Your media player, html5, flash, ... the most suited on the platform you run your app</p>
+
+<p><a href="/doc/api/symbols/uielements_video.html">Click for details</a></p>
+
+<!--<h2>Video</h2>
+
+<p>Video in a new window</p>
+
+<p><a href="/doc/api/symbols/uielements_videopopup.html">Click for details</a></p>
+-->
+<h2>MediaControls</h2>
+
+<p>Your media controls: play, pause, stop, forward, …</p>
+
+<p>Not implemented in ios adapter, as we're using the native video player, which comes with its own controls.</p>
+
+<p><a href="/doc/api/symbols/uielements_video.html">Click for details</a></p>
+
+<h2>Map</h2>
+
+<p>Actually the Map component is a abstraction of the Google Maps API.</p>
+
+<p>It uses the <a href="http://code.google.com/apis/maps/documentation/javascript/reference.html", target="_blank">Google Maps Javascript API V3</a>, with a fallback on the <a href="http://code.google.com/apis/maps/documentation/staticmaps/" target="_blank">Google Static Maps API</a> if needed.</p>
+
+<p>You're able to control the positioning of the map, the zoom level, ... and of course to pin point your data.</p>
+
+<p>If you want to use another maps provider (Bing Maps, OpenStreet Maps, ..), feel free to contribute ! <a target='_blank' href='http://github.com/joshfire/joshlib'>Fork us on github</a></p>
+
+<p><a href="/doc/api/symbols/uielements_map.html">Click for details</a></p>

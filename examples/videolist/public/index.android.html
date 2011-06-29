@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+<!-- 	<script data-main="../" src="../joshfire/adapters/android/bootstrap.js"></script> -->
+  <title>Video list</title>
+  <meta name="description" content="mySkreen">
+  <meta name="author" content="Joshfire.com">
+  <!--  Mobile viewport optimized: j.mp/bplateviewport -->
+  <meta name="viewport" content="width=960; user-scalable=no;" />
+  <!-- CSS : implied media="all" -->
+  <link rel="stylesheet" href="../export/leanback-android.css">	
+</head>
+<body>
+	<div id='splashscreen'></div>
+<script src="../export/leanback-android.js"></script>
+<script>
+	require(
+		//{urlArgs: "bust=" +  (new Date()).getTime()},
+		["src/app"],function(VideoApp) {
+		window._app = new VideoApp();
+		//alert(window._app.options.parentElement);
+	});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,224 @@
+<h1>Adapter development</h1>
+
+<h2>First steps</h2>
+
+<h3>Find a smart name</h3>
+
+<ol>
+  <li>Avoid version numbers, except when there is major changes in the
+    device API compared to a previous adapter</li>
+  <li>It will be used in a lot of file names or as string id in the JS
+    and CSS code. Dont take any risks : no space, not other character than
+    <code>[a-z0-9]</code>
+    <br>Eg: <em>android</em>, <em>samsungtv</em>, <em>node</em></li>
+</ol>
+
+<h3>Make sure you understand Joshfire's script loading and bootstrap system</h3>
+
+If not, go back to <a href="/doc/develop/scriptloading">Script loading</a>
+
+<h3>Declare your new adapter</h3>
+
+<p>Create a directory with a first file : <code>src/adapters/DEVICE/global.js</code></p>
+
+<p>This file is executed in the bootstrap of the framework, before RequireJS is even included.
+You can use it to declare global variables, and provide device-specific implementations
+of methods under the <a href="/doc/api/symbols/Joshfire.html">Joshfire namespace</a>.</p>
+
+<p>Here is a sample <code>global.js</code> file. Feel free to check the ones of existing adapters
+  in the source.</p>
+
+<pre><code class="javascript">
+(function(J) {
+  
+  J.onReady = function(callback) {
+    Device_Specific_onDomReady(callback);
+  };
+  
+  New_Global_Variable = Device_Specific_Init();
+  
+})(Joshfire);
+
+</code></pre>
+
+<p><strong>Don't forget</strong> to re-run <code>fab bootstraps</code> after editing <code>global.js</code> or 
+  adding new modules to your connector.</p>
+
+<h2>Adapting Joshfire base UI elements</h2>
+
+<p>Create a new file with the same path as the base implementation but in the adapter directory.
+Eg: to adapt the video element, the base file is
+<code>src/uielements/video.js</code>, so you need to create
+<code>src/adapters/DEVICE/lib/uielements/video.js</code></p>
+
+<p>Usually the adapter implementation will extend the base class like this:</p>
+
+<pre><code class="javascript">
+Joshfire.define([ 'joshfire/class', '../../../uielements/video.js', function(Class, Video) {
+
+  return Class(Video, {
+    
+    // Provide a custom play() function
+    play: function(options) {
+      Device_Specific_Play(options.url);
+    }
+    
+  });
+});
+
+</code></pre>
+
+<p>Note the <code>'../../../uielements/video.js'</code> used to lookup the base file located in
+  <code>src/uielements/video.js</code>. This is needed because just writing 
+  <code>'joshfire/uielements/video.js'</code> would have actually loaded the file you're writing inside the adapter!
+  (Check <a href="/doc/develop/scriptloading">Script loading</a> to understand why).
+  </p> 
+
+<p>Looking at the source of the UI Elements implementations in the 
+  <code>src/adapters/DEVICE/uielements/</code> directories is a great way to learn.</p>
+
+<p>The <a href="/doc/api/symbols/uielement.html">UI Element API reference</a> should also be useful for knowing
+  which properties and methods to implement.</p>
+
+<h2>Reusing code from other adapters</h2>
+
+<p>It is common for adapters to share code. There are two ways to do it:</p>
+
+<h3>Manually</h3>
+
+<p>Do this when you just need to borrow a few modules from other adapters.</p>
+
+<p>Suppose you're writing a new video UI Element in the <code>Android</code> connector based on
+  the video UI Element in the <code>Browser</code> connector. You would write this:</p> 
+
+<pre><code class="javascript">
+Joshfire.define(['joshfire/class', 'joshfire/adapters/browser/uielements/video.js'], function(Class, Video) {
+  
+  return Class(Video, {
+    
+    // Just change a few details
+    setup:function(callback) {
+      this.Android_Specific_Variable = true;
+      
+      // Call setup() function in base class
+      this.__super(callback);
+    }
+    
+  });   
+});
+
+</code></pre>
+
+<h3>Declaring a global dependency</h3>
+
+<p>When an adapter is generally extending another you can declare a dependency between both of them.</p>
+
+<p>For instance, the <code>GoogleTV</code> adapter has only code to support a few key codes from the remote but is 
+  similar in every other way to the <code>Browser</code> adapter. This is declared in the 
+  <code>src/adapters/googletv/global.js</code> file:</p>
+  
+<pre><code class="javascript">
+(function(J) {
+
+  J.adapterDeps = ['browser'];
+  
+})(Joshfire);
+
+</code></pre>
+
+<p>The lookup sequence when loading <code>joshfire/uielements/video</code> will now be:
+  <ul>
+    <li><code>joshfire/adapters/googletv/uielements/video.js</code>: not found</li>
+    <li><code>joshfire/adapters/browser/uielements/video.js</code>: found!</li>
+    <li>(<code>joshfire/uielements/video.js</code> if the previous one hadn't been found)</li>
+  </ul>
+</p>
+
+<h2>Adapting device inputs</h2>
+
+<p>
+Your device might be a touchscreen, have a remote control, a mouse, a
+keyboard or something entirely different like a camera that interprets
+body gestures. For this reason input devices don't interact directly with
+the UI Elements, instead they send generic input events to the application like
+ <code>right</code>, <code>left</code>, <code>enter</code> and so on.</p>
+
+<p>This event-driven architecture allows even remote devices to control your apps
+  via HTTP packets or websockets for instance.</p>
+  
+<p>It is up to you to translate user actions to <code>input</code> events.
+Create <code>src/adapters/DEVICE/inputs/INPUT.js</code> and either:
+<ul>
+  <li>Extend another similar input like you would do with a UI Element (see above)</li>
+  <li>Write an input method from scratch</li>
+</ul>
+
+<p>Here is an example of a networked input you could implement:</p>
+
+<pre><code class="javascript">
+Joshfire.define(['joshfire/input', 'joshfire/class'], function(Input, Class) {
+  
+  return Class(Input, {
+    
+    setup: function(callbackOnReady) {
+      
+      // this device listens to network events, so the onReady callback function
+      // is called only once the network is initialized
+      DeviceNetwork.onConnect = function() {
+        callbackOnReady(null);
+        
+        // Wait for messages and forward them to the app as input events
+        DeviceNetwork.onMessage = function(message) {
+          if (message === 'MOVE_LEFT')
+            self.app.publish('input', ['left']);
+        };
+      };
+    }
+  });
+});
+
+</code></pre>
+
+<p>New inputs will need to be reference in the <code>app.options.inputs</code> array (see below).</p>
+
+<h2>Adapting the App class</h2>
+
+<p>You may overwrite any aspects of the initialization or inner workings of the 
+  base <code>App</code> class in your <code>src/adapters/DEVICE/app.js</code> file.</p>
+
+<p>If you have developed new input methods, you could add them to the default options so
+  that they are automatically loaded whenever an app is bootstraped with your adapter. Here's how:</p>
+
+<pre><code class="javascript">
+Joshfire.define(
+  ['joshfire/class', '../../app', 'joshfire/inputs/my_http_input','joshfire/vendor/underscore'],
+  function(Class, App, MyHTTPInput, _) {
+    
+    return Class(App, {
+      
+      // Build the default options of any instanciated app
+      getDefaultOptions: function() {
+        
+        // Overwrite the 'inputs' field with your new input class
+        return _.extend(this.__super(), {
+            'inputs': [MyHTTPInput]
+        });
+      }
+    });
+});
+
+</pre></code>
+
+<h2>CSS</h2>
+<p>In order to help application developers, you might need to provide
+generic fixes or CSS reset rules. You can put <code>.css</code> or <code>.scss</code> ( see
+<a href="http://sass-lang.com/">http://sass-lang.com/</a>) files in the <code>/css/adapters/DEVICE/</code>
+directory.
+</p>
+
+<h2>Packaging</h2>
+<p>Some environments (like Samsung TV) cannot run in <a href="/dev/develop/scriptloading">Development mode</a>
+and need to load only one JavaScript file like in Production mode. To help developers to do so, you may
+provide build scripts.</p>
+<p>You may also bundle a default project template so that developer can bootstrap new projects with just one command.</p>
+<p>All these features should be located in the <code>build/adapter/DEVICE/</code> directory.</p>

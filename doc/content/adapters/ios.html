@@ -1,0 +1,80 @@
+<h1>iOS adapter</h1>
+
+<h2>What's specific</h2>
+
+<p>The Joshfire framework uses PhoneGap to compile your JavaScript app into a native iOS app.</p>
+
+<p>Actually there are two major differences between the iOS adapter &amp; the classic browser adapter:</p>
+<ul>
+  <li>iOS adapter rely on <a href="http://zeptojs.com">zepto.js</a>, which is lighter than jQuery
+  <li>The navigation for the UI component 'List' is actually based on <a target="_blank" href="http://cubiq.org/iscroll-4">iScroll4</a>, for a nearly-native scrolling experience. Switching to Joe Hewitt's <a target="_blank" href="http://joehewitt.github.com/scrollability/">scrollability</a> is on the roadmap. And <code>-webkit-overflow-scrolling: 'touch' </code> seems to be <a target="_blank" href="http://functionsource.com/post/scrollability-can-hopefully-become-a-shim">on its way</a> :-)</li>
+</ul>
+
+<h2>Environment setup</h2>
+
+<h3>Foreword</h3>
+
+<p>To use PhoneGap you'll need to have XCode installed &amp; running on your system. Here are a few prerequisites and recommendations to help you build your iOS apps.</p>
+
+<h3>Prerequisites</h3>
+
+<p>To proceed with the following, you'll need:</p>
+
+<ul>
+  <li>A system running with Mac OS X</li>
+  <li>An active apple developer program membership</li>
+  <li>An iOS developer certification</li>
+  <li>And … the iOS devices you want your apps to run on</li>
+</ul>
+
+<h3>XCode</h3>
+
+<p>If XCode isn't installed on your system, <a href="http://developer.apple.com/devcenter/ios/index.action" target="_blank">download it</a> on Apple's developer portal. Keep in mind that you need to have an active membership to do so.</p>
+
+<h3>PhoneGap</h3>
+
+<p>PhoneGap has a good <a target="_blank" href="http://www.phonegap.com/start">'get started'</a> page, where you can download the Zip archive, setup and test your first project.</p>
+
+<p>There is also a nice <a target="_blank" href="http://www.youtube.com/v/W5hzwxxUCqE?autoplay=1">video tutorial</a>, and a more detailed version of the getting started page <a href="http://wiki.phonegap.com/w/page/16494778/Getting-Started-with-PhoneGap-(iOS)" target="_blank">here</a>.</p>
+
+<h2>Joshfire &amp; PhoneGap</h2>
+
+<p>You've followed every phone gap directive, have run you first 'Hello world', what about building your Joshfire app to an iOS device?</p>
+
+<p>Your phonegap's <code>www/index.html</code> file should look like the following:</p>
+
+<pre><code>
+  &lt;!DOCTYPE html>
+  &lt;html>
+    &lt;head>
+      &lt;title>Your title&lt;/title>
+  &lt;link rel="stylesheet" href="css/stylesheet.css" type="text/css" media="screen" charset="utf-8">
+    /* Needed external librairies here : 
+      Google Maps API http://maps.google.com/maps/api/js?sensor=false
+      ....
+    */
+    /* iOS adapter bootstrap */
+      &lt;script  src="joshfirepath/adapters/ios/bootstrap.js">&lt;/script>
+    /* Phone gap */
+    &lt;script type="text/javascript" charset="utf-8" src="phonegap.0.9.5.1.min.js">&lt;/script>
+      /* init your app after device ready */
+    &lt;script type="text/javascript" charset="utf-8">
+    function initApp()
+    {    
+      document.addEventListener("deviceready",function(){
+        require({
+              urlArgs: "bust=" +  (new Date()).getTime()
+            },["appsrc/app.ios"],function(MyApp) {
+              window._app = new MyApp();
+            });
+      },false);
+    }
+
+      &lt;/script>
+    &lt;/head>
+    /* Call your initApp function onLoad */
+    &lt;body onload="initApp()">
+    /* Nice HTML here */
+    &lt;/body>
+  &lt;/html>
+</code></pre>

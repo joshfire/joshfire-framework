@@ -1,0 +1,87 @@
+<h1>Node.js adapter</h1>
+
+<p>This adapter is used to make applications run on servers or embedded devices.</p>
+
+<p>The following are only two examples of use cases. Expect more to come from Joshfire 
+  or from the community.</p>
+
+<h2>Building server-side websites</h2>
+
+<p>Usage of JavaScript on the server side with Node.js is currently exploding. One of its most
+  powerful prospects is to share code between client and server. This feature has been planned since
+  the early stages of the framework and is completely integrated in its design thanks to the Node.js adapter.</p>
+
+<h3>Request lifecycle</h3>
+
+<p>An incoming request from the client goes through a few components in this order:</p>
+<ul>
+  <li><strong>Webserver:</strong> The code actually listening on the port. Joshfire has a sample Express.js middleware
+    so that you can integrate it in your existing server code and benefit from all the features of Express. It is also the
+    recommended way to bootstrap a new project. But you could also use Node.js' <code>http.createServer()</code> method
+    or any other webserver code.</li>
+    
+  <li><strong>App Factory:</strong> Instanciates the App class and does a <code>app.setState()</code> call to set
+    the current environment (request URI, headers, ...)</li>
+
+</ul>
+
+<p>Once the client has received the page from the server, you can also run the application client-side, depending 
+  on the capabilities of the browser. The Navigation Util from the <a href="/doc/adapters/browser">Browser adapter</a>
+  will then intercept clicks on links and perform the same <code>app.setState()</code> that the App Factory does.</p>
+<p>This design allows the Browser connector to change pages just by manipulating the DOM, like "single-page" apps do. 
+  This will bring all the benefits of such apps like responsiveness and improved user experience, while the Node.js 
+  connector solves all their usual issues by still being able to generate individual pages server-side (SEO, Old/specific
+  browsers without JavaScript support, accessibility, ...). See 
+  <a href="http://www.slideshare.net/sylvinus/node-camp">Sylvain Zimmer's slides</a> on this topic.</p>
+
+<img src="../img/design.002.png" style="width:900px;" alt="Request workflow"/>
+
+<h3>Rendering</h3>
+
+<p>Let's zoom on what is happening inside the App itself when processing the request.</p>
+<ul>
+  <li>The <a href="/doc/api/symbols/utils_router.html">Router util</a> listens to
+  the <code>state.location</code> events on the app. </li>
+  <li>It is often bound to a Panel Manager containing the part of
+  the layout that changes depending on the page. Usually this excludes headers and footers.
+  When a route matches, the Router issues a <code>manager.setState(route)</code> call.</li>
+  <li>The <a href="/doc/api/symbols/uielements_panel.manager.html">Panel Manager</a> selects only
+    one of its children to be rendered depending on the route.</li>
+  <li>The App issues a render() call to the root element of the UI Tree, which will trigger a cascade of
+    render() calls down the tree to build the actual page.</li>
+</ul>
+
+
+<img src="../img/design.003.png" style="width:900px;" alt="Rendering workflow"/>
+
+<h3>Freshness</h3>
+
+<p>In the Browser adapter, the actual rendering of all the UI Elements of the UI Tree is done with simple 
+  progressive DOM manipulation. <br/>
+  However it is a bit more complex with the Node.js adapter because the adapter needs to know
+  when all the components are fully rendered and not in a "loading" state anymore.</p>
+<p>All the UI Elements can signal their "freshness" with a <code>uielement.setState('fresh',true);</code> call,
+  meaning that they are in a state that can be immediately serialized with <code>uielement.getHtml()</code> and sent
+  to the client.</p>
+<p>The page will be serialized and sent to the client when all the displayable elements of the UI Tree are 
+  marked as "fresh".</p>
+  
+<h3>Examples</h3>
+
+<p>The first public example is this website, which can be generated both from the server and the client sides.</p>
+
+<p>It is <a href="https://github.com/joshfire/www-joshfire">open source on GitHub</a> so that you can learn from it.</p>
+
+<p>Expect many more to come in the next few weeks.</p>
+
+
+<h2>Receiving events via HTTP</h2>
+
+<p>Thanks to its HTTP Input, the Node.js adapter can receive requests and convert them to internal events.</p>
+
+<p>These events can then be either processed locally by the application or sent again over the network, for instance
+  to another application running in a browser via websockets (supporter in the Browser adapter's own HTTP Input).</p>
+
+<h3>Examples</h3>
+
+<p>The videolist example has an <a href="/doc/advanced/arduino">Arduino controller</a> that works as described above.</p>

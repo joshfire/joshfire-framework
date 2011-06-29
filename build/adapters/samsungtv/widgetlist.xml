@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rsp stat="ok">
+	<list>
+		<widget id="WIDGETNAME">
+			<title>WIDGETNAME</title>
+			<compression size="ZIPSIZE" type="zip"/>
+			<description></description>
+			<!-- the IP here must be seen from the TV. Widgetlist.xml must be at the root -->
+			<download>http://192.168.0.1/WIDGETNAME.zip</download>
+		</widget>
+	</list>
+</rsp>

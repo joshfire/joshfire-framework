@@ -1,0 +1,22 @@
+Licenses
+--------
+
+The Joshfire Framework is dual licensed under the GPLv2 and a commercial license.
+
+ - GPLv2
+      
+      A copy of this license is available in the gpl-2.0.txt file.
+
+ - Commercial license
+
+      The commercial license is inspired by the MIT license. It allows developers to
+      distribute apps using the framework without having to include a copy of the code,
+      as long as they distribute this license and the name of the authors along with their app.
+      
+      This license is granted to you for FREE, except when you want to:
+        - Distribute your app pre-packaged with a physical electronic device
+        - Bundle the framework in any way in a physical electronic device.
+        
+      These uses apply mostly to OEMs. Please contact us in this case.
+      
+http://framework.joshfire.com/license

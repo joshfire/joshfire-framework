@@ -1,0 +1,23 @@
+<div id="index">
+  <h3 class="projectTitle">{+JSDOC.opt.D.projectTitle+} 
+    <if test="JSDOC.opt.D.version">v.{+JSDOC.opt.D.version+}</if>
+  </h3>
+  <div class="toplinks">Class Index | {+new Link().toFile("files.html").withText("File Index")+}</div>
+  <if test="JSDOC.opt.D.imageFile">
+    <img src="{+JSDOC.opt.D.imageFile+}">
+  </if>
+  {+publish.classesIndex+}
+</div>
+<div id="content_doc">
+  <h1 class="classTitle">The Joshfire framework</h1>
+  <if test="data.readme">
+    <p><strong>Author:</strong> {+data.readme.author+}</p>
+    <p><strong>Version:</strong> {+data.readme.version+}</p>
+  </if>
+
+  <p>This is the auto-generated code documentation for {+JSDOC.opt.D.projectTitle+}.</p>
+  <if test="data.readme">{+data.readme.desc+}</if>
+
+  <h1 class="classTitle">Class Index</h1>    
+  {+doTemplate('classlist.tmpl', data.classes)+}
+</div>

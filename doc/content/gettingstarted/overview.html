@@ -1,0 +1,77 @@
+<h1>General design of the framework</h1>
+
+<h2>Target users</h2>
+
+<p>Joshfire is focused on <b>easy cross-device application development</b>.
+Most design decisions are a direct consequence of this focus.</p>
+
+<p>Currently the framework has very good support for "content-based" applications, including text, audio and video browsing.
+Depending on user need, future releases may focus on form input and other areas.</p>
+
+<h2>Anatomy of a typical Joshfire application</h2>
+
+<img src="../img/design.001.png" alt="General design" style="width:900px;"/>
+
+<h3>Adapters</h3>
+
+<p>Joshfire comes bundled with several adapters, one for each supported device.
+As new devices get released, Joshfire or third-parties will provide additional adapters.</p>
+
+<p>When an application is launched, it must choose an adapter matching the device it is currently running on.</p>
+
+<h3>Application class</h3>
+
+<p>Joshfire has a default App implementation that your application has to inherit from. It provides
+initialization methods and general glue.</p>
+
+<h3>The Two Trees : Data &amp; User Interface</h3>
+
+<p>This is one of the most opinionated design decisions. Each app manages two tree structures:<ul>
+
+  <li><b>Data Tree</b> : Contains all the data the app needs to load or use over time. It can be loosely mapped to
+  any URL structure or filepath.</li>
+
+  <li><b>UI Tree</b> : Contains all the UI Elements the user might see or interact with (buttons, lists, videos, ...).</li>
+
+</ul>
+</p>
+
+<p>This design has a number of advantages:<ul>
+  <li>Clear separation of content and interface</li>
+  <li>Each element, either a data item or a UI element, is addressable with a unique path in its tree.</li>
+  <li>Simple mappings can be made with existing standards (DataTree to URLs/filepaths/NoSQL ids, UITree to XML/...)</li>
+  <li>Applications can be executed with a simplier UI or with no UI Tree at all, on the server-side with NodeJS for instance</li>
+</ul></p>
+
+<h3>UI Elements</h3>
+
+<p>Basic UI elements like lists, videos, panels, are abstracted in base classes from which inherit device-specific
+implementations.</p>
+<p>For instance a list may be displayed as :<ul>
+  <li>In a browser: a simple &lt;UL&gt; - &lt;LI&gt; combo</li>
+  <li>In a smartphone (iOS, Android, etc.): a scrollable, native-looking list</li>
+  <li>In a shell: a list of choices in a command-line</li>
+  <li>In a connected TV: a browseable ribbon</li>
+</ul></p>
+<p>The UI video element is another good example of UI Element abstraction.</p>
+<p>It will be embedded as:
+<ul>
+  <li>In a browser: an HTML5 &lt;VIDEO&gt; tag</li>
+  <li>On Android: a call to the native media player</li>
+  <li>In a Samsung TV: a mapping to the proprietary Video Widget</li>
+</ul></p>
+
+<h3>Inputs</h3>
+
+<p>Each adapter supports several input methods like "keyboard", "mouse", "touch", "tvremote", etc.</p>
+
+<p>Each user interaction can be mapped to an event to which any part of the application can react.</p>
+
+<p>Inputs can also be proxies for remote controllers (think <a href="/doc/advanced/arduino">Arduinos</a> or even other instances of the same app),
+with a simple TCP packet firing an event in the app.</p>
+
+<h3>Events</h3>
+
+<p>Joshfire has built-in publish/subscribe methods on many classes. They are often the primary medium of interaction between
+components. Using events reduces the coupling between components and allows greater 
+extensibility and modularity.</p>

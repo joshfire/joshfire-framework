@@ -1,0 +1,65 @@
+<h1>Installation</h1>
+
+<h2>Download</h2>
+
+<p>Go to our <a href="/download">download page</a> to get the latest <em>stable</em> version.</p>
+
+<p>Unzipping the file will create a folder called <code>joshfire/</code> containing all the code of our framework, examples, raw documentation and build tools.</p>
+
+<h2>Sanity Check</h2>
+
+<p>Open the file <code>examples/helloworld/index.html</code> in your favorite browser, it should display a white page with "Hello World" written on it. If so, you're ready to jump into <a href="/doc/gettingstarted/firstapp1">the tutorial</a>.</p>
+
+<p>If you do not see "Hello World", use one of our <a href="/channel">support channel</a> to get help.</p>
+
+<h2 id="advanced">Advanced topics</h2>
+
+<h3>Downloading the development version</h3>
+
+<!-- fixme once merged into a new project --><p>If you're adventurous, you can either get the latest version of the Joshfire SDK as a <a href="https://github.com/joshfire/joshlib/tarball/sencha">tarball</a> or a <a href="https://github.com/joshfire/joshlib/zipball/sencha">zip</a> file, or clone the source from <a href="https://github.com/joshfire/joshlib/tree/sencha">github</a>. <strong>Please, keep in mind that we do not provide support for this version.</strong></p>
+
+<h3>Running the documentation locally</h3>
+
+<p>Our documentation is first compiled, then served via HTTP thanks to node and our own framework. You'll need:</p>
+
+<ul>
+  <li><a href="https://github.com/joyent/node/wiki/Installation">Node.js</a> 0.4.x</li>
+  <li><a href="http://npmjs.org">npm</a> 1.x (compulsory for installing node modules)</li>
+  <li><a href="http://docs.fabfile.org/en/1.1.0/index.html#installation">fabric</a></li>
+</ul>
+
+<p>All required node modules are listed in the <code>package.json</code> file located at the root of the framework. Just use <code>npm install</code> at the root to install dependencies.</p>
+
+<h3>Others dependencies</h3>
+
+<p>Depending on commands you're executing, you may need to install:</p>
+
+<ul>
+  <li><a href="http://www.javascriptlint.com/download.htm">JavaScript Lint</a></li>
+  <li><a href="http://code.google.com/closure/utilities/">Google Closure Linter</a></li>
+</ul>
+
+<p>Also, some adapters need specific tools. Dependencies are detailed in each adapters page.</p>
+
+<h3>Launching tests</h3>
+
+<p>You'll need:</p>
+
+<ul>
+  <li><a href="https://github.com/joyent/node/wiki/Installation">Node.js</a> 0.4.x</li>
+  <li><a href="http://npmjs.org">Npm</a> 1.x (compulsory for installing node modules)</li>
+  <li><a href="http://docs.fabfile.org/en/1.1.0/index.html#installation">fabric</a></li>
+  <li><a href="http://code.google.com/p/selenium/">selenium (via <code>$ sudo easy_install install selenium</code>)</a></li>
+</ul>
+
+<p>All required node modules are listed in the <code>package.json</code> file located at the root of the framework. Just use <code>npm install</code> at the root to install dependencies.</p>
+
+<p>Then open your terminal, go to the <code>joshfire/test/</code> repository and execute the following command:</p>
+
+<pre>
+  <code>$ fab general</code>
+</pre>
+<p>and</p>
+<pre>
+  <code>$ fab selenium</code>
+</pre>

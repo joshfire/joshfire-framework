@@ -1,0 +1,5 @@
+The CSS
+The videolist example uses the SCSS option :
+- in "build.js", instead of "modules.css.include", there is a reference to the .scss entry point
+- then compile with "fab optimize"
+- the compiled CSS files are in /export/

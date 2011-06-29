@@ -1,0 +1,77 @@
+<h1>General code standards</h1>
+
+<h2>Common patterns</h2>
+
+<p>There are a few code patterns exposed by the framework that you will probably use:</p>
+
+<h3>Callbacks</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Callback_(computer_programming)">Callbacks</a> are a common pattern in JavaScript because of its asynchronous nature, both on the client and on the server side with Node.js</p>
+
+<p>A lot of methods of the framework take a callback as a parameter. We follow the Node.js convention so the first
+  argument of each callback method is always an <code>error</code> object, and it is undefined/null if the method was successful.</p>
+<pre>
+  <code class="javascript">
+var callback = function(error, data) {
+  if (error) {
+    console.error("Your method failed");
+    return;
+  }
+  console.log("Your method returned data :", data);
+};
+
+// Signature is <a href="/doc/api/symbols/tree.html#fetch">tree.fetch(path, query, callback)</a>
+app.data.fetch("/news/", {"category":"sports"}, callback);
+    
+</code>
+</pre>
+
+<h3>Event publish/subscribe</h3>
+
+<p>A few base classes of the framework (App, UIElement, Tree) have a 
+  <a href="/doc/api/symbols/mixins_pubsub.html">pubsub mixin</a> so that they can publish and subscribe to events. This is
+  very helpful for <strong>loose coupling</strong> between components.</p>
+
+<pre>
+  <code class="javascript">
+// Listen to the "ready" event on this app instance
+app.subscribe("ready",function(event,data) {
+  
+  console.log("App is ready.");
+  
+  // Simulate a "left" keystroke on the /news UI Element
+  // publish() takes an event ID and a data arguments.
+  app.ui.element("/news").publish("input",["left"]);
+  
+}):
+
+</code>
+</pre>
+
+<h2>Style Guidelines</h2>
+
+<h3>JavaScript</h3>
+
+<p>The framework code follows the <a href="http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml">Google JavaScript Style Guide</a>. It might also be a good idea to do the same in your app code.</p>
+
+<p>Most important things:</p>
+
+<ul>
+  <li>2-space indentation,</li>
+  <li>always start your curly braces on the same line as whatever they're opening,</li>
+  <li>always use semicolons.</li>
+</ul>
+
+<h3>HTML</h3>
+
+<ul>
+  <li>2-space indentation,</li>
+  <li>all attributes should be quoted (with double quote).</li>
+</ul>
+
+<h3>CSS</h3>
+
+<ul>
+  <li>2-space indentation.</li>
+  <li>always start your curly braces on the same line as whatever they're opening.</li>
+</ul>

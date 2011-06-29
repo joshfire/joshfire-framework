@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tweet map</title>
+		<link rel="stylesheet" href="../public/css/tweetmap.css" />
+	    <script data-main="../" src="../joshfire/adapters/samsungtv/bootstrap.js"></script>
+
+    </head>
+    <body>
+	    <h1 class="article_title">Tweet Map</h1><h2 class='subtitle'>On a Samsung TV</h2>
+	
+        <script>
+			require({
+				urlArgs: "bust=" +  (new Date()).getTime()
+			},["src/app.samsungtv"],function(TweetMap) {
+					window._app = new TweetMap();
+			});
+		</script>
+    </body>
+</html>

@@ -1,0 +1,218 @@
+<h1>Writing your first application: part 1</h1>
+
+<p>Let's learn by example.</p>
+
+<p>The framework enables your to quickly build applications targeting several platforms including tablets, mobile phones, TVS, etc. Compatible devices depends on which adapters you use (and build).</p>
+
+<p>In this tutorial, we'll walk you through the creation of a basic application displaying a Rss feed.</p>
+
+<p>It will consist of 3 parts, in which we will:</p>
+<ol>
+  <li>create a basic application displaying static data</li>
+  <li>see how to fetch dynamic content and display it</li>
+  <li>create an iOS version of the application</li>
+</ol>
+
+<p>We'll assume you have Joshfire installed already. If not, go to the <a href="/doc/gettingstarted/installation">Installation</a> page.</p>
+
+<h2>Creating a project</h2>
+
+<p>We do not yet have a command line tool. In the meantime, create the following folders anywhere you like:</p>
+
+<ul>
+  <li><strong><code>joshfire/</code></strong>: the framework</li>
+  <li><strong><code>public/</code></strong>: for public files
+    <ul>
+      <li><strong><code>css/</code></strong>: for stylesheets</li>
+      <li><strong><code>img/</code></strong>: for images</li>
+    </ul>
+  </li>
+  <li><strong><code>src/</code></strong>: for main files, the heart of your application</li>
+</ul>
+
+<p>Please note that every file and name folders could be changed, this is just a convention among the framework developers.</p>
+
+<h2><code>app.js</code></h2>
+
+<p>Now create a file <code>app.js</code> in <code>src/</code> directory.</p>
+<code>app.js</code> should be the main file of your application. This is where all the base logic should go because this file will be used by all adapters.</p>
+
+
+<h3>Data Tree</h3>
+<p>Each application needs a Data Tree. It's a structure which will reference all the data your application handles.</p>
+<p>In the MVC pattern, it's similar to the Model except that the tree makes all the elements addressable by their "path" and that the framework doesn't impose a fixed schema (This is <a href="/doc/advanced/philosophyandchoices">up to the developers</a>!).</p>
+<p>Here is what a Data Tree should look like:</p>
+
+<pre>
+<code class="javascript">
+// a dataTree is a structure which references all your data
+var dataTree = [
+  {
+    // this id will be associated with the path '/news/' in the tree
+    id: 'news',
+
+    //list all the children of the node '/news/'
+    children: [
+      // for instance, the path of the array on the following line will be '/news/0'
+      {id:0, title:'title1', description:'this is a description!', link:'http://wikipedia.org'},
+      {id:1, title:'title2', description:'this is a another one!', link:'http://creativecommons.org'},
+      {id:2, title:'title3', description:'this is the last one!',  link:'http://fsf.org'}
+    ]
+  }
+];
+
+</code>
+</pre>
+
+So if you access the path '/news/1' you will get the following data: 
+<pre><code class="javascript">
+  {id:1, title:'title2', description:'this is a another one!', link:'http://creativecommons.org'}
+  
+</code></pre>
+
+<h3>UI Tree</h3>
+
+<p>Each application also has an UI Tree: it is a structure which references all the UI elements of your application.
+It gives you the ability to bind an element to some data referenced by a path in the Data Tree.</p>
+
+<p>It's the View in MVC.</p>
+
+<p>The skeleton of a UI Tree can be defined like this:</p>
+
+<pre>
+  <code class="javascript">
+var uiTree = [
+  {
+    // the unique id which identify the UI Element in the UI Tree
+    // here the path of the List will be '/newsList'.
+    id: 'newsList',
+
+    // the type of UI Element we want to use (here, a List)
+    type: List,
+
+    // the path of the data (in the data tree) which you wish to bind to this UI Element.
+    // it will automatically populate the UI Element and update it if the data changes
+    dataPath: '/news/',
+
+    // override the default template for list items 
+    // by default templates use Underscore.js' micro engine
+    itemInnerTemplate:
+      '&lt;div class="clearfix"&gt;'+
+      '    &lt;h1 class="title"&gt;&lt;%= item.title %&gt;&lt;/h1&gt;'+
+      '    &lt;div class="description"&gt;&lt;%= item.description %&gt;&lt;/div&gt;'+
+      '    &lt;a href="&lt;%= item.link %&gt;"&gt;&lt;%= item.link %&gt;&lt;/a&gt;'+
+      '&lt;/div&gt;'                
+  }
+];
+
+  </code>
+</pre>
+
+
+<p>See our <a href="/doc/gettingstarted/overview">overview</a> of the framework if you want more information on Joshfire Trees.</p>
+
+
+<h3>Complete source code</h3>
+
+Let's put it all together.
+
+<pre>
+  <code class="javascript">
+
+// Joshfire.define is a wrapper arround require.js : it allows you to load all your dependencies
+//   Here we are using:
+//      - joshfire/app.js              the baseclass from which your applications should inherit
+//      - joshfire/class.js            allows you to do inheritance in JS (John Resig style!)
+//      - joshfire/uielements/list.js  the baseclass of a simple List UI element
+
+Joshfire.define(['joshfire/app', 'joshfire/class', 'joshfire/uielements/list'], function(BaseApp, Class, List) {
+  
+  // this module will return an Object which extends 'BaseApp'
+  return Class(BaseApp, {
+
+    // a unique id which identify your application
+    id: 'exampleRss',               
+
+    // the Data Tree we saw earlier
+    dataTree: [
+      {
+        id: 'news',
+        children: [
+          {id:0, title:'title1', description:'this is a description!', link:'http://wikipedia.org'},
+          {id:1, title:'title2', description:'this is a another one!', link:'http://creativecommons.org'},
+          {id:2, title:'title3', description:'this is the last one!',  link:'http://fsf.org'}
+        ]
+      }
+    ],
+
+    // the UI Tree we saw earlier
+    uiTree: [
+      {
+        id: 'newsList',
+        type: List,
+        dataPath: '/news/',
+        itemInnerTemplate:
+          '&lt;div class="clearfix"&gt;'+
+          '    &lt;h1 class="title"&gt;&lt;%= item.title %&gt;&lt;/h1&gt;'+
+          '    &lt;div class="description"&gt;&lt;%= item.description %&gt;&lt;/div&gt;'+
+          '    &lt;a href="&lt;%= item.link %&gt;"&gt;&lt;%= item.link %&gt;&lt;/a&gt;'+
+          '&lt;/div&gt;'                
+      }
+    ]
+    
+  });
+});
+  </code>
+</pre>
+
+<p>If you want more informations on <code>Joshfire.define()</code>, check out our <a href="/doc/develop/scriptloading">Script loading</a> doc.</p>
+
+
+<h2><code>public/index.html</code></h2>
+
+<p>The second file needed is <code>index.html</code>. It will be the entry point of the application in a browser.</p>
+
+<pre>
+  <code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;RSS Feed App&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/app.css" /&gt;
+    
+    &lt;!-- In development mode, include the boostrap file of the required adapter: here we target browsers --&gt;
+    &lt;script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"&gt;&lt;/script&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+    
+      // Joshfire.debug enables console.log output and forces refresh of script files in the browser
+      Joshfire.debug = true;
+
+      // Now we require the app.js file we created ...
+      Joshfire.require(['src/app'], function(App) {
+        
+        console.log("Code is loaded!");
+
+        // ... and instanciate a new application !
+        // by default the app will start right away and insert itself in the &lt;body&gt;
+        new App();
+
+      });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+  </code>
+</pre>
+
+
+<h2><code>Run it!</code></h2>
+
+<p>Just download the following stylesheet <a href=""><code>app.css</code></a> and put in <code>public/css</code> folder.</p>
+
+<p>You can now launch the application in your browser, and it should look like this:</p>
+
+<img src="sc01.png" />
+
+<p><a href="/doc/gettingstarted/firstapp2">You are ready for part 2 !</a></p>

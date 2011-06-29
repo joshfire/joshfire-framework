@@ -1,0 +1,219 @@
+<h1>Samsung TV adapter</h1>
+<p>This adapter has been made for the Samsung SDK framework, and tested with the 2.3 version.</p>
+
+<h2>Environment setup</h2>
+<h3>Requirements</h3>
+<ul>
+	<li>Windows (works fine on a virtual machine, but not on bootcamp)
+	<li>the 2.3 SDK or later : get the latest version on samsungforum / apps guide / download SDK and tools
+	<li>You're strongly adviced to work with an actual device. Do not rely on the emulators alone!
+</ul>
+
+<h3>Installation</h3>
+<ul>
+	<li>Install the SDK and the emulator. You also need to install Apache, as you'll need it package your application.</li>
+	<li>The visual editor is only useful if you plan to develop Samsung TV-only apps. It's not suitable to use it for multi-devices applications development, as it creates specific Samsung UI components.</li>
+	<li>Check that the emulator is up and running:  Clicking on the Home button, you should see a version of the SmartHub&copy; and can navigate with the fake remote control.
+<figure>
+	<img src="./screenshot-samsungtv-smarthub.jpg">
+	<figcaption>The Samsung App Store</figcaption>
+</figure>
+</li>
+</ul>
+<h3>Hello World with the Editor</h3>
+<p>The SDK editor is a modified Eclipse IDE, you can create a new “Hello World” project by right-clicking on the <code>Apps</code> directory in the left panel and selecting “New Javascript project”. Once done, right click on the project and select “Run emulator”.
+	<figure>
+		<img src="./screenshot-samsungtv-emulator.jpg">
+		<figcaption>The emulator running an application</figcaption>
+	</figure>
+</p>
+<p><em>Note 1 : Your files <b>must</b> remain in <code>C:\Program Files\Samsung\Samsung TV Apps SDK\Apps\</code>, or the emulator won't work.</em></p>
+<p><em>Note 2 : SDK tends to use 100% of the CPU, making it difficult to use the emulator in the same time. If so, you will use the SDK editor only to create a new project or package it. Use the “Open App” button in the Emulator to execute your project.</em></p>
+<p>For those reasons, and because you are probably doing an application for more than one device, we made several things to help you.</p>
+
+<h3>Hello World with Joshfire</h3>
+<p>If you prefer to use your development tools or have to write the same application for other platforms, Joshfire provide you the right tools.
+<ol>
+	<li>We will use the “Hello World” example (<code>examples/helloworld</code>) and the build tools so that it can be executed in the Samsung emulator
+		<figure>
+			<img src="./samsungtv-helloworld.png">
+			<figcaption>Starting point : just 2 files and a symlink</figcaption>
+		</figure>
+		Simply edit <code>app.js</code> and in the dependancies list, replace <code>joshfire/app</code> by <code>joshfire/adapters/samsungtv/app</code>. This Web Application is now a Samsung TV application.
+	</li>
+	<li>Enable the build tools by creating 
+		<ol>
+			<li>a <a href="/doc/develop/buildtools#fabfilepy"><code>fabfile.py</code></a> file </li>
+			<li>the <code>build/build.js</code> descriptor file</li>
+			<li>the <code>export</code> folder</li>
+		</ol>
+	</li>
+	<li>run the generic <code>fab <a href="/doc/develop/buildtools#optimize">optimize</a></code> method to generate the compiled files in the <code>export</code> directory
+		<figure>
+			<img src="./samsungtv-helloworld2.png">
+			<figcaption>Check point : build configuration and result</figcaption>
+		</figure>
+	</li>
+	<li>run the special <code>fab <a href="/doc/develop/buildtools#exportAdapterSamsungTV">exportAdapterSamsungTV</a></code> method to obtain the Samsung TV version
+		<figure>
+			<img src="./samsungtv-helloworld3.png">
+			<figcaption>Ending point : the Samsung files</figcaption>
+		</figure>
+	</li>
+</ol>
+</p>
+<p>Now you obtained the files needed to run an application in the Samsung world. The last two files (<code>videolist-example.zip</code> and <code>widgetlist.xml</code>) are useful if you have a <a href="#tv">physical device</a> or when you will submit your application to the Samsung validation process.</p>
+<p>The emulator needs you to copy the first files and directories in a subdirectory of <code>C:\Program Files\Samsung\Samsung TV Apps SDK\Apps\</code> directory. Once done, open the emulator and click “Open App”, you should see your app running"</p>
+
+<h3>Support and documentation</h3>
+There is two known forums :
+<ul>
+	<li>The official forum, mandatory anyway if you want to submit your app : <a href="http://www.samsungdforum.com/">www.samsungdforum.com/</a>
+	<li>An independant forum : <a href="http://www.connectedtvforum.com/viewforum.php?f=3">www.connectedtvforum.com</a>, where you will sometimes find more answers
+</ul>
+
+
+<h2>Known limitation you should be aware of</h2>
+<h3>Browser</h3>
+<ul>
+	<li>The Maple browser is based on an old Gecko engine, test carefully all of your CSS
+	<li>CPU is limited, especially on bluray players. You should avoid too much DOM manipulation like the animations on those devices. You can detect the type of device with the static method <code>samsungJoshfire.TVInfoAPI.GetProductType()</code>
+	<li>the <code>.innerHTML</code> property works but Samsung recommends <strong>not</strong> using it, because of potential memory saturation. The Joshfire Framework patched for your <code>jQuery $.html()</code> to follow the recommanded alternative method.
+	<li>The app will always be displayed in <code>960*540</code> resolution, whatever the TV resolution. Medias like videos or photos using the Samsung APIs will however be displayed at the TV resolution.
+	<li><code>z-index</code> above 99 are ignored
+	<li>communication with an <code>iframe</code> is possible with some hacks (monitoring the URL dash value of the iframe), but the communication is lost when frame is reloaded. If we find a workaround, we will include it in a next release.
+	<li><code>console.log</code> does not work, use <code>J.log()</code> instead
+	<li>the HTML5 <code>video</code> element does not work as expected, use the <code>adapters/samsungtv/uielements/video.mediaelement</code> class
+</ul>
+
+<h3>Forms<h3>
+<h4>bugs</h4>
+<p>some input types can not be rendered normaly :
+<ul>
+	<li>checkboxes are white squares, Joshfire provides you a default styling, however it would be pretier to replace them by images (background images do not work)
+	<li><code>radio</code> buttons are white squares, not even stylable : avoid them or reprogram them entirely
+	<li><code>select</code> fields are not usable : avoid them or reprogram them entirely
+</ul>
+In a future release, the adapter will do this for you.
+</p>
+<h4>focus</h4>
+How do you navigate in a form and fill in text fields in a Samsung TV ? Well you can‘t. Or you have to manage the focus and the virtual keyboard yourself. But don‘t worry, we got you covered with a small utility.
+<pre><code class="javascript">
+Joshfire.define(
+  ['joshfire/adapters/samsungtv/utils/navigationhelper'],
+  function(NavigationHelper) {
+	// ask the NavigationHelper utility to search in the DOM the input elements
+	NavigationHelper.autoDiscoverForms();
+	// enable up and down keys to go from one textfield to another
+	NavigationHelper.listenToNavigation();
+	// autofocus on the first element
+	NavigationHelper.focus(0);
+	// events fired when the visibility of the Samsung virtual keyboard changes
+	// in order to update the UI accordingly
+	NavigationHelper.subscribe('virtualkeyboard', function(name, event) {
+		if(event === 'show') {
+			// move the form to the left
+		} else if(event === 'hide') {
+			// center the form
+		}
+	});
+	// when the form disappears, you should run this method
+	NavigationHelper.reset();
+  }
+);
+</code></pre>
+
+<h3>Other things Joshfire does for you</h3>
+<h4>XHR (AJAX)</h4>
+<p>Even if the application is executed on the local file system the native <code>XMLHTTPRequest</code> object works fine because cross-domain calls are allowed. However the the <code>$.ajax()</code> jQuery method had to be fixed. We still recomend using the <a href="/doc/api/symbols/utils_datasource.html"><code>Utils.DataSource.request()</code></a> method, so that your application is cross-device compatible
+<h4>Shortcuts to TV APIs</h4>
+<p>If you know what you are doing, you can have a direct access to the TV APIs :
+<ul>
+	<li><code>samsungJoshfire.widgetAPI</code>, instance of <code>new Common.API.Widget()</code>
+	<li><code>samsungJoshfire.pluginAPI</code>, instance of <code>new Common.API.Plugin()</code>
+	<li><code>samsungJoshfire.oKeys</code>, contains all remote control key values as returned by <code>new Common.API.TVKeyValue()</code>
+	<li><code>samsungJoshfire.TVNavigationAPI</code> is the <code>clsid:SAMSUNG-INFOLINK-NNAVI</code> plugin
+	<li><code>samsungJoshfire.TVInfoAPI</code> is the <code>clsid:SAMSUNG-INFOLINK-TV</code> plugin
+</ul>
+Do not forget to <a href="https://github.com/joshfire/joshlib">contribute</a> to this adapter if you think we missed something important that could be used by other people.
+</p>
+<h4>Local storage</h4>
+<p>There will be Joshfire Framework methods to do it in a cross-device way, but in the meantime we made two shortcut methods to save content locally on the Samsung TV
+<ul>
+	<li><code>samsungJoshfire.writeToFileID(sFileID, sContent )</code>
+	<li><code>samsungJoshfire.readFromFileID(sFileID )</code>
+</ul>
+However be careful :
+<ul>
+	<li>there is no way to know if you reached the limit : plan for failure
+	<li>the total available space is unknown : plan for failure
+	<li>all applications share the same space : store as litle as possible
+	<li>it seems that there is no sandbox so any application can access to the files of the other : provide a non-guessable <code>sFileID</code>
+</ul>
+</p>
+
+<h4>Volume control, TV tuner, navigation keys</h4>
+<p>The applications on Samsung TV are a bit too powerful, and that includes preventing the user to leave your application, watching another TV show or even to control his own volume ! Samsung is aware of this and will reject your application if you do such things so Joshfire got you covered too:
+<ul>
+	<li>the <code>config.xml</code> file is already configured with correct settings for <code>srcctl</code>, <code>audiomute</code>, <code>videomute</code>, <code>flashplayer</code> and <code>movie</code>. That means that when running your application, the current video chanel is stopped, but when exiting, it will get back.
+	<li>we let the user manage the volume with the standard OSD
+	<li>we binded the remote control multimedia buttons to the <code>play / pause / stop / forward / rewind</code> global events
+	<li>we require the TV to display the app when it is inserted. If you need to modify this behaviour, overwrite <code>App.insert()</code> and call <code>samsungJoshfire.widgetAPI.sendReadyEvent();</code> when you think your application can be displayed.
+</ul>
+</p>
+
+<h4>Playing videos</h4>
+<p>You should use <code>uielements/video.mediaelement</code> who will work as expected.
+<pre><code class="javascript">
+Joshfire.define(
+  ['src/uielements/video.mediaelement'],
+  function(Video) {
+	// plays a non protect H.264 file
+	Video.play('http://example.org/video/file.mp4')
+	// plays a video with DRM management
+	Video.play( {
+		DRMType:'HLS', // could be HLA
+		url:'http://example.org/video/fileWithToken.m3u8'
+	});
+	// listen to download or play events
+	Video.subscribe('error', function() {
+		
+	});
+	
+	Video.subscribe('loading', function() {
+		// buffering, should display an indicator
+	});
+	Video.subscribe('playing', function() {
+		// update the play/pause button state
+	});
+	Video.subscribe('timeupdate', function(args) {
+		console.log(args.currentTime, args.totalTime);
+	})
+  }
+);
+</code></pre>
+Be aware of the fact that by default the video is played fullscreen, behind the web interface. That means you have to let transparent <code>background-color</code> to see it.
+</p>
+
+<h2><a name="tv">Testing on the TV</a></h2>
+<ol>
+	<li>Run the <code>fab <a href="/doc/develop/buildtools#exportAdapterSamsungTV">exportAdapterSamsungTV</a></code> command
+	<li>copy <code>videolist-example.zip</code> and <code>widgetlist.xml</code> to the root of an HTTP server like Apache
+		<ul>
+			<li>On the TV use the provided browser to check you can reach that server via its IP
+			<li>the port must be 80
+		</ul>
+	<li>Start the TV, start SmartHub&copy;
+	<li>Login (red button) with special account "develop". Follow the Samsung instructions on samsungforum.com to create an account if you dont have one
+	<li>Once logued in, Parameters menu (blue button)
+	<li>Development sub-menu, configure the IP if needed
+	<li>Then synchronize user application. If the application never downloads, check the following things :
+		<ul>
+			<li>check <code>widgetlist.xml</code> is present on the server root
+			<li>check that there is only one zip file referenced
+			<li>check the size and the availability of the zip file
+			<li>reboot TV
+		</ul>
+	<li>Close and reopen SmartHub&copy;, the app should be visible
+</ol>	
+<p><em>Note : to empty cache or erase cookies, there is only one action : reboot TV</em></p>

@@ -1,0 +1,106 @@
+.mediacontrols-controls {
+direction: ltr;
+position: absolute;
+top:1em;
+left: 50%;
+margin-left: -15em;
+width: 30em;
+z-index: 94;
+background: rgba(0,0,0,0.7);
+padding: .4em;
+border-radius: .4em;
+-moz-border-radius: .4em;
+-webkit-border-radius: .4em;
+color: #f1f1f1;
+}
+
+.mediacontrols-controls div.mediacontrols-buttons {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.mediacontrols-controls div.mediacontrols-info {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 2em;
+  padding-top: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  background: #2F323B;
+  border-radius: .4em;
+  -moz-border-radius: .4em;
+  -webkit-border-radius: .4em;
+}
+.mediacontrols-controls .mediacontrols-button,
+.mediacontrols-controls .mediacontrols-time {
+  display: block;
+  float:left;
+  text-decoration: none;
+  text-align: center;
+  height: 40px;
+  line-height:40px;
+  width: 40px;
+  background: #2F323B;
+  margin:3px 3px 0 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.mediacontrols-controls .mediacontrols-time {
+  width: 145px;
+  overflow: hidden;
+  position:absolute;
+  right:1px;
+}
+
+.mediacontrols-controls .mediacontrols-button {
+  cursor: pointer;
+  font-size:200%;
+}
+.mediacontrols-controls .mediacontrols-button.focused {
+  color: #333;
+  background: #f1f1f1;
+}
+.mediacontrols-button img {
+width: 2em;
+vertical-align: baseline;
+}
+.mediacontrols-controls .mediacontrols-button .mediacontrols-icon {
+display: inline;
+}
+.mediacontrols-controls .mediacontrols-button .mediacontrols-icon-hover {
+display: none;
+}
+.mediacontrols-controls .mediacontrols-button.focused .mediacontrols-icon {
+display: none;
+}
+.mediacontrols-controls .mediacontrols-button.focused .mediacontrols-icon-hover {
+display: inline;
+}
+.mediacontrols-time-rail {
+  clear:both;
+  padding-top: 5px;
+}
+.mediacontrols-controls .mediacontrols-time-rail span {
+  height: .4em;
+  display: block;
+  pointer-events: none;
+  -webkit-border-radius: .4em;
+  -moz-border-radius: .4em;
+  border-radius: .4em;
+}
+.mediacontrols-controls .mediacontrols-time-rail .mediacontrols-time-total {
+width: 30em;
+background: #2F323B;
+}
+.mediacontrols-controls .mediacontrols-time-rail .mediacontrols-time-loaded {
+background: #fff;
+width: 0;
+}
+.mediacontrols-controls .mediacontrols-time-rail .mediacontrols-time-current {
+  width: 0;
+  background: #A2B8FA;
+  margin-top:-.4em;
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PopGram Web</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Slackey:regular&v1" rel="stylesheet">
+  </head>
+  <body class="clearfix">
+    <header>
+      <h1>PopGram</h1>
+      <h2>Popular photos from Instagr.am</h2>
+    </header>
+    <script>
+      Joshfire.require(['src/app.web'], function(PopGram) {
+        window._app = new PopGram();
+      });
+    </script>
+  </body>
+</html>

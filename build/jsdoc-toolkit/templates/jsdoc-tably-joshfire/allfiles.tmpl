@@ -1,0 +1,28 @@
+{! Link.base = ""; /* all generated links will be relative to this */ !}
+
+<div id="index">
+  <h3 class="projectTitle">{+JSDOC.opt.D.projectTitle+} 
+    <if test="JSDOC.opt.D.version">v.{+JSDOC.opt.D.version+}</if>
+  </h3>
+  <div class="toplinks">{+new Link().toFile("index.html").withText("Class Index")+} | File Index</div>
+  <if test="JSDOC.opt.D.imageFile">
+    <img src="{+JSDOC.opt.D.imageFile+}">
+  </if>
+  {+publish.classesIndex+}
+</div>
+<div id="content_doc">
+  <h1 class="classTitle">File Index</h1>
+  <hr />
+  <table class="summaryTable" cellspacing="0" cellpadding="3"> 
+    <tr> 
+      <th width="20%">File</th><th width="80%">Overview</th> 
+    </tr> 
+    <for each="item" in="data">
+      <tr class="row{+($item_i % 2)+}"> 
+        <td>{+new Link().toSrc(item.alias).withText(item.name)+}</td>
+        <td><if test="item.desc">{+resolveLinks(item.desc)+}</if></td> 
+      </tr> 
+    </for>
+  </table>
+</div>
+        

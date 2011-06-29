@@ -1,0 +1,102 @@
+<h1>Script loading</h1>
+
+<p>The Joshfire framework uses a model based on <a href="http://requirejs.org/">RequireJS</a> to 
+manage dependencies and load scripts dynamically. </p>
+
+<p>RequireJS was chosen after a survey of existing script loaders.</p>
+<p>It was the only one with both an easy and unified API which allows script-loading either client-side in browsers or server-side in NodeJS.
+Its major downside is the high filesize of the <code>require.js</code> script, but we managed to avoid loading it in production mode.</p>
+<p>This solution eases development with the added benefit of a very low overhead in production.</p>
+
+<h2>Defining modules</h2>
+
+<p>The standard way to encapsulate a module is :</p>
+
+<pre><code class="javascript">
+Joshfire.define(["path/to/dependency1","joshfire/class","joshfire/uielements/list"], function(Dep1, Class, List) {
+
+	// Your code here
+	...
+
+	return yourObject;
+
+});
+
+</code></pre>
+
+<p>A few remarks:
+<ul>
+  <li><code>Joshfire.define()</code> function is a wrapper arround the <code>define()</code> 
+  function from <a href="http://requirejs.org/">RequireJS</a>.</li>
+
+  <li>You should take a look at the 
+  <a href="http://requirejs.org/docs/api.html#define">define() documentation</a>. 
+  The basics are : one module definition per file, the path of the file is the 
+  unique identifier of that module.</li>
+
+  <li>Loading a module like <code>"joshfire/uielements/list"</code> results in:
+  <ol>
+    <li>a lookup inside the current adapter to check if it provides an alternative implementation of the module</li>
+    <li>if that's not the case, a fallback on the base module.</li>
+  </ol>
+  So when using a samsungtv module, it will first try to load <code>"joshfire/adapters/samsungtv/uielements/list"</code> and if that fails <code>"joshfire/uielements/list"</code> will get loaded.</li>
+
+</ul>
+</p>
+
+<h2>Loading modules</h2>
+
+<p>There are two ways to load a module:
+<ul>
+  <li>through the list of dependencies of another module (it is the most common way)</li>
+  <li>through the <code>require()</code> function (for instance to load the first module)</li>
+</ul>
+
+<p><code>Joshfire.require()</code> function takes the same arguments as <code>Joshfire.define()</code>. It works the same way except it doesn't define any module, and you can call it multiple times from the same file.</p>
+
+
+<h2>Development mode (bootstrap files)</h2>
+
+<p>In development mode, RequireJS loads all dependencies on the fly. It is convenient because you don't
+need any server-side process to develop and you can test changes in your code immediately. Here is a sample
+base HTML file suitable for development :</p>
+
+
+<pre>
+  <code class="html">
+&lt;!DOCTYPE html>
+&lt;html>
+  &lt;head>
+    &lt;script src="joshfire/adapters/samsungtv/bootstrap.js">&lt;/script>
+  &lt;/head>
+  &lt;body>
+  &lt;script>
+    Joshfire.require(["my/samsungApp"],function(appClass) {
+      var app = new appClass();
+    });
+  &lt;/script>
+  &lt;/body>
+&lt;/html>
+
+</code>
+</pre>
+
+<p>The only Javascript file you need to include is the <code>bootstrap.js</code> file inside the adapter you wish to use.</p>
+
+<p>Bootstrap files are only used in development mode. They contain a copy of <code>RequireJS</code> and the initialization of the <code>Joshfire</code> namespace (found in the <code>global.js</code> files).</p>
+
+<p>Don't forget to regenerate the bootstrap files with the command <code>$ fab bootstraps</code> if you :
+<ul>
+  <li>modify any of the <code>global.js</code> files</li>
+  <li>add a new module inside an adapter</li>
+</ul>
+</p>
+
+<h2>Production mode (optimized files)</h2>
+
+<p>Joshfire's built-in optimizer takes care of bundling and compressing Javascript code based on the 
+<code>Joshfire.define</code> dependencies. RequireJS will not be included in the final build.
+</p>
+
+<p>In this mode, you just have to load the generated Javascript file instead of the bootstrap file.</p>
+

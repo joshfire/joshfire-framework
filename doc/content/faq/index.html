@@ -1,0 +1,57 @@
+<h1>Frequently Asked Questions</h1>
+
+<h2>Developers</h2>
+
+<h3>I've added a new file in an adapter but when I try to require it, only the base class gets loaded.</h3>
+
+<p>This is probably because you forgot to run <code>fab bootstraps</code> to rebuild the list of modules provided by the adapter.</p>
+
+
+<h3>I got an <code>Uncaught Error: Mismatched anonymous require.def modules</code> after adding my dependencies</h3>
+<p>Check that you do have a <code>Joshfire.require(...);</code> entry in your file, not only <code>Joshfire.define(...);</code> </p>
+
+<h3>Are there CSS themes ?</h3>
+<p>The framework does not come with pre-made design. We believe that each application needs to be unique while consistent across multiple devices. Providing CSS to mimic the look of the native applications for each platform would break the consistency you are looking for.
+</p>
+
+<h3>How do I access the <code>app</code> global variable ?</h3>
+<p>It depends on where you are :
+<ul>
+	<li>in a UI element: trough <code>this.app.</code>
+	<li>from outside: through <code>window._app.</code>
+</ul>
+</p>
+
+<h3>What differs from other JavaScript Frameworks ?</h3>
+<p>Joshfire share the same will of easing Web Application development by introducing template engines, MVC coding style, magic UI binding to data and so on. However, until now, each framework had its own supported platforms : mobile webkit for some, recent desktop browsers for the others. Joshfire targets platforms ranging from IE6 to mobile devices, connected televisions and even headless devices.</p>
+
+<h3>Do you use Express ?</h3>
+<p></p>
+
+<h3>What template engine do you use ?</h3>
+<p></p>
+
+<h3>Object-oriented ? MVC ?</h3>
+<p>The framework use mixins and simple inheritance internally (with the <a href="http://documentcloud.github.com/underscore/">underscore.js</a> library) and it is recommanded to do the same in your applications.</p>
+<p>Joshfire provides a pretty neat implementation of the MVC pattern: <code>tree.ui</code> and <code>tree.data</code> files allow you to describe separately the interface, the underlying data, and the relations between them.</p>
+
+<h3>I want to throw custom errors in order to debug properly.</h3>
+<p>You could use the standard <code>throw new TypeError()</code> but:
+<ul>
+  <li>you will probably encounter troubles when compiling your JS files</li>
+  <li>it will not be helpful in production mode where line numbers of minified files are meaningless</li>
+</ul>
+</p>
+<p>You should rather use the pub/sub mechanism at the <code>app</code> level with the keyword <code>'error'</code>.</p>
+<pre><code>
+try {
+	// something risky here
+} catch (e) {
+	return app.publish('error', 
+		{	message:'samsungtv VideoMediaElement : no URL given',
+			number:21,
+			origin:'adapters/samsungtv/ui/video.mediaelement' 
+		});
+}
+</pre></code>
+<p>You should at least provide a <code>message</code> property containing both the error and the object it comes from. Adding the pathfile and an error number is recommanded for debugging purpose.</p>

@@ -1,0 +1,42 @@
+<h1>Design philisophy and technical choices</h1>
+
+<p>The framework's primary goal is to be <strong>multi-device</strong>. This has implications on most design decisions.
+  The first releases of the framework will focus on having on the number of adapters, not the number or complexity
+  of the UI Elements. This makes the framework currently <strong>optimal for multi-device media/content apps</strong>.</p>
+
+<p>Another goal of the framework is also to <strong>avoid bothering developers</strong>. The framework won't impose a crazy IDE, a specific MVC 
+  pattern/library or a database choice. Developers should be free to continue using the tools and libraries they love. That said,
+  the framework also bundles a selection of great libraries that are mostly not mandatory but are quite standard in their domains,
+  to avoid reinventing the wheel.</p>
+
+<h2>Impose what really matters</h2>
+
+<p>In order to be multi-device, there are only two patterns that need to be used by the developers:</p>
+<ul>
+  <li><a href="/doc/adapters/">The Adapters</a> : One for each supported device, they provide specific implementations
+    of base classes or UI Elements.</li>
+  <li><a href="/doc/gettingstarted/overview">The Data &amp; UI Trees</a> : They describe the application in an abstract
+    and portable way</li>
+</ul>
+
+<h2>Let developers stay in their comfort zone for the rest</h2>
+
+<p>Title says all. You are pretty much free to use whatever ORM, Template engine, API library, CSS framework, CoffeeScript clone,
+  Webserver framework, ... you want. Some tools may restrict the number of devices your application can be ported on but
+  this will just depend on you.</p>
+    
+<h2>Stand on the shoulders of giants</h2>
+
+<p>Joshfire bundles a number of popular libraries that solve common issues or provide interesting features. You may however not 
+  use them at all or replace them by your own.</p>
+<ul>
+  <li><a href="http://documentcloud.github.com/underscore/">Underscore.js</a> provides functional programming support</li>
+  <li><a href="http://cubiq.org/iscroll-4">iScroll 4</a> is used in the Android and iOS adapters to provide native-like scrolling.</li>
+  <li><a href="http://mediaelementjs.com">MediaElement.js</a> is used to provide cross-browser video embedding</li>
+  <li><a href="http://socket.io">socket.io</a> is used in the Node.js and Browser adapters</li>
+  <li><a href="http://jquery.com/">jQuery</a> is used in the Browser adapter by convenience</li>
+  <li><a href="http://zeptojs.com/">Zepto</a> is used in the iOS and Android adapters by convenience</li>
+  <li><a href="http://code.google.com/p/swfobject/">SWFObject</a> is used in the Browser adapter for embedding SWF files in the DOM</li>
+  <li><a href="http://requirejs.org">RequireJS</a> is used only in development mode to load script dynamically and manage dependencies</li>
+  
+</ul>

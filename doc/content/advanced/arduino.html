@@ -1,0 +1,57 @@
+<h1>Using an Arduino to control applications</h1>
+
+<img src="../img/arduinocontroller.jpg" style="width:250px;float:right;margin:10px;" alt="Simple arduino controller"/>
+
+<h2>Why?</h2>
+
+<p>The goal is to create custom objects that can act as controllers for applications built with the framework.</p>
+
+<p>For instance, the videolist example has code for a simple "remote" pictured on the right.</p>
+
+<p>This object features two buttons: </p>
+<ul>
+  <li>a nice "panic" push button for skipping to a random video</li>
+  <li>a on/off switch.</li>
+</ul>
+
+<p>We'll show how to bind both to control the videolist example application.</p>
+
+<h2>The design</h2>
+
+<p>An arduino with an Ethernet shield can't easily send packets directly to a browser application. There are
+  simple websockets code for arduino but they won't support legacy browsers like 
+  <a href="http://socket.io">socket.io</a> does.</p>
+  
+<p>For this reason we have to create a proxy that will basically act as an event forwarder.</p>
+
+<p>This server-side application (using the <a href="/doc/adapters/node">Node.js adapter</a> could also perform
+  any other action based on what events it receives but in this example it will just act as forwarder.</p>
+
+<img src="../img/design.004.png" style="width:900px;" alt="Arduino design"/>
+
+<h2>The code</h2>
+
+<p>Here are the files used in this example:</p>
+<ul>
+  <li><code>examples/videolist/arduino/simple_controller.pde</code> The simple C-like code to be uploaded on the
+    Arduino. It supposes that the red button is connected to pins GND and 11, and that the switch is connected to pins GND, 9 and 10.
+    You will need to edit the static IP address configuration on top of the file.</li>
+  
+  <li><code>examples/videolist/arduino.cli.js</code> The init code of the server-side app. You can start it with <code>fab arduino</code>.</li>
+  
+  <li><code>lib/adapters/node/inputs/http.js</code> The HTTP Input of the Node.js adapter which receives the HTTP POSTs
+    from the Arduino and forwards them as events to the app</li>
+    
+  <li><code>lib/adapters/node/utils/eventsocket.js</code> The <a href="http://socket.io">socket.io</a> server that listens
+    to any event on the app and forwards them in the socket.</li>
+    
+    <li><code>lib/adapters/browser/inputs/http.js</code> The HTTP Input of the Browser adapter which is connected to the
+      EventSocket (also with <a href="http://socket.io">socket.io</a>). It forwards requests as events on the app.</li>
+</ul>
+
+<p>After going through all these components (in a few milliseconds usually), a push on the physical red button triggers
+  a <code>"input",["random"]</code> event on the browser app that can be subscribed to in order to perform the required action.</p>
+  
+<h2>Your turn!</h2>
+
+<p>Happy hacking! Feel free to share your projects with the community to inspire other people ;-)</p>

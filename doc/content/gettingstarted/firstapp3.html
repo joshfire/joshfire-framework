@@ -1,0 +1,291 @@
+<h1>Writing your first application: part 3</h1>
+
+<p>At this point, our application is able to fetch data from a RSS feed and display it in browsers.</p>
+<p>We are now going to see how easy it is to make it work on iOS.</p>
+
+
+<h2><code>tree.data.js</code></h2>
+
+<p>No changes are required: the data we use will be the same and it is already fetched in a portable way. Enjoy!</p>
+
+<h2><code>tree.ui.js</code></h2>
+
+<p>We are going to improve the UI by adding a new component. This will also show you how UI Elements can easily be bound together.</p>
+
+<pre><code class="javascript">
+Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list', 'joshfire/uielements/panel'],
+function(Class, UITree, List, Panel) {
+
+  return Class(UITree, {
+
+    buildTree: function() {
+      // Create UI Elements
+      return [
+        {
+          id: 'newsList',
+          type: List,
+          orientation: 'left',
+          dataPath: '/news/',
+          itemInnerTemplate:
+            '&lt;div class="clearfix"&gt;'+
+            '    &lt;h1 class="title"&gt;&lt;%= item.title %&gt;&lt;/h1&gt;'+
+            '    &lt;img src="&lt;%= item.thumbnail %&gt;" /&gt;'+
+            '    &lt;div class="description"&gt;&lt;%= item.description %&gt;&lt;/div&gt;'+
+            '&lt;/div&gt;',
+
+          // The two following parameters are new:
+          loadingTemplate: null       // override default template used during data loading
+          scroller: true,             // add scrolling capabilities used for iOS
+        },
+        // We create a Panel UI Element : this is a simple block which aims to display content
+        {
+          id: 'newsInfo',             // internal id
+          type: Panel,                // type of UI widget : a Panel
+          uiDataMaster: '/newsList',  // bind this element to listen change on its master (parent)
+          autoShow: false,            // hide the element (UI Element are displayed by default)
+          showOnFocus: false,         // disable auto-show on focus as it is not always the desired behaviour
+          forceDataPathRefresh: true, // fire a refresh event event if dataPath was not changed
+          innerTemplate:              // override default template for the element 
+            '&lt;div class="info"&gt;'+
+            '  &lt;p class="title"&gt;&lt;%= data.title %&gt;&lt;/p&gt;'+
+            '  &lt;div class="clearfix"&gt;'+
+            '    &lt;img src="&lt;%= data.image %&gt;" /&gt;'+
+            '    &lt;p class="description"&gt;&lt;%= data.description %&gt;&lt;/p&gt;'+
+            '    &lt;p class="author"&gt;&lt;%= data.creator %&gt;&lt;/p&gt;'+
+            '    &lt;p class="date"&gt;&lt;%= data.pubDate %&gt;&lt;/p&gt;'+
+            '    &lt;p class="comments"&gt;&lt;%= data.commentsCount %&gt; comments&lt;/p&gt;'+
+            '  &lt;/div&gt;'+
+            '  &lt;div class="clearfix"&gt;'+
+            '  &lt;ul class="category clearfix"&gt;'+
+            '    &lt;% for (name in data.category) { %&gt; &lt;li&gt;&lt;%= data.category[name] %&gt;&lt;/li&gt; &lt;% }; %&gt;'+
+            '  &lt;/ul&gt;'+
+            '  &lt;/div&gt;'+
+            '&lt;/div&gt;',
+          loadingTemplate: null       // override default template used during data loading
+        }
+      ];
+    }
+
+  });
+
+});
+</code></pre>
+
+<p>The only new thing in the code above is the <code>uiDataMaster</code> property: it binds a UI element to a master one. When an item is selected in the master UI Element, the <code>dataPath</code> of the slave Element is updated. When this happens, its content also is reloaded, according to the new <code>dataPath</code>.</p>
+
+
+<h2>App files</h2>
+
+<h3><code>app.js</code></h3>
+
+<p>We are going to refactor <code>app.js</code> so that it contains only code common to all adapters.</p>
+
+<pre><code class="javascript">
+Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', 'joshfire/utils/splashscreen'],
+function(BaseApp, Class, Data, UI, SC) {
+
+  Joshfire.debug = true;
+
+  return Class(BaseApp, {
+
+    id: 'exampleRss',
+
+    uiClass: UI,
+    dataClass: Data,
+
+    setup: function(callback) {
+      var self = this;
+
+      // Basic util allowing us to display / hide a splashcreen
+      var splashscreen = new SC();
+
+      // We subscribe to 'data' event to remove the slapshscreen when data is loaded
+      self.ui.element('/newsList').subscribe('data', function(ev) {
+        splashscreen.remove();
+      });
+
+      // If a class inherit from this one, it will be its job to call the callback
+      if (callback)
+        callback(null, true);
+    }
+
+  });
+});
+</code></pre>
+
+
+
+<h3><code>app.browser.js</code></h3>
+
+<p>This is where the specific code for <code>browsers</code> belongs.</p>
+
+
+<pre><code class="javascript">
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore', 'joshfire/vendor/jquery'],
+function(App, Class, _, $) {
+
+  Joshfire.debug = true;
+
+  return Class(App, {
+
+    setup: function(callback) {
+      var self = this;
+
+      // Call parent setup method (that would be the one in 'app.js')
+      this.__super();
+
+      // When data is loaded, give focus to '/newsList/'
+      self.ui.element('/newsList').subscribe('data', function(ev) {
+        self.ui.moveTo('focus', '/newsList');
+      });
+
+      // Load a jQuery plugin which displays boxes
+      Joshfire.require(['public/js/jquery.colorbox-min'], function() {
+
+        // When '/newsInfo' dataRoot is changed (it does when selections occurs on '/newsList') ...
+        self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
+          // ... give focus to '/newsInfo' ...
+          self.ui.moveTo('focus', '/newsInfo');
+          // ... display '/newsInfo' inside a styled box thanks to colorbox plugin !
+          $.colorbox({width:'800px', inline:true, href:'#'+ self.ui.element('/newsInfo').htmlId +' .info',
+            // When user close the box ...
+            onCleanup: function() {
+              // ... give focus back to '/newsList' !
+              self.ui.moveTo('focus', '/newsList');
+            }
+          });
+        });
+
+      });
+
+      if (callback)
+        callback(null, true);
+    }
+
+  });
+
+});
+</code></pre>
+
+
+<h3><code>app.ios.js</code></h3>
+
+<p>This is where the specific code for <code>iOS</code> belongs.</p>
+
+<pre><code class="javascript">
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'], function(App, Class, _) {
+
+  Joshfire.debug = true;
+
+  return Class(App, {
+
+    setup: function(callback) {
+      var self = this;
+      this.__super();
+
+      // When an item in '/newsList' is selected, '/newsInfo' gets refreshed
+      self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
+        // We show '/newsInfo' 
+        self.ui.element('/newsInfo').show();
+      });
+
+      // When '/newsInfo' is 'tapped' (clicked) ...
+      self.ui.element('/newsInfo').subscribe('input', function(ev, id) {
+        if (id[0] == 'enter')
+          // ... we hide '/newsInfo' so '/newsList' gets displayed again
+          self.ui.element('/newsInfo').hide();
+      });
+
+      if (callback)
+        callback(null, true);
+    }
+
+  });
+
+});
+</code></pre>
+
+
+<h2><code>index</code> files</h2>
+
+
+<h3><code>index.browser.html</code></h3>
+
+<p>This is where we move the content of the previous <code>index.html</code> file.</p>
+<p>We only added a stylesheet from jQuery <a href="http://colorpowered.com/colorbox/" target="_blank">Colorbox</a> plugin, changed the name of the app file to include, and added a <code>splashscreen</code> div.</p>
+
+<pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;RSS Feed App&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/app.browser.css" /&gt;
+    &lt;link rel="stylesheet" href="css/colorbox.css" /&gt; &lt;!-- This is new --&gt;
+    &lt;script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+      Joshfire.debug = true;
+      Joshfire.require(['src/app.browser'], function(App) {  // browser app
+        console.log("Code is loaded!");
+        new App();
+      });
+    &lt;/script&gt;
+    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt; &lt;!-- This too --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+
+
+<h3><code>index.ios.html</code></h3>
+
+<p>This is the entrypoint for the iOS version of the application. As you will see, changes are minimal.</p>
+
+<pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;RSS Feed App&lt;/title&gt;
+    &lt;link rel="stylesheet" href="css/app.ios.css" /&gt; &lt;!-- A custom stylesheet --&gt;
+    &lt;script data-main="../" src="../joshfire/adapters/ios/bootstrap.js"&gt;&lt;/script&gt; &lt;!-- iOS bootstrap --&gt; 
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+      Joshfire.debug = true;
+      Joshfire.require(['src/app.ios'], function(App) {  // iOS app
+        console.log("Code is loaded!");
+        new App();
+      });
+    &lt;/script&gt;
+    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+
+
+<h2>Accessory files</h2>
+
+<p>The application stylesheets:
+<ul>
+  <li><code><a href="">public/css/app.browser.css</a></code></li>
+<li><code><a href="">public/css/app.ios.css</a></code></li>
+</ul>
+</p>
+
+<p>Colorbox dependencies:
+<ul>
+<li><code><a href="">jquery.colorbox-min.js</a></code></li>
+<li><code><a href="">public/img/control.png</a></code></li>
+<li><code><a href="">public/img/loading.gif</a></code></li>
+</ul>
+</p>
+
+
+
+<h2>Conclusion</h2>
+<p>As you can see, the two versions of the application only differs by something like 12 lines of code.</p>
+<p> ??? DEVELOP ??? </p>
+
+

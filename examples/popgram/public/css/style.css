@@ -1,0 +1,123 @@
+html, body, ul, figure {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+a img {
+  border: 0;
+}
+
+body {
+  background: url(../img/brushed_alu.png) fixed;
+  width: 960px;
+  margin: auto;
+  font: 12px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+}
+
+header {
+  text-align: center;
+  font-family: 'Slackey', serif;
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+}
+
+header h1 {
+  margin: 0.2em 0 0;
+}
+
+header h2 {
+  margin-top: 0;
+  font-size: 24px;
+}
+
+li {
+  float: left;
+  list-style: none;
+  margin: 10px;
+  padding: 10px;
+  z-index: 1;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.5) 0 3px 6px 0px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.5) 0 3px 6px 0px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 3px 6px 0px;
+  background: #fff;
+  max-width: 220px;
+  -webkit-transform: rotate(-2deg);
+  -moz-transform: rotate(-2deg);
+  -o-transform: rotate(-2deg);
+  transform: rotate(-2deg);
+  -webkit-transition: -webkit-transform .3s linear;
+  -moz-transition: -moz-transform .3s linear;
+  -o-transition: -o-transform .3s linear;
+  transition: transform .3s linear;
+}
+
+li:nth-child(even) {
+  -webkit-transform: rotate(2deg);
+  -moz-transform: rotate(2deg);
+  -o-transform: rotate(2deg);
+  transform: rotate(2deg);
+}
+
+li img {
+  width: 200px;
+}
+
+figure {
+  position: relative;
+  line-height: 0;
+}
+
+figcaption {
+  position: absolute;
+  bottom: 0; left: 0;
+  opacity: 0;
+  line-height: 1em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 3px;
+  -webkit-transition: opacity .3s linear;
+  -moz-transition: opacity .3s linear;
+  -o-transition: opacity .3s linear;
+  transition: opacity .3s linear;
+}
+
+li.selected,
+li.focused,
+li:hover {
+  -webkit-transform: rotate(0);
+  -moz-transform: rotate(0);
+  -o-transform: rotate(0);
+  transform: rotate(0);
+  -webkit-transform: scale(1.1);
+  z-index: 10;
+}
+
+li.selected figcaption,
+li.focused figcaption,
+li:hover figcaption {
+  opacity: 1;
+}
+
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }

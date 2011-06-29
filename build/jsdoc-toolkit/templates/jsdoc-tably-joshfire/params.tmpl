@@ -1,0 +1,39 @@
+<table class="summaryTable" cellspacing="0">
+    <thead>
+        <tr>
+            <th scope="table" colspan="3" class="param">Parameters (<span class="optional">optional</span>)</th>
+        </tr>
+    </thead>
+    <tbody>
+    <for each="item" in="data">
+        <tr>
+            {!
+                var config = false, name = item.name;
+                var lastDot = item.name.lastIndexOf(".");
+                var lastBracket = item.name.lastIndexOf("[");
+                if (lastDot > 0 || lastBracket > 0) {
+                    if (lastDot > lastBracket && !item.name.match(/\[?\.\.\.\]?$/)) {
+                        config = item.name.substr(0, lastDot+1);
+                        name = item.name.substr(lastDot+1);
+                    } else {
+                        config = item.name.substr(0, lastBracket);
+                        name = item.name.substr(lastBracket);
+                    }
+                }
+            !}
+            <td class="paramname {+item.isOptional?'optional':''+}"><if test="config"><span class="paramconfig">{+config+}</span></if>{+name+}</td>
+            <td class="datatype">
+                <if test="item.type">
+                    {{+new Link().toSymbol(item.type)+}}
+                </if>
+            </td>
+            <td width="100%">
+                {+resolveLinks(item.desc)+}
+                <if test="item.defaultValue">
+                    <div class="defaultvalue">Default: {+resolveLinks(item.defaultValue)+}</div>
+                </if>
+            </td>
+        </tr>
+    </for>
+    </tbody>
+</table>

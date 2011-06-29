@@ -1,0 +1,39 @@
+<table class="summaryTable" cellspacing="0">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col" width="100%">{+data.type+}</th>
+        </tr>
+    </thead>
+    <tbody>
+    <for each="member" in="data.members">
+        <tr class="row{+($member_i % 2)+}">
+            <td>
+                <if test="member.memberOf != data.alias">
+                    {+new Link().toSymbol(member.alias).withText('
+                        <img src="inherited.gif" alt="Inherited from ' + member.memberOf + '">
+                    ')+}
+                </if>
+            </td>
+            <td class="nameDescription">
+                <div class="fixedFont">
+                <if test="member.isStatic && member.memberOf != '_global_'">{+member.memberOf+}.</if><b>{+new Link().toSymbol(member.alias).withText(member.name)+}</b><if test="data.type=='Method'||data.type=='Event'">{+makeSignature(member.params)+}</if>
+                <if test="data.type=='Field' && member.type"><span class="datatype">:{{+new Link().toSymbol(member.type)+}}</span></if>
+                </div>
+                <div class="description">
+                    <if test="member.isPrivate">
+                        <span class="attributes private">[private]</span>
+                    </if>
+                    <if test="member.isInner">
+                        <span class="attributes inner">[inner]</span>
+                    </if>
+                    <if test="member.isConstant">
+                        <span class="attributes constant">[constant]</span>
+                    </if>
+                    {+resolveLinks(summarize(member.desc))+}
+                </div>
+            </td>
+        </tr>
+    </for>
+    </tbody>
+</table>

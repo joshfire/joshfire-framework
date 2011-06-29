@@ -1,0 +1,25 @@
+/*
+sytles here are used only for the local splashcreen, when the .loading class is applied to the body
+.loading class is removed from the body when the online CSS has arrived
+*/
+body.loading {
+	padding:0;
+	margin:0;
+	border:0
+}
+
+.loading #container {
+	background-color:black;
+	width:100%;
+	height:100%;
+	padding-top:10%;
+	text-align:center;
+}
+.loading #splashscreen #splashscreen_base{
+	width:90%;
+}
+.loading #splashscreen .loading {
+	padding-top:5%;
+	text-align:center;
+	color:white;
+}

@@ -1,0 +1,241 @@
+/*  Title style inspired from http://trentwalton.com/ */
+
+/* @group General */
+
+html, body, ul, figure {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url(../img/tweetmap_85.jpg) fixed center top;
+  width: 780px;
+  margin: auto;
+  font: 12px 'Lucida Grande', 'Trebuchet MS', Verdana, sans-serif;
+}
+
+/* @end */
+
+/* @group Logo */
+
+.article_title, .subtitle {
+  text-align: center;
+  color: #795930;
+  width: 100%;
+  text-transform: uppercase;
+  display: inline-block;
+}
+.article_title{
+  font: 80px 'Impact', 'Arial Narrow', sans-serif;
+}
+.subtitle{
+  font: 30px 'Impact', 'Arial Narrow', sans-serif;
+  margin-top:-18px;
+}
+.article_title span {
+  color: #f4f1de;
+  display: inline-block;
+  width: .55em;
+}
+.char1, .char3, .char5, .char7, .char9 {
+  -webkit-transform: scale(1) skewY(-15deg);
+  -moz-transform: scale(1) skewY(-15deg);
+  -ms-transform: scale(1) skewY(-15deg);
+  -o-transform: scale(1) skewY(-15deg);
+  transform: scale(1) skewY(-15deg);
+  background: #976f39 url(../img/dots.png) left top;
+  background-size: 227%;
+}
+.char2, .char4, .char8 {
+  -webkit-transform: scale(1) skewY(15deg);
+  -moz-transform: scale(1) skewY(15deg);
+  -ms-transform: scale(1) skewY(15deg);
+  -o-transform: scale(1) skewY(15deg);
+  transform: scale(1) skewY(15deg);
+  background: #795930 url(../img/dots.png) center top;
+  background-size: 227%;
+}
+.char2, .char7 {
+  width: 1em !important;
+}
+.char8 {
+  width: .65em !important;
+}
+.char2 {
+  -webkit-transform: scale(1) skewY(9deg) !important;
+  -moz-transform: scale(1) skewY(9deg) !important;
+  -ms-transform: scale(1) skewY(9deg) !important;
+  -o-transform: scale(1) skewY(9deg) !important;
+  transform: scale(1) skewY(9deg) !important;
+}
+.char6 {
+  width: .25em !important;
+}
+.char7 {
+  -webkit-transform: scale(1) skewY(-9deg) !important;
+  -moz-transform: scale(1) skewY(-9deg) !important;
+  -ms-transform: scale(1) skewY(-9deg) !important;
+  -o-transform: scale(1) skewY(-9deg) !important;
+  transform: scale(1) skewY(-9deg) !important;
+}
+
+.logo:hover {
+  background-image: url(../img/dots.png);
+}
+.logo:hover img{
+  opacity:1;
+}
+
+/* @end */
+
+/* @group Menu */
+
+#tweetMap__menu {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+#tweetMap__menu img,
+#tweetMap__menu br {
+  display: none;
+}
+
+#tweetMap__menu ul {
+  background-color: #705228;
+  list-style: none;
+  width: 141px;
+  height: 25px;
+  padding: 1px;
+  margin: 0 auto;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .15);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .15);
+}
+
+#tweetMap__menu li {
+  background-color: #976f39;
+  float: left;
+  margin-left: 1px;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, .1)), to(rgba(255, 255, 255, 0)));
+  background-image: -moz-linear-gradient(0 0 -90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, 0));
+  -webkit-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .1);
+  -moz-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .1);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .1);
+}
+
+#tweetMap__menu li:first-child {
+  margin-left: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+#tweetMap__menu li:last-child {
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#tweetMap__menu li {
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 24px;
+  text-align: center;
+  display: block;
+  width: 70px;
+  height: 25px;
+  color: #f4f1de;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+}
+
+#tweetMap__menu li:not(.selected) {
+  cursor: pointer;
+}
+
+#tweetMap__menu li:hover {
+  background-color: #a78452;
+  -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, .15),
+                      inset 0 0 5px rgba(0, 0, 0, .1);
+  -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, .15),
+                   inset 0 0 5px rgba(0, 0, 0, .1);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, .15),
+              inset 0 0 5px rgba(0, 0, 0, .1);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 1);
+}
+
+#tweetMap__menu li.selected {
+  background-image:
+      -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(rgba(255, 255, 255, .1)));
+  background-image:
+      -moz-linear-gradient(0% 0% -90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .1));
+  background-color: #705228;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1),
+                      inset 0 0 5px rgba(0, 0, 0, .15);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1),
+                   inset 0 0 5px rgba(0, 0, 0, .15);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1),
+              inset 0 0 5px rgba(0, 0, 0, .15);
+  color: #fff;
+  text-shadow: 0 1px 0 #000;
+}
+
+/* @end */
+
+/* @group Tweets */
+
+#tweetMap__manager li {
+  list-style: none;
+}
+
+#tweetMap__manager li {
+  height: 50px;
+  margin-bottom: 10px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+}
+
+#tweetMap__manager li img {
+  float: left;
+  margin-right: 10px;
+  border-radius: 3px;
+  max-height: 50px;
+}
+
+#tweetMap__manager li span {
+  line-height: 1.5em;
+}
+
+/* @end */
+
+/* @group Map */
+
+#tweetMap__ {
+  height: 100%;
+  width: 100%;
+}
+
+.josh-type-Map {
+  border: 5px solid #fff;
+  width: 770px;
+  height: 300px;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, .5);
+}
+
+/* @end */

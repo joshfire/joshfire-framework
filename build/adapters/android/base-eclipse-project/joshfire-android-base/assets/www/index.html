@@ -1,0 +1,30 @@
+<!doctype html>  
+<head>
+  <meta charset="utf-8">
+  <title>mySkreen</title>
+  <meta name="author" content="Joshfire.com">
+
+  <!--  Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="viewport" content="width=960; user-scalable=no;" />
+  <!-- CSS : implied media="all" -->
+  <link rel="stylesheet" href="./myapp.css">
+</head>
+<body>
+  <div id="container">
+    <div id="main">
+
+    </div>
+	<div id='splashscreen'>
+		<div class="loading"><img src='images/button/loader.gif' />
+		</div>
+	</div>
+
+  </div> <!--! end of #container -->
+<script src="./myapp.js"></script>
+<script>
+  Joshfire.require(['src/app'], function(App) {
+	window._app = new App();
+});
+</script>
+</body>
+</html>

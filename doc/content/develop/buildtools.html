@@ -1,0 +1,175 @@
+<h1>Build tools: Fabfiles</h1>
+
+<h2>Fabfiles ?</h2>
+
+<p><code><a href="http://docs.fabfile.org/" target="_blank">Fabric</a></code> is a task management tool written in <code>Python</code>, quite similar to <code>make</code>.<br />
+Joshfire use it to process recurrent processes</p>
+
+
+<p><code>fabfile.py</code> is the equivalent of a <code>Makefile</code> in <code>Fabric</code>.</p>
+<p>To run tasks: <pre><code>$ fab <i>name_of_the_task</i></code></pre></p>
+
+<p>To install <code>Fabric</code>: <a href="http://docs.fabfile.org/en/1.0.1/installation.html" target="_blank">http://docs.fabfile.org/en/1.0.1/installation.html</a></p>
+
+<h2>Available tasks</h2>
+
+<h3>Adapter Development</h3>
+
+<p>The following actions are avalaible in the home directory of the framework :</p>
+
+<ul>
+  <li>
+    <div class="name"><code>bootstraps</code></div>
+    <div class="desc">
+    builds bootstrap files for each <a href="/doc/adapterdevelopment/index.html">adapter</a> available in the framework :
+    you must run <code>fab bootstraps</code> every time you modify an adapter.
+    </div>
+  </li>
+  <li>
+    <div class="name"><a name="exportAdapterSamsungTV"><code>exportAdapterSamsungTV</code></a></div>
+    <div class="desc">
+	For the Samsungtv environment : use after having run <code>optimize</code>. It will take the compiled <code>export/samsungtv.js</code> and <code>export/samsungtv.css</code> and generate the files needed to test your application in the Samsung emulator or the real device. By default, all files are put in <code>export/build</code>.
+    </div>
+  </li>
+</ul>
+
+
+<h3>Code quality check</h3>
+
+<ul>
+  <li>
+    <div class="name"><code>gjslint</code><br/></div>
+    <div class="desc">
+      Display reports on source code quality using Google's <code><a href="http://code.google.com/closure/utilities/" target="_blank">gjslint</a></code> from <code>Closure Linter</code>.
+    </div>
+  </li>
+
+  <li>
+    <div class="name"><code>fixjsstyle</code> or <code>fix</code></div>
+    <div class="desc">
+      Automatically fixes JavaScript files using Google's <code><a href="http://code.google.com/closure/utilities/" target="_blank">fixjsstyle</a></code>.
+      Reindents and rewrites code to fix errors detected by <code>gjslint</code>.
+      Should be run before every commit of the framework.
+    </div>
+  </li>
+
+  <li>
+    <div class="name"><code>jslint</code></div>
+    <div class="desc">
+      Display reports on source code quality using Douglas Crockford's <code><a href="http://jslint.com/" target="_blank">jslint</a></code>.
+    </div>
+  </li>
+
+  <li>
+    <div class="name"><code>jshint</code></div>
+    <div class="desc">
+      Display reports on source code quality using <code><a href="http://jshint.com/" target="_blank">http://jshint.com/</a></code>, a fork of <code>jslint</code>.
+    </div>
+  </li>
+
+</ul>
+
+<h3>Pre-production</h3>
+
+<p>Thoses tasks are available in <code>joshfabric</code> module, located in <code>build</code> directory.</p>
+<p><a name="fabfilepy"></a>You can have access to those tasks in your application by creating a <code>fabfile.py</code> file at the application's root, that will contain the following code :
+<pre><code class="python">
+from fabric.api import *
+import os,sys
+sys.path.append("../../build")
+from joshfabric import *
+</code></pre>
+
+<ul>
+  <li>
+    <div class="name"><a name="optimize"><code>optimize</code></a></div>
+    <div class="desc">
+      Generate single JavaScript and CSS files to fasten loading.
+      It uses the informations avalaible in project's build file <code>build/build.js</code>. Here is an example :
+<pre><code class="javascript">
+var build = {
+// root of the application that contains the css/ and src/ folders
+baseUrl: '../',
+// used to differentiate the build.js files
+name: 'exampleVideoList',
+// final directory
+dir: '../export/',
+modules: [
+	{
+		// used in the final file name
+		name: 'web',
+		// adapter ID used internally for further optimizations
+		adapter: 'browser',
+		// reference JavaScript files
+		js: {
+			include: [
+				// the requireJS class ID
+				'src/app.web',
+				'joshfire/adapters/browser/uielements/video.youtube.swf'
+			]
+		},
+		// 
+		css: {
+		  // if this array exists, will simply concatenate the CSS files
+		  /*'include': [
+		    'css/samsungtv.css'
+		  ],*/
+		  // if this property exists, it is the entry point of the sass compiler
+		  scss:'css/web.scss'
+		}
+	},
+	// you can declare other versions of the app
+	]
+};
+</code></pre>
+    </div>
+  </li>
+
+  <li>
+    <div class="name"><code>compile</code></div>
+    <div class="desc">
+      Compress JavaScript files using <code>uglifyJs</code> and <code>Closure Compiler</code>.
+    </div>
+    <div class="link">
+      <ul>
+        <li><a href="http://code.google.com/closure/compiler/" target="_blank">http://code.google.com/closure/compiler/</a></li>
+        <li><a href="https://github.com/mishoo/UglifyJS" target="_blank">https://github.com/mishoo/UglifyJS</a></li>
+      </ul>
+    </div>
+  </li>
+
+  <li>
+    <div class="name"><code>prod</code></div>
+    <div class="desc">
+      Call successively <code>optimize</code> and <code>compile</code>.
+    </div>
+  </li>
+</ul>
+
+
+<h3>Testing</h3>
+
+<p>Available in the <code>tests</code> directory.</p>
+
+<ul>
+  <li>
+    <div class="name"><code>test_all</code></div>
+    <div class="desc">
+      Run all tests that can be directly processed by node-qunit and display the results.
+    </div>
+  </li>
+
+  <li>
+    <div class="name"><code>selenium</code></div>
+    <div class="desc">
+      Compress JavaScript files using <code>uglifyJs</code> and <code>Closure Compiler</code>.
+    </div>
+    <div class="link">
+      <ul>
+        <li><a href="http://seleniumhq.org/" target="_blank">http://seleniumhq.org/</a></li>
+      </ul>
+    </div>
+  </li>
+</ul>
+
+

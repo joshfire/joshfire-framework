@@ -1,0 +1,44 @@
+{
+   "name" : "joshfire",
+   "version" : "0.9.0",
+   "main" : "./lib/main",
+   "description": "Multi-device JavaScript Framework",
+   "keywords": [
+          "joshfire",
+          "framework",
+          "javascript",
+          "multidevice",
+          "multi-device",
+          "crossdevice",
+          "cross-device",
+          "nodejs",
+          "samsungtv",
+          "googletv",
+          "ios",
+          "android"
+    ],
+    "maintainers": [
+          {
+              "name": "Joshfire",
+              "email": "contact@joshfire.com",
+              "web": "http://www.joshfire.com" 
+          } 
+    ],
+    "contributors": [],
+    "dependencies": {
+        "express": "2.3.x",
+        "mkdirp": "0.0.x",
+        "sharedjs": "0.0.x",
+        "socket.io": "0.7.x"
+    },
+    "licenses": [
+          {
+              "type": "GPLv2",
+              "url": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" 
+          },
+          {
+              "type": "Commercial",
+              "url": "http://framework.joshfire.com/license" 
+          }
+    ]
+}

@@ -1,0 +1,11 @@
+<table class="summaryTable" cellspacing="0" cellpadding="3"> 
+    <tr> 
+        <th width="30%">Class</th><th width="70%">Description</th> 
+    </tr> 
+    <for each="thisClass" in="data">
+        <tr class="row{+($thisClass_i % 2)+}"> 
+            <td>{+(new Link().toSymbol(thisClass.alias))+}</td>
+            <td>{+resolveLinks(summarize(thisClass.classDesc))+}</td> 
+        </tr> 
+    </for>
+</table>

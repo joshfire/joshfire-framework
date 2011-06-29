@@ -1,0 +1,80 @@
+<h1>Android adapter</h1>
+
+
+<h2>Environment setup</h2>
+<h3>Eclipse and Android SDK</h3>
+<p><em>Note 1 : This has been validated with a 2.2 (froyo) android tablet. There is numerous versions of the Android OS running in the wild, and even the development environment could change from one major version to another. Always refer to the <a href="http://developer.android.com/sdk/installing.html">official android documentation</a>.</em></p>
+<p><em>Note 2 : Using real devices to test the application is almost mandatory.</em></p>
+<p>The Android - Eclipse installation process :
+<ol>
+	<li><a href='http://www.eclipse.org/downloads/' target='_blank'>Download</a> & install Eclipse</li>
+	<li>install an Eclipse plugin (you can do without it in command line)</li>
+	<li>launch Eclipse, go to Help > Install new Software</li>
+	<li>paste https://dl-ssl.google.com/android/eclipse/ in the text input</li>
+	<li>check the “Developer tools”, hit “next” two times then “finish” then “ok” and finally restart Eclipse</li>
+	<li>get the Android SDK on http://developer.android.com/sdk/index.html</li>
+	<li>reference it in Eclipse : go to Eclipse / Preferences / Android / SDK Location and hit the browse button</li>
+	<li>choose the the Android Version of the device you are targeting. Eg: for the Samsung Galaxy Tab V1, it's 2.2 (or 8)</li>
+</ol>
+
+<h3>Check environment</h3>
+Let‘s start with an <code>hello world</code> example on a real device
+<ol>
+	<li>File > New > Project and chose Android Project
+	<li>fill the fields. Eg for the Samsung Galaxy Tab V1:
+		<ul>
+			<li>check the targets Android 2.2 or Galaxy tab addon
+			<li>min SDK version is 8
+		</ul>
+	<li>Edit android <code>manifest.xml</code>, set <code>debuggable</code> to <code>true</code>
+</ol>
+<p>Then use this code in the main class (in <code>src</code>):
+<pre><code class="java">
+import android.app.Activity;
+import android.widget.TextView;
+import android.os.Bundle;
+
+public class hello extends Activity {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		//setContentView(R.layout.main);
+		TextView tv = new TextView(this);
+		tv.setText(“Hello, Android”);
+		setContentView(tv);
+	}
+}
+</code></pre>
+Finally:
+<ul>
+	<li>hit run 
+	<li>if the android device is connected and in debugging mode (Parameters > Applications > Development > check USB debug), you should see it in the device list
+	<li>Hit “ok”, look at your hello world on your device
+</ul>
+
+<h2>Building a Joshfire application for Android</h2>
+<p>We provide you a base project. Open your configured Eclipse and create a new "Android Project" and select "create project from existing source".
+<figure>
+	<img src="./android-eclipse-create.png" />
+	<figcaption>Start from the base project</figcaption>
+</figure>
+Indicate the <code>joshfire/build/adapters/android/base-eclipse-project/joshfire-android-base</code>. Then as above:
+<ol>
+	<li>check the targets Android 2.2 or Galaxy tab addon
+	<li>min SDK version is 8
+	<li>Edit android <code>manifest.xml</code>, set <code>debuggable</code> to <code>true</code>
+</ol>
+Back in your project :
+<ul>
+	<li>Check you have a <code>build/build.js</code> file configured for your android adapter
+	<li>run <code>fab <a href="/doc/develop/buildtools#optimize">optimize</a></code> method to generate the compiled files in the <code>export</code> directory
+	<li>Copy the content of <code>*-android.js</code> and <code>*-android.css</code> into the two eclipse files : <code>assets/www/myapp.js</code> and <code>assets/www/myapp.css</code>
+	<li>Choose Window > Open perspective > DDMS and from there hit the debug button. You should see the logs of your application
+</ul>
+
+<figure>
+	<img src="./android-logs.png" />
+	<figcaption>The javascript logs and errors in the Eclipse console</figcaption>
+</figure>
+
+</p>

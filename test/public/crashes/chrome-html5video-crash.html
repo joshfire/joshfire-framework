@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Chrome HTML5 video crash test</title>
+  </head>
+
+  <body>
+    <div id="videocnt"></div>
+    <div id="debug"></div>
+    <script>
+
+      window.onload = function() {
+
+        var videos = [
+          "http://www.france24.com/static/ipad/en/sport.mp4",
+          "http://www.france24.com/static/ipad/en/jt.mp4",
+          "http://www.france24.com/static/ipad/en/eco.mp4"
+        ];
+
+        for (var i = 0; i < 200; i++) {
+          setTimeout(function() {
+
+            document.getElementById("debug").innerHTML += i +" Setting src=gif<br/>";
+
+            //try to unload the video from memory
+            if (document.getElementById("videotest"))
+              document.getElementById("videotest").src="http://imgjam.com/spacer.gif";
+
+            document.getElementById("videocnt").innerHTML = '<video id="videotest" autoplay="autoplay" preload autobuffer controls></video>';
+
+            document.getElementById("debug").innerHTML += i +" Setting src="+ videos[i++ % videos.length] +"<br/>";
+
+            document.getElementById("videotest").src=videos[i % videos.length];
+            document.getElementById("videotest").load();
+            document.getElementById("videotest").play();
+          },i * 2000);
+
+        }
+        i = 0;
+
+      };
+
+    </script>
+
+  </body>
+</html>

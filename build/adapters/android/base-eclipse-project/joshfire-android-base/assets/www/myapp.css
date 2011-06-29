@@ -1,0 +1,213 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.mediacontrols-controls {
+  direction: ltr;
+  position: absolute;
+  top: 1em;
+  left: 50%;
+  margin-left: -15em;
+  width: 30em;
+  z-index: 94;
+  background: rgba(0, 0, 0, 0.7);
+  padding: .4em;
+  border-radius: .4em;
+  -moz-border-radius: .4em;
+  -webkit-border-radius: .4em;
+  color: #f1f1f1; }
+
+.mediacontrols-controls div.mediacontrols-buttons {
+  margin: 0;
+  padding: 0;
+  width: 100%; }
+
+.mediacontrols-controls div.mediacontrols-info {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 2em;
+  padding-top: 1em;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  background: #2F323B;
+  border-radius: .4em;
+  -moz-border-radius: .4em;
+  -webkit-border-radius: .4em; }
+
+.mediacontrols-controls .mediacontrols-button,
+.mediacontrols-controls .mediacontrols-time {
+  display: block;
+  float: left;
+  text-decoration: none;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  width: 40px;
+  background: #2F323B;
+  margin: 3px 3px 0 0;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px; }
+
+.mediacontrols-controls .mediacontrols-time {
+  width: 145px;
+  overflow: hidden;
+  position: absolute;
+  right: 1px; }
+
+.mediacontrols-controls .mediacontrols-button {
+  cursor: pointer;
+  font-size: 200%; }
+
+.mediacontrols-controls .mediacontrols-button.focused {
+  color: #333;
+  background: #f1f1f1; }
+
+.mediacontrols-button img {
+  width: 2em;
+  vertical-align: baseline; }
+
+.mediacontrols-controls .mediacontrols-button .mediacontrols-icon {
+  display: inline; }
+
+.mediacontrols-controls .mediacontrols-button .mediacontrols-icon-hover {
+  display: none; }
+
+.mediacontrols-controls .mediacontrols-button.focused .mediacontrols-icon {
+  display: none; }
+
+.mediacontrols-controls .mediacontrols-button.focused .mediacontrols-icon-hover {
+  display: inline; }
+
+.mediacontrols-time-rail {
+  clear: both;
+  padding-top: 5px; }
+
+.mediacontrols-controls .mediacontrols-time-rail span {
+  height: .4em;
+  display: block;
+  pointer-events: none;
+  -webkit-border-radius: .4em;
+  -moz-border-radius: .4em;
+  border-radius: .4em; }
+
+.mediacontrols-controls .mediacontrols-time-rail .mediacontrols-time-total {
+  width: 30em;
+  background: #2F323B; }
+
+.mediacontrols-controls .mediacontrols-time-rail .mediacontrols-time-loaded {
+  background: #fff;
+  width: 0; }
+
+.mediacontrols-controls .mediacontrols-time-rail .mediacontrols-time-current {
+  width: 0;
+  background: #A2B8FA;
+  margin-top: -0.4em; }
+
+body {
+  line-height: 1.2em;
+  background: #1E2124;
+  font-family: 'Maven Pro', arial,serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  text-shadow: none;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: 0em;
+  word-spacing: 0em; }
+
+#exampleVideoList__player_video {
+  width: 100%;
+  height: 100%; }
+
+#exampleVideoList__videolist {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  overflow: hidden; }
+
+#exampleVideoList__videolist ul {
+  /*list-style-type:none;*/
+  position: relative;
+  width: 100000px;
+  left: 0px; }
+
+#exampleVideoList__videolist li {
+  float: left;
+  display: block;
+  height: 240px;
+  width: 250px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid #2F323B;
+  padding: 5px 0px 0px 0px;
+  font-size: 13px;
+  background: #2F323B;
+  color: #F1F1F1; }
+
+#exampleVideoList__videolist li img {
+  height: 180px;
+  width: 240px;
+  margin-bottom: 15px; }
+
+#exampleVideoList__videolist li.selected {
+  border: 2px solid #A2B8FA;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+#exampleVideoList__videolist li.focused {
+  border: 2px solid white;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px; }
+
+#exampleVideoList__player {
+  height: 464px; }
