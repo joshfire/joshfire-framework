@@ -137,7 +137,6 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data'], function(Class, DataTr
           // just to emulate an asynchronous call
           setTimeout(function() {childCallback(null, oVideos);}, 2000);
 
-          //getVideosForYouTubeUser("ninofficial",childCallback); //radiohead
         }
       }];
     }
