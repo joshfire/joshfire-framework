@@ -33,20 +33,11 @@
 
 <p>Here are the files used in this example:</p>
 <ul>
-  <li><code>examples/videolist/arduino/simple_controller.pde</code> The simple C-like code to be uploaded on the
-    Arduino. It supposes that the red button is connected to pins GND and 11, and that the switch is connected to pins GND, 9 and 10.
-    You will need to edit the static IP address configuration on top of the file.</li>
-  
-  <li><code>examples/videolist/arduino.cli.js</code> The init code of the server-side app. You can start it with <code>fab arduino</code>.</li>
-  
-  <li><code>lib/adapters/node/inputs/http.js</code> The HTTP Input of the Node.js adapter which receives the HTTP POSTs
-    from the Arduino and forwards them as events to the app</li>
-    
-  <li><code>lib/adapters/node/utils/eventsocket.js</code> The <a href="http://socket.io">socket.io</a> server that listens
-    to any event on the app and forwards them in the socket.</li>
-    
-    <li><code>lib/adapters/browser/inputs/http.js</code> The HTTP Input of the Browser adapter which is connected to the
-      EventSocket (also with <a href="http://socket.io">socket.io</a>). It forwards requests as events on the app.</li>
+  <li><code><a href="https://github.com/joshfire/joshfire-framework/blob/master/examples/videolist/arduino/simple_controller/simple_controller.pde">examples/videolist/arduino/simple_controller.pde</a></code> The simple C-like code to be uploaded on the Arduino. It supposes that the red button is connected to pins GND and 11, and that the switch is connected to pins GND, 9 and 10. You will need to edit the static IP address configuration on top of the file.</li>
+  <li><code><a href="https://github.com/joshfire/joshfire-framework/blob/master/examples/videolist/arduinosocket.cli.js">examples/videolist/arduinosocket.cli.js</a></code> The init code of the server-side app. You can start it with <code>fab arduino</code>.</li>
+  <li><code><a href="https://github.com/joshfire/joshfire-framework/blob/master/lib/adapters/node/inputs/http.js">lib/adapters/node/inputs/http.js</a></code> The HTTP Input of the Node.js adapter which receives the HTTP POSTs from the Arduino and forwards them as events to the app</li>
+  <li><code><a href="https://github.com/joshfire/joshfire-framework/blob/master/lib/adapters/node/utils/eventsocket.js">lib/adapters/node/utils/eventsocket.js</a></code> The <a href="http://socket.io">socket.io</a> server that listens to any event on the app and forwards them in the socket.</li>
+  <li><code><a href="https://github.com/joshfire/joshfire-framework/blob/master/lib/adapters/browser/inputs/http.js">lib/adapters/browser/inputs/http.js</a></code> The HTTP Input of the Browser adapter which is connected to the EventSocket (also with <a href="http://socket.io">socket.io</a>). It forwards requests as events on the app.</li>
 </ul>
 
 <p>After going through all these components (in a few milliseconds usually), a push on the physical red button triggers
