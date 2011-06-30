@@ -20,11 +20,11 @@ h1{
 #exampleVideoList__{
   height: 100%;
   width: 100%;
-/*  position: relat;*/
 }
 
 .josh-id-videolist {
-  position: absolute; z-index: 1;
+  position: absolute;
+  z-index: 1;
   top: 40px; bottom:0px; left:0px;
   width: 100%;
   background: #1E2124;
@@ -136,7 +136,6 @@ h1{
   position: absolute;
   left: 50%;
   margin-left: -40px;
-/*  margin-top: 10px;*/
   padding: 10px 20px;
   background-color: #fff;
   border: 1px solid #000;
