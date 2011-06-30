@@ -22,6 +22,8 @@
           type: List,                 // type of ui widget
           orientation: 'left',        // change navigations properties of the grid
           dataPath: '/news',          // data which will be used to populate the list
+          noMouseAutoFocus: true,     // deactivate focus on mouse hover
+          moveOnFocus: true,          // keep focused element on display 
 <span class="focus">          scroller: true,             // add scrolling capabilities used for iOS</span>
           itemInnerTemplate:          // override default template for list items
               '&lt;div class="clearfix"&gt;' +
@@ -194,7 +196,7 @@ Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'], funct
   &lt;head&gt;
     &lt;title&gt;RSS Feed App&lt;/title&gt;
 <span class="focus">    &lt;link rel="stylesheet" href="css/app.browser.css" /&gt;</span>
-    &lt;link rel="stylesheet" href="css/colorbox.css" /&gt; &lt;!-- This is new --&gt;
+    &lt;link rel="stylesheet" href="css/colorbox.css" /&gt;
     &lt;script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
@@ -205,7 +207,7 @@ Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'], funct
         new App();
       });
     &lt;/script&gt;
-    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt; &lt;!-- This too --&gt;
+    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 

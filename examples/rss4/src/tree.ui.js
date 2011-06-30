@@ -22,6 +22,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
           type: List,                 // type of ui widget
           orientation: 'left',        // change navigations properties of the grid
           dataPath: '/news',          // data which will be used to populate the list
+          noMouseAutoFocus: true,     // deactivate focus on mouse hover
+          moveOnFocus: true,          // keep focused element on display 
           scroller: true,             // add scrolling capabilities used for iOS
           itemInnerTemplate:          // override default template for list items
               '<div class="clearfix">' +
@@ -29,7 +31,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
               '    <img src="<%= item.image %>" />' +
               '    <div class="description"><%= item.description %></div>' +
               '</div>',
-          loadingTemplate: null       // override default template used during data loading
+          loadingTemplate: null,       // override default template used during data loading
         },
         {
           id: 'newsInfo',             // internal id

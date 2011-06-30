@@ -22,6 +22,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
           type: List,                 // type of ui widget
           orientation: 'left',        // change navigations properties of the grid
           dataPath: '/news',          // data which will be used to populate the list
+          noMouseAutoFocus: true,     // deactivate focus on mouse hover
+          moveOnFocus: true,          // keep focused element on display 
           itemInnerTemplate:          // override default template for list items
               '<div class="clearfix">' +
               '    <h1 class="title"><%= item.title %></h1>' +
