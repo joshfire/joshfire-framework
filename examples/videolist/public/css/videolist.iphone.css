@@ -145,3 +145,6 @@ h1{
   -moz-border-radius: 2px;
   border-radius: 2px;
 }
+.video-paused{
+  border:3px solid red;
+}

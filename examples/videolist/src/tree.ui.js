@@ -36,8 +36,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
           itemInnerTemplate: '<figure><img src="<%= item.image %>"/><figcaption><%=item.label%></figcaption></figure>',
           scroller: true,
           scrollOptions: {
-            vScroll: false,
-            hScroll: true
+            vScroll: Joshfire.adapter==='ios',
+            hScroll: !Joshfire.adapter==='ios'
           },
           scrollBarClass: 'rainbow',
           dataPath: '/videos/',
