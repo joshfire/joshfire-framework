@@ -11,7 +11,8 @@
 
 <p>So we are going to move the UI Tree code in a file called <code>src/tree.ui.js</code>. This file will be used to describe all the UI elements of the application: it's the View of MVC.</p>
 
-<pre><code class="javascript">// As UI Tree is now in an external file, we will include it as a module from app.js
+<pre><code class="javascript">
+// As UI Tree is now in an external file, we will include it as a module from app.js
 Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list'],
 function(Class, UITree, List) {
 
@@ -39,6 +40,7 @@ function(Class, UITree, List) {
   });
 
 });
+
 </code></pre>
 
 <ul><li><code><a data-ajax="false" href="/examples/rss2/src/tree.ui.js">src/tree.ui.js</a></code></li></ul>
@@ -58,7 +60,8 @@ function(Class, UITree, List) {
 <p>To simplify this process, we created a <code>Yahoo Pipe</code> to generate a JSONp output from an XML RSS Feed. If you wish to learn more on <code>Yahoo Pipes</code>, just go to <a href="http://pipes.yahoo.com/pipes/" target="_blank">http://pipes.yahoo.com/pipes/</a>.</p>
 
 
-<pre><code class="javascript">Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/underscore',
+<pre><code class="javascript">
+Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/underscore',
 'joshfire/utils/datasource'], function(Class, DataTree, _, Datasource) {
 
   // To perform external requests, we use the datasource.js util
@@ -107,6 +110,7 @@ function(Class, UITree, List) {
   });
 
 });
+
 </code></pre>
 
 <ul><li><code><a data-ajax="false" href="/examples/rss2/src/tree.data.js">src/tree.data.js</a></code></li></ul>
@@ -125,7 +129,8 @@ function(Class, UITree, List) {
 
 <p>Let's update the <code>app.js</code> file a bit.</p>
 
-<pre><code class="javascript"><span class="focus">Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui'],
+<pre><code class="javascript">
+<span class="focus">Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui'],
 function(BaseApp, Class, Data, UI) {</span>
 
   Joshfire.debug = true;
@@ -158,6 +163,7 @@ function(BaseApp, Class, Data, UI) {</span>
 
   });
 });
+
 </code></pre>
 
 <ul><li><code><a data-ajax="false" href="/examples/rss3/src/app.js">src/app.js</a></code></li></ul>

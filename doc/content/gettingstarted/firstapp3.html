@@ -16,7 +16,8 @@
 
 <p>We are going to improve the UI by adding a new component. This will also show you how UI Elements can easily be bound and interact together.</p>
 
-<pre><code class="javascript"><span class="focus">Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list', 'joshfire/uielements/panel'],
+<pre><code class="javascript">
+<span class="focus">Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list', 'joshfire/uielements/panel'],
 function(Class, UITree, List, Panel) {</span>
 
   return Class(UITree, {
@@ -70,6 +71,7 @@ function(Class, UITree, List, Panel) {</span>
   });
 
 });
+
 </code></pre>
 
 <ul><li><code><a data-ajax="false" href="/examples/rss3/src/tree.ui.js">src/tree.ui.js</a></code></li></ul>
@@ -82,7 +84,8 @@ function(Class, UITree, List, Panel) {</span>
 
 <p>We are going to add some interactions to the UI.</p>
 
-<pre><code class="javascript"><span class="focus">Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui',
+<pre><code class="javascript">
+<span class="focus">Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui',
 'joshfire/utils/splashscreen', 'joshfire/vendor/jquery'],
 function(BaseApp, Class, Data, UI, SC, $) {</span>
   Joshfire.debug = true;
@@ -133,6 +136,7 @@ function(BaseApp, Class, Data, UI, SC, $) {</span>
 
   });
 });
+
 </code></pre>
 
 <ul><li><code><a data-ajax="false" href="/examples/rss3/src/app.js">src/app.js</a></code></li></ul>
@@ -143,7 +147,8 @@ function(BaseApp, Class, Data, UI, SC, $) {</span>
 <p>This is where we move the content of the previous <code>index.html</code> file.</p>
 <p>We only added a stylesheet from jQuery <a href="http://colorpowered.com/colorbox/" target="_blank">Colorbox</a> plugin and added a <code>splashscreen</code> div.</p>
 
-<pre><code class="html">&lt;!DOCTYPE html&gt;
+<pre><code class="html">
+&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
     &lt;title&gt;RSS Feed App&lt;/title&gt;
@@ -162,6 +167,7 @@ function(BaseApp, Class, Data, UI, SC, $) {</span>
 <span class="focus">    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt;</span>
   &lt;/body&gt;
 &lt;/html&gt;
+
 </code></pre>
 
 <ul><li><code><a data-ajax="false" href="/examples/rss3/public/index.html">public/index.html</a></code></li></ul>
