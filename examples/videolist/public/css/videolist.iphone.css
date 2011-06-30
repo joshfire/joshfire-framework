@@ -20,11 +20,11 @@ h1{
 #exampleVideoList__{
   height: 100%;
   width: 100%;
-/*  position: relat;*/
 }
 
 .josh-id-videolist {
-  position: absolute; z-index: 1;
+  position: absolute;
+  z-index: 1;
   top: 40px; bottom:0px; left:0px;
   width: 100%;
   background: #1E2124;
@@ -115,13 +115,13 @@ h1{
 }
 
 .josh-type-Video {
-  outline: 5px solid red;
   display: none;
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
   text-align: center;
+  max-width: 100%;
 }
 
 .josh-type-Video video {
@@ -129,14 +129,13 @@ h1{
   display: inline-block;
   width: 512px;
   height: 288px;
-  outline: 2px solid #6D7287;
+  width: 100%;
 }
 
 .josh-type-Video .close {
   position: absolute;
   left: 50%;
   margin-left: -40px;
-  margin-top: 10px;
   padding: 10px 20px;
   background-color: #fff;
   border: 1px solid #000;
