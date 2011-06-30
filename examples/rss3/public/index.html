@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RSS Feed App</title>
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/colorbox.css" />
+    <script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"></script>
+  </head>
+  <body>
+    <script>
+      Joshfire.debug = true;
+      Joshfire.require(['src/app'], function(App) {
+        console.log('Code is loaded!');
+        new App();
+      });
+    </script>
+    <div id="splashscreen">RSS Feed Example</div>
+  </body>
+</html>

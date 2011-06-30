@@ -1,5 +1,7 @@
 <h1>Writing your first application: part 1</h1>
 
+<h2><strong>A basic app</strong></h2>
+
 <p>Let's learn by example.</p>
 
 <p>The framework enables your to quickly build applications targeting several platforms including tablets, mobile phones, TVS, etc. Compatible devices depends on which adapters you use (and build).</p>
@@ -105,8 +107,7 @@ var uiTree = [
   }
 ];
 
-  </code>
-</pre>
+</code></pre>
 
 
 <p>See our <a href="/doc/gettingstarted/overview">overview</a> of the framework if you want more information on Joshfire Trees.</p>
@@ -116,9 +117,7 @@ var uiTree = [
 
 Let's put it all together.
 
-<pre>
-  <code class="javascript">
-
+<pre><code class="javascript">
 // Joshfire.define is a wrapper arround require.js : it allows you to load all your dependencies
 //   Here we are using:
 //      - joshfire/app.js              the baseclass from which your applications should inherit
@@ -172,8 +171,7 @@ Joshfire.define(['joshfire/app', 'joshfire/class', 'joshfire/uielements/list'], 
 
 <p>The second file needed is <code>index.html</code>. It will be the entry point of the application in a browser.</p>
 
-<pre>
-  <code class="html">
+<pre><code class="html">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
@@ -206,13 +204,18 @@ Joshfire.define(['joshfire/app', 'joshfire/class', 'joshfire/uielements/list'], 
   </code>
 </pre>
 
+<h2>Layout files</h2>
+
+<p>Just download the following stylesheet in <code>public/css/</code> folder.</p>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss1/public/css/app.css">public/css/app.css</a></code></li></ul>
+
 
 <h2><code>Run it!</code></h2>
 
-<p>Just download the following stylesheet <a href=""><code>app.css</code></a> and put in <code>public/css</code> folder.</p>
 
 <p>You can now launch the application in your browser, and it should look like this:</p>
 
 <img src="sc01.png" />
 
-<p><a href="/doc/gettingstarted/firstapp2">You are ready for part 2 !</a></p>
+<p><strong><a href="/doc/gettingstarted/firstapp2">You are ready for part 2 !</a></strong></p>

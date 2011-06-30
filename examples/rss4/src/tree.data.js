@@ -12,7 +12,7 @@
 
 Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/underscore', 'joshfire/utils/datasource'], function(Class, DataTree, _, Datasource) {
 
-  var datasource = new Datasource();
+  var datasource = new Datasource(); // wrapper for ajax requests
 
   var rssToJson = function(rssUrl, callback) {
 
@@ -24,7 +24,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/unders
       if (error) { return callback(error, null); }
 
       callback(null, _.map(news.value.items, function(item,id) {
-        return _.extend(item, { id: id, image: item.image.substr(0, item.image.length - 6) });
+        return _.extend(item, { id: id, thumbnail: item.image, image: item.image.substr(0, item.image.length - 6) });
       }));
 
     });
