@@ -1,0 +1,271 @@
+<h1>Writing your first application: part 4</h1>
+
+<h2><strong>Adding an iOS version</strong></h2>
+
+<p>We are now going to see how easy it is to make it work on iOS. Unleash the power of the adaptors !</p>
+
+
+<h2><code>tree.data.js</code></h2>
+
+<p>No changes are required: the data we use will be the same and it is already fetched in a portable way. Enjoy!</p>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss3/src/tree.data.js">src/tree.data.js</a></code></li></ul>
+
+
+<h2><code>tree.ui.js</code></h2>
+
+<p>All we need to add is a single line to the List UI Element.</p>
+
+<pre><code class="javascript">...
+        {
+          id: 'newsList',             // internal id
+          type: List,                 // type of ui widget
+          orientation: 'left',        // change navigations properties of the grid
+          dataPath: '/news',          // data which will be used to populate the list
+<span class="focus">          scroller: true,             // add scrolling capabilities used for iOS</span>
+          itemInnerTemplate:          // override default template for list items
+              '&lt;div class="clearfix"&gt;' +
+              '    &lt;h1 class="title"&gt;&lt;%= item.title %&gt;&lt;/h1&gt;' +
+              '    &lt;img src="&lt;%= item.image %&gt;" /&gt;' +
+              '    &lt;div class="description"&gt;&lt;%= item.description %&gt;&lt;/div&gt;' +
+              '&lt;/div&gt;',
+          loadingTemplate: null       // override default template used during data loading
+        },
+...
+</code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss4/src/tree.ui.js">src/tree.ui.js</a></code></li></ul>
+
+<h2>App files</h2>
+
+<h3><code>app.js</code></h3>
+
+<p>We are going to refactor <code>app.js</code> so that it contains only code common to all adapters.</p>
+
+<pre><code class="javascript">
+<span class="focus">Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', 'joshfire/utils/splashscreen'],
+function(BaseApp, Class, Data, UI, SC) {</span>
+
+  Joshfire.debug = true;
+
+  return Class(BaseApp, {
+
+    id: 'exampleRss',
+
+    uiClass: UI,
+    dataClass: Data,
+
+    setup: function(callback) {
+      var self = this;
+
+      // Basic util allowing us to display / hide a splashcreen
+      var splashscreen = new SC();
+      // We subscribe to 'data' event to remove the slapshscreen when data is loaded
+      self.ui.element('/newsList').subscribe('data', function(ev) {
+        splashscreen.remove();
+      });
+
+<span class="focus">      // !!! REMOVED SOME CODE</span>
+
+<span class="focus">      // If a class inherit from this one, it will be its job to call the callback
+      //  in this case, we may called without the callback parameter 
+      if (callback)
+        callback(null, true);</span>
+    }
+
+  });
+});
+</code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss4/src/app.js">src/app.js</a></code></li></ul>
+
+
+<h3><code>app.browser.js</code></h3>
+
+<p>This is where the specific code for <code>browsers</code> belongs. We move the code which used to be in <code>app.js</code> here.</p>
+
+
+<pre><code class="javascript">
+<span class="focus">
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore', 'joshfire/vendor/jquery'],
+function(App, Class, _, $) {</span>
+
+  Joshfire.debug = true;
+
+<span class="focus">  // Note that now we inherit from the App class in app.js
+  return Class(App, {</span>
+
+    setup: function(callback) {
+      var self = this;
+
+<span class="focus">      // Call parent setup method (that would be the one in 'app.js')
+      this.__super();</span>
+
+      // When data is loaded, give focus to '/newsList/'
+      self.ui.element('/newsList').subscribe('data', function(ev) {
+        self.ui.moveTo('focus', '/newsList');
+      });
+
+      // Load a jQuery plugin which displays boxes
+      Joshfire.require(['public/js/jquery.colorbox-min'], function() {
+
+        // When '/newsInfo' dataRoot is changed (it does when selections occurs on '/newsList') ...
+        self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
+          // ... give focus to '/newsInfo' ...
+          self.ui.moveTo('focus', '/newsInfo');
+          // ... display '/newsInfo' inside a styled box thanks to colorbox plugin !
+          $.colorbox({width:'800px', inline:true, href:'#'+ self.ui.element('/newsInfo').htmlId +' .info',
+            // When user close the box ...
+            onCleanup: function() {
+              // ... give focus back to '/newsList' !
+              self.ui.moveTo('focus', '/newsList');
+            }
+          });
+        });
+
+      });
+
+      callback(null, true);
+    }
+
+  });
+
+});
+</code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss4/src/app.browser.js">src/app.browser.js</a></code></li></ul>
+
+
+
+
+<h3><code>app.ios.js</code></h3>
+
+<p>This is where the specific code for <code>iOS</code> belongs.</p>
+
+<pre><code class="javascript">
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'], function(App, Class, _) {
+
+  Joshfire.debug = true;
+
+  return Class(App, {
+
+    setup: function(callback) {
+      var self = this;
+      this.__super();
+
+<span class="focus">      // CODE SPECIFIC TO iOS
+
+      // When an item in '/newsList' is selected, '/newsInfo' gets refreshed
+      self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
+        // We show '/newsInfo' 
+        self.ui.element('/newsInfo').show();
+      });
+
+      // When '/newsInfo' is 'tapped' (clicked) ...
+      self.ui.element('/newsInfo').subscribe('input', function(ev, id) {
+        if (id[0] == 'enter')
+          // ... we hide '/newsInfo' so '/newsList' gets displayed again
+          self.ui.element('/newsInfo').hide();
+      });</span>
+
+      callback(null, true);
+    }
+
+  });
+
+});
+</code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss4/src/app.ios.js">src/app.ios.js</a></code></li></ul>
+
+
+<h2><code>index</code> files</h2>
+
+
+<h3><code>index.browser.html</code></h3>
+
+<p>This is where we move the content of the previous <code>index.html</code> file.</p>
+
+<pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;RSS Feed App&lt;/title&gt;
+<span class="focus">    &lt;link rel="stylesheet" href="css/app.browser.css" /&gt;</span>
+    &lt;link rel="stylesheet" href="css/colorbox.css" /&gt; &lt;!-- This is new --&gt;
+    &lt;script data-main="../" src="../joshfire/adapters/browser/bootstrap.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+      Joshfire.debug = true;
+<span class="focus">      Joshfire.require(['src/app.browser'], function(App) {  // browser app</span>
+        console.log("Code is loaded!");
+        new App();
+      });
+    &lt;/script&gt;
+    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt; &lt;!-- This too --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss4/public/index.browser.html">public/index.browser.html</a></code></li></ul>
+
+
+
+<h3><code>index.ios.html</code></h3>
+
+<p>This is the entrypoint for the iOS version of the application. As you will see, changes are minimal.</p>
+
+<pre><code class="html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;RSS Feed App&lt;/title&gt;
+<span class="focus">    &lt;link rel="stylesheet" href="css/app.ios.css" /&gt; &lt;!-- A custom stylesheet --&gt;</span>
+<span class="focus">   &lt;script data-main="../" src="../joshfire/adapters/ios/bootstrap.js"&gt;&lt;/script&gt; &lt;!-- iOS bootstrap --&gt;</span>
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;script&gt;
+      Joshfire.debug = true;
+<span class="focus">      Joshfire.require(['src/app.ios'], function(App) {  // iOS app</span>
+        console.log("Code is loaded!");
+        new App();
+      });
+    &lt;/script&gt;
+    &lt;div id="splashscreen"&gt;RSS Feed Example&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss4/public/index.ios.html">public/index.ios.html</a></code></li></ul>
+
+
+<h2>Layout files</h2>
+
+<ul>
+  <li><code><a data-ajax="false" href="/examples/rss4/public/css/app.browser.css">public/css/app.browser.css</a></code></li>
+  <li><code><a data-ajax="false" href="/examples/rss4/public/css/app.ios.css">public/css/app.ios.css</a></code></li>
+</ul>
+
+<p>Colorbox dependencies:
+<ul>
+<li><code><a data-ajax="false" href="/examples/rss4/public/js/jquery.colorbox-min.js">public/js/jquery.colorbox-min.js</a></code></li>
+<li><code><a data-ajax="false" href="/examples/rss4/public/css/colorbox.css">public/css/colorbox.css</a></code></li>
+<li><code><a data-ajax="false" href="/examples/rss4/public/img/control.png">public/img/control.png</a></code></li>
+<li><code><a data-ajax="false" href="/examples/rss4/public/img/loading.gif">public/img/loading.gif</a></code></li>
+</ul>
+</p>
+
+
+
+<h2><code>Run it!</code></h2>
+
+<p>You already know the browser version. On iOS, it should look like this:</p>
+
+<p align="center"><img src="sc04.png" /></p>
+
+
+<h2>Conclusion</h2>
+<p>As you can see, the two versions of the application only differs by something like 15 lines of code!</p>
+
+

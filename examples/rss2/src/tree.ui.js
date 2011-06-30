@@ -17,6 +17,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
     buildTree: function() {
       // Create UI widgets
       return [
+        // A UI List Element
         {
           id: 'newsList',             // internal id
           type: List,                 // type of ui widget
@@ -25,9 +26,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
           itemInnerTemplate:          // override default template for list items
               '<div class="clearfix">' +
               '    <h1 class="title"><%= item.title %></h1>' +
-              '    <img src="<%= item.thumbnail %>" />' +
+              '    <img src="<%= item.image %>" />' +
               '    <div class="description"><%= item.description %></div>' +
-              '    <a href="<%= item.link %>" target="_blank"><%= item.link %></a>' +
               '</div>'
         }
       ];

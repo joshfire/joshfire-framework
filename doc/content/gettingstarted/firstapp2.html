@@ -1,16 +1,17 @@
 <h1>Writing your first application: part 2</h1>
 
+<h2><strong>Loading external Data with Ajax & refactoring</strong></h2>
+
 <p>Now that we have seen how to build a basic application, we are going to refactor it and add data loading through Ajax request.</p>
 
 
 <h2>UI Tree: <code>tree.ui.js</code></h2>
 
-<p>In part 1, everything was embedded in <code>app.js</code>. This can get messy as the size of you application increases.</p>
+<p>In <a href="/doc/gettingstarted/firstapp3">part 1</a>, everything was embedded in <code>app.js</code>. This can get messy as the size of you application increases.</p>
 
 <p>So we are going to move the UI Tree code in a file called <code>src/tree.ui.js</code>. This file will be used to describe all the UI elements of the application: it's the View of MVC.</p>
 
-<pre><code class="javascript">
-// As UI Tree is now in an external file, we will include it as a module from app.js
+<pre><code class="javascript">// As UI Tree is now in an external file, we will include it as a module from app.js
 Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list'],
 function(Class, UITree, List) {
 
@@ -40,6 +41,8 @@ function(Class, UITree, List) {
 });
 </code></pre>
 
+<ul><li><code><a data-ajax="false" href="/examples/rss2/src/tree.ui.js">src/tree.ui.js</a></code></li></ul>
+
 <p>So what did we do exactly ? Basically we took UI Tree code of part 1 and moved it in an external file.</p>
 <p>The module in that file returns a class which extends <code>UITree</code> base class.</p>
 <p>This class has a method <code>buildTree</code> which returns an array describing our UI : this is where the code we wrote previously fits in.</p>
@@ -55,8 +58,7 @@ function(Class, UITree, List) {
 <p>To simplify this process, we created a <code>Yahoo Pipe</code> to generate a JSONp output from an XML RSS Feed. If you wish to learn more on <code>Yahoo Pipes</code>, just go to <a href="http://pipes.yahoo.com/pipes/" target="_blank">http://pipes.yahoo.com/pipes/</a>.</p>
 
 
-<pre><code class="javascript">
-Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/underscore',
+<pre><code class="javascript">Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/underscore',
 'joshfire/utils/datasource'], function(Class, DataTree, _, Datasource) {
 
   // To perform external requests, we use the datasource.js util
@@ -79,7 +81,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/unders
       if (error) { return callback(error, null); }
 
       callback(null, _.map(news.value.items,function(item,id) {
-        return _.extend(item, { id: id, thumbnail: item.image,
+        return _.extend(item, { id: id, 
                                 image: item.image.substr(0, item.image.length - 6) });
       }));
       
@@ -107,6 +109,9 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/unders
 });
 </code></pre>
 
+<ul><li><code><a data-ajax="false" href="/examples/rss2/src/tree.data.js">src/tree.data.js</a></code></li></ul>
+
+
 <p>Note: As you may have noticed, the prototype of framework callback function follows nodeJS convention.
 <ul>
   <li>On error, it is passed as the first parameter.</li>
@@ -120,9 +125,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data', 'joshfire/vendor/unders
 
 <p>Let's update the <code>app.js</code> file a bit.</p>
 
-<pre><code class="javascript">
-Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui'],
-function(BaseApp, Class, Data, UI) {
+<pre><code class="javascript"><span class="focus">Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui'],
+function(BaseApp, Class, Data, UI) {</span>
 
   Joshfire.debug = true;
 
@@ -130,13 +134,13 @@ function(BaseApp, Class, Data, UI) {
 
     id: 'exampleRss',
 
-    // In part 1, we used 'uiTree' property to pass UI data directly
+<span class="focus">    // In part 1, we used 'uiTree' property to pass UI data directly
     //   now that we use a class, we use 'uiClass' so that it gets instanciated
     uiClass: UI,
     // The same apply for 'dataTree' - 'dataClass'
-    dataClass: Data,
+    dataClass: Data,</span>
 
-    // 'setup' is a method which gets called by the constructor of the class
+<span class="focus">    // 'setup' is a method which gets called by the constructor of the class
     setup: function(callback) {
       var self = this;
 
@@ -150,11 +154,18 @@ function(BaseApp, Class, Data, UI) {
       // As there are no asyncroneous task that we are waiting uppon, we call
       //  the framework callback directly
       callback(null, true);
-    }
+    }</span>
 
   });
 });
 </code></pre>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss3/src/app.js">src/app.js</a></code></li></ul>
+
+
+<h2>Layout files</h2>
+
+<ul><li><code><a data-ajax="false" href="/examples/rss2/public/css/app.css">public/css/app.css</a></code></li></ul>
 
 
 <h2><code>Run it!</code></h2>
@@ -163,4 +174,4 @@ function(BaseApp, Class, Data, UI) {
 
 <img src="sc02.png" />
 
-<p><a href="/doc/gettingstarted/firstapp3">You are ready for part 3 !</a></p>
+<p><strong><a href="/doc/gettingstarted/firstapp3">You are ready for part 3 !</a></strong></p>
