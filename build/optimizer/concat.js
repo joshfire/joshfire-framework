@@ -155,8 +155,8 @@ build.modules.forEach(function(mod) {
     concatModules(false,jsInclude);
   });
   
-  finalJSFile = build.abs_dir+"/"+mod.name+'-'+mod.adapter+".js";
-  finalCSSFile  = build.abs_dir+'/'+mod.name+'-'+mod.adapter+'.css';
+  var finalJSFile   = build.abs_dir+"/"+mod.name+'-'+mod.adapter+".js",
+      finalCSSFile  = build.abs_dir+'/'+mod.name+'-'+mod.adapter+'.css';
   
   fs.writeFileSync(finalJSFile,concatJs,"utf-8");
   console.log('JS compiled to '+finalJSFile);
