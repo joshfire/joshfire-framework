@@ -14,30 +14,40 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
   return Class(UITree, {
 
     buildTree: function() {
+      
+      // UI specialization : the video list scrolls from top to bottom only on iOS
+      if(Joshfire.adapter === 'ios') {
+        var bVerticalList = true;
+      } else {
+        var bVerticalList = false;
+      }
+      
       var app = this.app;
-
-      return [
+      
+      // our UI definition
+      var aUITree = [
         {
           id: 'player',
-          //"type":"video.youtube.swf"
           type: 'video.mediaelement',
           // path to the .swf player file, if needed
-          mediaElementDefaultsPluginPath: '/public/swf/',
-          autoShow: false
-        },
-        {
-          id: 'controls',
-          type: 'mediacontrols',
-          media: '/player'
+          mediaElementDefaultsPluginPath: './swf/',
+          autoShow: false,
+          options:{
+            forceAspectRatio:false,
+            //width:window.innerWidth,
+            height:window.innerHeight
+          }
         },
         {
           id: 'videolist',
           type: 'list',
+          // modify default content of the <li>. item correspond to the childrens of videos/ in the data tree
           itemInnerTemplate: '<figure><img src="<%= item.image %>"/><figcaption><%=item.label%></figcaption></figure>',
           scroller: true,
           scrollOptions: {
-            vScroll: Joshfire.adapter==='ios',
-            hScroll: !Joshfire.adapter==='ios'
+            // do scroll in only one direction
+            vScroll: bVerticalList,
+            hScroll: !bVerticalList
           },
           scrollBarClass: 'rainbow',
           dataPath: '/videos/',
@@ -48,6 +58,18 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
           }
         }
       ];
+      
+      // UI specialization : the video control bar is useless on environments without a mouse
+      //console.log(Joshfire.adapter);
+      if(Joshfire.adapter === 'browser') {
+        aUITree.push(  {
+            id: 'controls',
+            type: 'mediacontrols',
+            media: '/player'
+          });
+      }
+      
+      return aUITree;
     }
   });
 });
