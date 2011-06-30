@@ -115,7 +115,6 @@ h1{
 }
 
 .josh-type-Video {
-  outline: 5px solid red;
   display: none;
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
