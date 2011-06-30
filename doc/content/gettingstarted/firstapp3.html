@@ -31,6 +31,8 @@ function(Class, UITree, List, Panel) {</span>
           type: List,
           orientation: 'left',
           dataPath: '/news/',
+<span class="focus">          noMouseAutoFocus: true,     // deactivate focus on mouse hover
+          moveOnFocus: true,          // keep focused element on display</span>
           itemInnerTemplate:
             '&lt;div class="clearfix"&gt;'+
             '    &lt;h1 class="title"&gt;&lt;%= item.title %&gt;&lt;/h1&gt;'+
