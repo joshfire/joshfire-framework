@@ -16,44 +16,26 @@ Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'],
     return Class(App, {
 
       setup: function(callback) {
+        var self = this;
 
         this.__super();
 
-        var self = this;
-
         self.subscribe('afterInsert', function(ev, info) {
-          var vl = self.ui.element('/videolist');
-          $('#' + self.id + '__').mousemove(function () {
-            //self.ui.moveTo('focus', '/videolist');
-            vl.show();
-            vl.hideDelayed();
-          });
+          var videolist = self.ui.element('/videolist'),
+              controls = self.ui.element('/controls');
 
-
-
-
-        });
-
-        self.ui.element('/videolist').subscribe('fresh', function(ev, info) {
-          var vl = self.ui.element('/videolist');
-          vl.show();
-          vl.hideDelayed();
-        });
- 
-
-        self.ui.element('/videolist').subscribe('data', _.once(function(ev, data) {
-          var $player = $(self.ui.element('/player').htmlEl);
-
-/*
-          var resize = function() {
-            var $video = $player.find('video');
-            $video.height($(window).height());
-            $video.width($(window).width());
+          function update() {
+            videolist.show();
+            videolist.hideDelayed();
+            if (controls) {
+              controls.show();
+              controls.hideDelayed();
+            }
           }
-          resize();
-          $(window).resize(resize);
-          */
-        }));
+
+          $('#' + self.id + '__').mousemove(update);
+          self.ui.element('/videolist').subscribe('fresh', update);
+        });
 
         callback(null, true);
       }
