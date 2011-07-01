@@ -10,35 +10,53 @@
  */
 
 
-Joshfire.define(['./app', 'joshfire/class', './tree.ui', 'joshfire/vendor/underscore', 'joshfire/inputs/http'],
-    function(App, Class, UI, _, HttpInput) {
-      return Class(App, {
-        uiClass: UI,//leanbackUI,
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'],
+  function(App, Class,  _) {
 
-        setup: function(callback) {
-          var self = this;
+    return Class(App, {
 
-          self.httpinput = new HttpInput(self, {
-            server: 'http://' + window.location.hostname + ':8080'
+      setup: function(callback) {
+
+        this.__super();
+
+        var self = this;
+
+        self.subscribe('afterInsert', function(ev, info) {
+          var vl = self.ui.element('/videolist');
+          $('#' + self.id + '__').mousemove(function () {
+            //self.ui.moveTo('focus', '/videolist');
+            vl.show();
+            vl.hideDelayed();
           });
 
-          self.httpinput.setup(function(err) {
-            alert('listening');
-            // Select first video on load
-            self.ui.element('/videolist').subscribe('data', _.once(function(ev,data) {
-              self.ui.setState('focus', '/videolist');
-            }));
 
-            // that event is fired when the mail Joshfire UI element is finally inserted
-            self.subscribe('afterInsert', function() {
-              self.ui.options.hideDelay = 400;
-              var vl = self.ui.get('/videolist');
-              vl.options.hideDelay = 400;
-              vl.hideDelayed();
-            });
 
-            callback(null, true);
-          });
-        }
-      });
+
+        });
+
+        self.ui.element('/videolist').subscribe('fresh', function(ev, info) {
+          var vl = self.ui.element('/videolist');
+          vl.show();
+          vl.hideDelayed();
+        });
+ 
+
+        self.ui.element('/videolist').subscribe('data', _.once(function(ev, data) {
+          var $player = $(self.ui.element('/player').htmlEl);
+
+/*
+          var resize = function() {
+            var $video = $player.find('video');
+            $video.height($(window).height());
+            $video.width($(window).width());
+          }
+          resize();
+          $(window).resize(resize);
+          */
+        }));
+
+        callback(null, true);
+      }
+
     });
+});
