@@ -13,7 +13,7 @@
 Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', 'joshfire/vendor/underscore', 'joshfire/utils/splashscreen'],
 function(App, Class, Data, UI, _, Splash) {
   Joshfire.debug = true;
-  
+
   return Class(App, {
 
     id: 'exampleVideoList',
@@ -36,7 +36,7 @@ function(App, Class, Data, UI, _, Splash) {
           // the onSelect method in tree.ui.js does the rest
           self.ui.element('/videolist').selectByIndex(0);
         }
-        //remove splash
+        // remove splash
         splash.remove();
       }));
 
