@@ -31,7 +31,7 @@ h1{
   overflow: auto;
 }
 
-.rainbowV {
+.scrollbarV {
  background: transparent;
  border: none;
  position: absolute;
@@ -41,7 +41,7 @@ h1{
  top: 2px;
  right: 1px
 }
-.rainbowV > div{
+.scrollbarV > div{
  position: absolute;
  z-index: 100;
  background: rgba(108,115,135,0.5);

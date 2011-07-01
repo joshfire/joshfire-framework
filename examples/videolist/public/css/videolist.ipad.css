@@ -42,7 +42,38 @@ li {
 }
 
 #exampleVideoList__videolist {
+  position: absolute;
+  z-index: 1;
   background: black;
+  top:50px;
+  bottom:0px;
+  width:100%;
+}
+.exampleVideoList__videolist_scroller {
+  width:100%;
+  position: absolute;
+}
+
+.scrollbarV {
+ background: transparent;
+ border: none;
+ position: absolute;
+ z-index: 100;
+ width: 7px;
+ bottom: 2px;
+ top: 2px;
+ right: 1px
+}
+.scrollbarV > div{
+ position: absolute;
+ z-index: 100;
+ background: rgba(255,55,55,1);
+ border: none;
+ webkit-background-clip: padding-box;
+ -webkit-box-sizing: border-box;
+ width: 100%;
+ -webkit-border-radius: 1px;
+ border-radius: 1px;
 }
 
 .josh-List {
