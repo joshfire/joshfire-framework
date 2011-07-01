@@ -15,13 +15,7 @@ function(App, Class, Data, UI, _, Splash) {
   Joshfire.debug = true;
   
   // Behaviour specialization : some environments should not autoplay the video, as it is fullscreen
-  if(Joshfire.adapter === 'samsungtv'
-    || Joshfire.adapter === 'browser') {
-    var bAutoPlay = true;
-  } else {
-    var bAutoPlay = false;
-  }
-  //console.log( 'JOSHFIRE');
+  var bAutoPlay = (Joshfire.adapter === 'samsungtv' || Joshfire.adapter === 'browser') ? true : false;
   
   return Class(App, {
     id: 'exampleVideoList',
@@ -38,7 +32,7 @@ function(App, Class, Data, UI, _, Splash) {
           // the onSelect method in tree.ui.js does the rest
           self.ui.element('/videolist').selectByIndex(0);
         }
-        //remove splash
+        // remove splash
         splash.remove();
       }));
       callback(null);
