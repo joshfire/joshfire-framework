@@ -9,16 +9,13 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
-Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/jquery'], function(App,Class,jQuery) {
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/jquery'], function(App, Class, jQuery) {
   return Class(App, {
     setup: function(callback) {
       this.__super(callback);
       Joshfire.require(['public/js/jquery.lettering-0.6.1.min'], function(PluginLettering) {
         jQuery('h1').lettering();
       });
-
     }
-
   });
 });

@@ -15,9 +15,7 @@
     </header>
     <div id="splashscreen">TED</div>
       <script>
-      require({
-        urlArgs: 'bust=' +  (new Date()).getTime()
-      }, ['src/app.ios'], function(VideoApp) {
+      require(['src/app.ios'], function(VideoApp) {
         window._app = new VideoApp();
       });
     </script>

@@ -13,7 +13,6 @@
 Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui'], function(App, Class, Data, UI) {
   Joshfire.debug = true;
 
-
   return Class(App, {
     id: 'tweetMap',
     uiClass: UI,
@@ -23,12 +22,10 @@ Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui'], 
       var self = this;
       self.subscribe('afterInsert', function() {
         self.ui.moveTo('focus', '/menu');
-        //self.publish("input",["enter"]);
         self.ui.element('/menu').selectByIndex(0);
       });
 
       callback(null, true);
     }
   });
-
 });

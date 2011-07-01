@@ -14,9 +14,7 @@
 	<div id='splashscreen'></div>
 <script src="../export/leanback-android.js"></script>
 <script>
-	require(
-		//{urlArgs: "bust=" +  (new Date()).getTime()},
-		["src/app"],function(VideoApp) {
+	require(['src/app'],function(VideoApp) {
 		window._app = new VideoApp();
 		//alert(window._app.options.parentElement);
 	});
