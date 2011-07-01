@@ -49,7 +49,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
             vScroll: bVerticalList,
             hScroll: !bVerticalList
           },
-          scrollBarClass: 'rainbow',
+          scrollBarClass: 'scrollbar',
           dataPath: '/videos/',
           autoScroll: true,
           hideDelay: 3000,
