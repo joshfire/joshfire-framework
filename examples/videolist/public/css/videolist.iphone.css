@@ -6,7 +6,7 @@ div, img, p, ul, li, figure, figcaption {
 body {
  margin: auto;
  font: 12px 'Lucida Grande', 'Trebuchet MS', Verdana, sans-serif;
- font-weight:normal;
+ font-weight: normal;
  color: #C1D2E3;
  background-color: #2F323B;
 }
@@ -53,12 +53,9 @@ h1{
  border-radius: 3px;
 }
 
-/**********/
-
 .exampleVideoList__videolist_scroller {
   position: absolute;
   z-index: 1;
-/*  -webkit-touch-callout:none;*/
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   width: 100%;
   padding: 0;
@@ -98,8 +95,6 @@ h1{
   width: 100%;
   height: 200px;
   line-height: 200px;
-/*  top: 50px;
-  left: 50px;*/
   background-color: #000;
   font-size: "arial narrow", arial;
   font-weight: bold;
