@@ -90,3 +90,33 @@ li {
 figcaption {
   font-weight: bold;
 }
+
+.josh-type-Video {
+  display: none;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  text-align: center;
+}
+
+.josh-type-Video video {
+  position: relative;
+  top: 40px;
+  display: inline-block;
+  height: 90%;
+  width: 100%;
+  z-index: 20;
+}
+
+.josh-type-Video .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 1px solid #000;
+  color: #000;
+  border-radius: 2px;
+  z-index: 30;
+}
