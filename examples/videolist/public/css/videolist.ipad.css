@@ -23,7 +23,7 @@ h1 {
 #splashscreen {
   position: absolute;
   top: 48px; right: 0; bottom: 0; left: 0;
-  line-height: 200%;
+  line-height: 5em;
   background: #000;
   font-size: "Arial Narrow", Arial, Sans-serif;
   font-weight: bold;
@@ -67,9 +67,9 @@ li {
 .scrollbarV > div{
  position: absolute;
  z-index: 100;
- background: rgba(255,55,55,1);
+ background: rgba(255, 55, 55, 1);
  border: none;
- webkit-background-clip: padding-box;
+ -webkit-background-clip: padding-box;
  -webkit-box-sizing: border-box;
  width: 100%;
  -webkit-border-radius: 1px;
@@ -78,9 +78,18 @@ li {
 
 .josh-List {
   float: left;
-  width: 25%;
   -webkit-box-sizing: border-box;
+  width: 25%;
+  height: 225px;
   padding: 5px;
+}
+
+.josh-List figcaption {
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .josh-List img {

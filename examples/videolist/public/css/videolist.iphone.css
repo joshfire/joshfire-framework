@@ -44,9 +44,9 @@ h1{
 .scrollbarV > div{
  position: absolute;
  z-index: 100;
- background: rgba(108,115,135,0.5);
+ background: rgba(108, 115, 135, 0.5);
  border: none;
- webkit-background-clip: padding-box;
+ -webkit-background-clip: padding-box;
  -webkit-box-sizing: border-box;
  width: 100%;
  -webkit-border-radius: 3px;
@@ -56,7 +56,7 @@ h1{
 .exampleVideoList__videolist_scroller {
   position: absolute;
   z-index: 1;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   width: 100%;
   padding: 0;
 }
@@ -113,10 +113,9 @@ h1{
   display: none;
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
   z-index: 9999;
   text-align: center;
-  max-width: 100%;
 }
 
 .josh-type-Video video {
