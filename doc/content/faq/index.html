@@ -1,5 +1,11 @@
 <h1>Frequently Asked Questions</h1>
 
+<h2>General</h2>
+
+<h3>What makes Joshfire different from other JavaScript frameworks ?</h3>
+<p>Joshfire's #1 goal is to be <strong>multi-device</strong> in the widest possible sense: web, mobiles, tablets, desktops, Node.js, connected TVs, even headless devices are supported. <strong>Write once, run everywhere.</strong> It's the first open source framework based on open standards to integrate this cross-platform goal so deep in its design.</p>
+
+
 <h2>Developers</h2>
 
 <h3>I've added a new file in an adapter but when I try to require it, only the base class gets loaded.</h3>
@@ -11,29 +17,25 @@
 <p>Check that you do have a <code>Joshfire.require(...);</code> entry in your file, not only <code>Joshfire.define(...);</code> </p>
 
 <h3>Are there CSS themes ?</h3>
-<p>The framework does not come with pre-made design. We believe that each application needs to be unique while consistent across multiple devices. Providing CSS to mimic the look of the native applications for each platform would break the consistency you are looking for.
-</p>
+<p>The framework does not currently ship with pre-made designs other that the ones in the examples, which are however usually a good starting point.</p>
 
-<h3>How do I access the <code>app</code> global variable ?</h3>
+<h3>How do I access my <code>app</code> instance variable ?</h3>
 <p>It depends on where you are :
 <ul>
-	<li>in a UI element: trough <code>this.app.</code>
-	<li>from outside: through <code>window._app.</code>
+	<li>in most classes: via <code>this.app</code></li>
+	<li>from outside: you'll have to save a global reference to it in the global scope when instanciating it, the framework doesn't impose any.</li>
 </ul>
 </p>
 
-<h3>What differs from other JavaScript Frameworks ?</h3>
-<p>Joshfire share the same will of easing Web Application development by introducing template engines, MVC coding style, magic UI binding to data and so on. However, until now, each framework had its own supported platforms : mobile webkit for some, recent desktop browsers for the others. Joshfire targets platforms ranging from IE6 to mobile devices, connected televisions and even headless devices.</p>
-
-<h3>Do you use coffeescript ?</h3>
-<p>No. We dont want to force you learning a new syntax, but we are open source : you can make an <a href="/doc/advanced/adapterdevelopment">adapter</a> from coffeescript to the Joshfire Framework.</p>
+<h3>Do you use CoffeeScript ?</h3>
+<p>No because we want to keep the entry barrier as low as possible for most people. That said, you can obviously write CoffeeScript apps using the framework (please contribute an example!)</p>
 
 <h3>What template engine do you use ?</h3>
-<p>Internally, we mostly use underscore.js who is enough for simple placeholder replacement. You can include your favorite template engine by adding it in a <code>vendor/</code> directory of your application and <a href="/doc/develop/scriptloading">including</a> it.</p>
+<p>By default we use <a href="http://documentcloud.github.com/underscore/#template">underscore.js templates</a> which should be enough for most needs. However you can include your favorite template engine by adding it in a <code>vendor/</code> directory of your application and <a href="/doc/develop/scriptloading">including</a> it.</p>
 
 <h3>Object-oriented ? MVC ?</h3>
-<p>The framework use mixins and simple inheritance internally (with the <a href="http://documentcloud.github.com/underscore/">underscore.js</a> library) and it is recommanded to do the same in your applications.</p>
-<p>Joshfire provides a pretty neat implementation of the MVC pattern: <code>tree.ui</code> and <code>tree.data</code> files allow you to describe separately the interface, the underlying data, and the relations between them.</p>
+<p>The framework uses mixins and simple inheritance internally (with the <a href="http://documentcloud.github.com/underscore/">underscore.js</a> library) and it is recommended to do the same in your applications.</p>
+<p>Joshfire provides a pretty neat implementation of the MVC pattern: <code>tree.ui</code> and <code>tree.data</code> files allow you to describe separately the interface, the underlying data, and the relationships between them.</p>
 
 <h3>I want to throw custom errors in order to debug properly.</h3>
 <p>You could use the standard <code>throw new TypeError()</code> but:
