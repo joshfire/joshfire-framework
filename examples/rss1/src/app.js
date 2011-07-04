@@ -9,27 +9,22 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
 Joshfire.define(['joshfire/app', 'joshfire/class', 'joshfire/uielements/list'], function(BaseApp, Class, List) {
-
   return Class(BaseApp, {
-
     id: 'exampleRss',
-
     uiTree: [
       {
         id: 'newsList',             // internal id
         type: List,                 // type of ui widget
         dataPath: '/news/',         // data which will be used to populate the list
         itemInnerTemplate:          // override default template for list items
-            '<div class="clearfix">' +
-            '    <h1 class="title"><%= item.title %></h1>' +
-            '    <div class="description"><%= item.description %></div>' +
-            '    <a href="<%= item.link %>"><%= item.link %></a>' +
-            '</div>'
+          '<div class="clearfix">' +
+          '  <h1 class="title"><%= item.title %></h1>' +
+          '  <div class="description"><%= item.description %></div>' +
+          '  <a href="<%= item.link %>"><%= item.link %></a>' +
+          '</div>'
       }
     ],
-
     dataTree: [
       {
         id: 'news',
@@ -40,6 +35,5 @@ Joshfire.define(['joshfire/app', 'joshfire/class', 'joshfire/uielements/list'], 
         ]
       }
     ]
-
   });
 });

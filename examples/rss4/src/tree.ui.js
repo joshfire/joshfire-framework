@@ -9,11 +9,8 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
 Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list', 'joshfire/uielements/panel'], function(Class, UITree, List, Panel) {
-
   return Class(UITree, {
-
     buildTree: function() {
       // Create UI widgets
       return [
@@ -26,12 +23,12 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
           moveOnFocus: true,          // keep focused element on display 
           scroller: true,             // add scrolling capabilities used for iOS
           itemInnerTemplate:          // override default template for list items
-              '<div class="clearfix">' +
-              '    <h1 class="title"><%= item.title %></h1>' +
-              '    <img src="<%= item.image %>" />' +
-              '    <div class="description"><%= item.description %></div>' +
-              '</div>',
-          loadingTemplate: null,       // override default template used during data loading
+            '<div class="clearfix">' +
+            '  <h1 class="title"><%= item.title %></h1>' +
+            '  <img src="<%= item.image %>" />' +
+            '  <div class="description"><%= item.description %></div>' +
+            '</div>',
+          loadingTemplate: null       // override default template used during data loading
         },
         {
           id: 'newsInfo',             // internal id
@@ -57,11 +54,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
               '  </div>' +
               '</div>',
           loadingTemplate: null       // override default template used during data loading
-
         }
       ];
     }
-
   });
-
 });

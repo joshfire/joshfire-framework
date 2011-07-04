@@ -11,27 +11,18 @@
 
 
 Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', 'joshfire/utils/splashscreen'], function(BaseApp, Class, Data, UI, SC) {
-  Joshfire.debug = true;
-
   return Class(BaseApp, {
-
     id: 'exampleRss',
-
     uiClass: UI,
     dataClass: Data,
-
     setup: function(callback) {
       var self = this;
-
       var splashscreen = new SC();
-
       self.ui.element('/newsList').subscribe('data', function(ev) {
         splashscreen.remove();
       });
-
       if (callback)
         callback(null, true);
     }
-
   });
 });

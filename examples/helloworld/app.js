@@ -9,7 +9,6 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
 Joshfire.define(['joshfire/app', 'joshfire/class'], function(App, Class) {
   return Class(App, {
     uiTree: {
