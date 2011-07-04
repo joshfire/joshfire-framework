@@ -9,20 +9,14 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
 Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore', 'joshfire/vendor/jquery'], function(App, Class, _, $) {
-  Joshfire.debug = true;
-
   return Class(App, {
-
     setup: function(callback) {
       var self = this;
       this.__super();
-
       self.ui.element('/newsList').subscribe('data', function(ev) {
         self.ui.moveTo('focus', '/newsList');
       });
-
       Joshfire.require(['public/js/jquery.colorbox-min'], function() {
         self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
           self.ui.moveTo('focus', '/newsInfo');
@@ -34,11 +28,9 @@ Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore', 'joshf
           });
         });
       });
-
-      if (callback)
+      if (callback) {
         callback(null, true);
+      }
     }
-
   });
-
 });

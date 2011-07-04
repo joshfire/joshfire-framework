@@ -9,30 +9,21 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
 Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'], function(App, Class, _) {
-  Joshfire.debug = true;
-
   return Class(App, {
-
     setup: function(callback) {
       var self = this;
       this.__super();
-
       self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
         self.ui.element('/newsInfo').show();
       });
-
       self.ui.element('/newsInfo').subscribe('input', function(ev, id) {
         if (id[0] == 'enter') {
           self.ui.element('/newsInfo').hide();
         }
       });
-
       if (callback)
         callback(null, true);
     }
-
   });
-
 });

@@ -9,30 +9,20 @@
  * Date: Wed Jun 29 16:25:37 2011
  */
 
-
-Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', 'joshfire/utils/splashscreen', 'joshfire/vendor/jquery'],
-function(BaseApp, Class, Data, UI, SC, $) {
-  Joshfire.debug = true;
-
+Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', 'joshfire/utils/splashscreen', 'joshfire/vendor/jquery'], function(BaseApp, Class, Data, UI, SC, $) {
   return Class(BaseApp, {
-
     id: 'exampleRss',
-
     uiClass: UI,
     dataClass: Data,
-
     setup: function(callback) {
       var self = this;
-
       var splashscreen = new SC();
       self.ui.element('/newsList').subscribe('data', function(ev) {
         splashscreen.remove();
       });
-
       self.ui.element('/newsList').subscribe('data', function(ev) {
         self.ui.moveTo('focus', '/newsList');
       });
-
       Joshfire.require(['public/js/jquery.colorbox-min'], function() {
         self.ui.element('/newsInfo').subscribe('afterRefresh', function(ev, id) {
           self.ui.moveTo('focus', '/newsInfo');
@@ -43,9 +33,7 @@ function(BaseApp, Class, Data, UI, SC, $) {
           });
         });
       });
-
       callback(null, true);
     }
-
   });
 });
