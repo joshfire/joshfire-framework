@@ -26,7 +26,8 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data', './app', 'joshfire/util
     datasource.request({
       url: 'http://search.twitter.com/search.json',
       data: _.extend(defaultParams, search),
-      dataType: 'jsonp'},
+      dataType: 'jsonp'
+    },
     function(error, tweets) {
       if (error) {
         return callback(err, null);
@@ -42,8 +43,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.data', './app', 'joshfire/util
         };
       });
       return callback(null, res);
-    }
-    );
+    });
   }
 
   return Class(DataTree, {
