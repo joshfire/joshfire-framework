@@ -46,6 +46,7 @@ def compile(export_dir="export/"):
   for f in os.listdir(export_dir):
     if f.endswith(".js") and not f.endswith(".compiled.js"):
       f = export_dir + f
+      print "Compiling %s ..." % f
       fc = f.replace(".js", ".compiled.js")
       with settings(hide("warnings"), warn_only=True):
         size = [os.path.getsize(f)]
@@ -59,7 +60,7 @@ def compile(export_dir="export/"):
         local("java -jar %s/optimizer/closure-compiler/compiler.jar --js=%s --js_output_file=%s" % (buildPath, fctmp, fc))
 
         local("rm %s" % fctmp)
-        return
+        continue
         
         size.append(os.path.getsize(fc))
         local("%s/optimizer/uglify-js/bin/uglifyjs --overwrite %s" % (buildPath, fc))
