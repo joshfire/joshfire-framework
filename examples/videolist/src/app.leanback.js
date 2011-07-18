@@ -10,8 +10,8 @@
  */
 
 
-Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'],
-  function(App, Class,  _) {
+Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore', 'joshfire/utils/activitymonitor'],
+  function(App, Class,  _, ActivityMonitor) {
 
     return Class(App, {
 
@@ -20,21 +20,18 @@ Joshfire.define(['./app', 'joshfire/class', 'joshfire/vendor/underscore'],
 
         this.__super();
 
+        
         self.subscribe('afterInsert', function(ev, info) {
-          var videolist = self.ui.element('/videolist'),
-              controls = self.ui.element('/controls');
-
-          function update() {
-            videolist.show();
-            videolist.hideDelayed();
-            if (controls) {
-              controls.show();
-              controls.hideDelayed();
-            }
-          }
-
-          $('#' + self.id + '__').mousemove(update);
-          self.ui.element('/videolist').subscribe('fresh', update);
+          
+          self.activitymonitor = new ActivityMonitor(self,{
+            'uiActive':['/videolist','/controls'],
+            'delay':5000
+          });
+          
+          self.ui.element('/videolist').subscribe('fresh', function() {
+            self.activitymonitor.activate();
+          });
+          
         });
 
         callback(null, true);

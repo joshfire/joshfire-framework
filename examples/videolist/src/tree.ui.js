@@ -52,7 +52,6 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
           scrollBarClass: 'scrollbar',
           dataPath: '/videos/',
           autoScroll: true,
-          hideDelay: 5000,
           onSelect: function(ui,evt,data) {
             document.getElementById(app.ui.element('/player').htmlId).style.display = 'block';
             app.ui.element('/player').play(ui.getDataById(data[0][0]));
@@ -66,8 +65,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
         aUITree.push(  {
             id: 'controls',
             type: 'mediacontrols',
-            media: '/player',
-            hideDelay: 5000
+            media: '/player'
           });
       }
       
