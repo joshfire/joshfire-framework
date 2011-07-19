@@ -1,3 +1,44 @@
-<h1>The datasoure utility</h1>
+<h1>The datasource util</h1>
 
-<p>Will be documented soon, for now checkout the <a href="/doc/api/symbols/utils_datasource.html">API documentation</a></p>
+<h2>Purpose</h2>
+
+<p>Use this class to make HTTP requests and parse their results in JSON or JSONP.</p>
+
+<h2>Implementation</h2>
+
+<p>In the browser adapter, <code>DataSource.request()</code> uses <code>jQuery.ajax</code> and accepts 
+  the same <a href="http://api.jquery.com/jQuery.ajax/">parameter format</a> excepted the callbacks, to stay
+  coherent with <a href="/doc/develop/standards">Joshfire's conventions</a>:</p>
+  
+<pre><code class="javascript">
+  // jQuery.ajax code
+  jQuery.ajax({
+    url:"/api/session",
+    type:"POST",
+    success:function(data) {
+      console.log("success!");
+    },
+    error:function() {
+      console.log("error!");
+    }
+  });
+  
+  // Equivalent DataSource code
+  var ds = new DataSource();
+  ds.request({
+    url:"/api/session",
+    type:"POST"
+  },function(error,data) {
+    if (error) {
+      console.log("error!");
+      return;
+    }
+    console.log("success!");
+  });
+  
+</code></pre>
+
+<p>In the node adapter, most of the options of <code>DataSource.request()</code> are implemented using
+  the <code>request</code> npm module and we target 100% compatibility in the future.</p>
+  
+<p>For more details checkout the <a href="/doc/api/symbols/utils_datasource.html">API documentation</a></p>
