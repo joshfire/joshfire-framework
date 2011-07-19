@@ -10,12 +10,12 @@
  - Began splitting init() and setup() methods for UI Elements to simplify initialization logic for developers 
     (setup() calls are all delayed until other UI elements have been instanciated)
  - Added a CommonJS-compatible template folder when compiling
- - PubSub: added token as thid callback parameter (allows easier unsubscription)
+ - PubSub: added token as third callback parameter (allows easier unsubscription)
  - Refactored refresh() methods to allow easy "show more" implementations
  - Added an item cache to the tree, in addition to the query cache
  - controls option for iOS videos
  - Improved examples
- - Updated iScroll to 4.1.7
+ - Updated iScroll to 4.1.7, jQuery to 1.6.2
  - Removed unused dateutil import in build tools (thanks @shinuza)
 
 0.9.0 (29/06/2011)
