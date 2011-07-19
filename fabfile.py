@@ -179,6 +179,10 @@ def gjslint(files = 0):
 
 
 
+
+def optimizeexamples():
+    local("cd examples/videolist/ && fab optimize")
+
 """
 Reindent & apply Google coding style
 """
