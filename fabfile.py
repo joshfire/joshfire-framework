@@ -106,6 +106,10 @@ def targz():
   #fix some files
   local("rm export/lib/uielements/forminput.js")
   
+  #include optimized builds in examples
+  optimizeexamples()
+  local("cp -R examples/videolist/export export/examples/videolist/")
+  
   local("cd export && tar czvf %s *" % finalname)
   
   return finalname
