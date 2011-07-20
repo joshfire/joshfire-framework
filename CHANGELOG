@@ -1,5 +1,6 @@
 0.9.1 (20/07/2011)
 -------------------
+ - Added [has/toggle/add/remove]HtmlClass methods to all UI Elements and a 'htmlClass' option
  - Added an ActivityMonitor util for managing visibility of UI components when the user is idle
  - Documentation improvements (thanks to Stephane Legouffe & others for proof-reading)
  - Fixes in Android and iOS lists when using the native-like scroller
