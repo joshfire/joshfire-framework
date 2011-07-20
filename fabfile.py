@@ -265,6 +265,16 @@ def fixjsstyle(files = 0):
         file.close()
 
 
+def preparerelease():
+    optimizeexamples()
+    jsdoc()
+    fixjsstyle()
+    fixjsstyle()
+    copyright()
+    bootstraps()
+    
+    #todo tests once more
+
 
 def copyright(files = 0):
     """
