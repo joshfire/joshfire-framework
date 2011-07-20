@@ -1,13 +1,37 @@
 /*!
- * Joshfire Framework 0.9.0
+ * Joshfire Framework 0.9.1
  * http://framework.joshfire.com/
  *
  * Copyright 2011, Joshfire
  * Dual licensed under the GPL Version 2 and a Commercial license.
  * http://framework.joshfire.com/license
  *
- * Date: Wed Jun 29 16:25:37 2011
+ * Date: Wed Jul 20 19:23:09 2011
  */
+
+
+/*!
+* Joshfire Framework 0.9.1
+* http://framework.joshfire.com/
+*
+* Copyright 2011, Joshfire
+* Dual licensed under the GPL Version 2 and a Commercial license.
+* http://framework.joshfire.com/license
+*
+* Date: Wed Jul 20 19:18:46 2011
+*/
+
+
+/*!
+* Joshfire Framework 0.9.0
+* http://framework.joshfire.com/
+*
+* Copyright 2011, Joshfire
+* Dual licensed under the GPL Version 2 and a Commercial license.
+* http://framework.joshfire.com/license
+*
+* Date: Wed Jun 29 16:25:37 2011
+*/
 
 
 var Q = QUnit;
@@ -41,8 +65,8 @@ Joshfire.require(['joshfire/class', 'joshfire/tree.ui', 'joshfire/app', 'joshfir
 
     uiTree: [{
       id: 'listStatic1',
-      htmlId:'htmlIdTest',
-      htmlClass:'htmlClassTest',
+      htmlId: 'htmlIdTest',
+      htmlClass: 'htmlClassTest',
       type: 'list',
       dataPath: '/static'
     },
@@ -65,42 +89,42 @@ Joshfire.require(['joshfire/class', 'joshfire/tree.ui', 'joshfire/app', 'joshfir
     stop();
 
     setTimeout(function() {
-      
-      equals("htmlIdTest",app.ui.element('/listStatic1').getHtmlId());
-      
-      ok(app.ui.element('/listStatic1').hasHtmlClass("htmlClassTest"));
-      
-      ok($("#htmlIdTest")[0].className.match(/htmlClassTest/));
-      
-      app.ui.element('/listStatic1').addHtmlClass("CLASSTeST");
-      ok(app.ui.element('/listStatic1').hasHtmlClass("CLASSTeST"));
-      ok($("#htmlIdTest")[0].className.match(/CLASSTeST/));
-      
-      app.ui.element('/listStatic1').toggleHtmlClass("CLASSTeST");
-      
-      ok(!$("#htmlIdTest")[0].className.match(/CLASSTeST/));
-      ok(!app.ui.element('/listStatic1').hasHtmlClass("CLASSTeST"));
-      
-      app.ui.element('/listStatic1').toggleHtmlClass("CLASSTeST");
-      
-      ok(app.ui.element('/listStatic1').hasHtmlClass("CLASSTeST"));
-      ok($("#htmlIdTest")[0].className.match(/CLASSTeST/));
-      
-      
-      equals("htmlIdTest",app.ui.element('/listStatic1').getHtmlId());
-      
-      ok(app.ui.element('/listStatic1').hasHtmlClass("htmlClassTest"));
-      
-      ok($("#htmlIdTest")[0].className.match(/htmlClassTest/));
-      
-      
-      equals("htmlIdTest",app.ui.element('/listStatic1').getHtmlId());
-      
-      ok(app.ui.element('/listStatic1').hasHtmlClass("htmlClassTest"));
-      
-      ok($("#htmlIdTest")[0].className.match(/htmlClassTest/));
-      
-      
+
+      equals('htmlIdTest', app.ui.element('/listStatic1').getHtmlId());
+
+      ok(app.ui.element('/listStatic1').hasHtmlClass('htmlClassTest'));
+
+      ok($('#htmlIdTest')[0].className.match(/htmlClassTest/));
+
+      app.ui.element('/listStatic1').addHtmlClass('CLASSTeST');
+      ok(app.ui.element('/listStatic1').hasHtmlClass('CLASSTeST'));
+      ok($('#htmlIdTest')[0].className.match(/CLASSTeST/));
+
+      app.ui.element('/listStatic1').toggleHtmlClass('CLASSTeST');
+
+      ok(!$('#htmlIdTest')[0].className.match(/CLASSTeST/));
+      ok(!app.ui.element('/listStatic1').hasHtmlClass('CLASSTeST'));
+
+      app.ui.element('/listStatic1').toggleHtmlClass('CLASSTeST');
+
+      ok(app.ui.element('/listStatic1').hasHtmlClass('CLASSTeST'));
+      ok($('#htmlIdTest')[0].className.match(/CLASSTeST/));
+
+
+      equals('htmlIdTest', app.ui.element('/listStatic1').getHtmlId());
+
+      ok(app.ui.element('/listStatic1').hasHtmlClass('htmlClassTest'));
+
+      ok($('#htmlIdTest')[0].className.match(/htmlClassTest/));
+
+
+      equals('htmlIdTest', app.ui.element('/listStatic1').getHtmlId());
+
+      ok(app.ui.element('/listStatic1').hasHtmlClass('htmlClassTest'));
+
+      ok($('#htmlIdTest')[0].className.match(/htmlClassTest/));
+
+
       start();
     },
     500);

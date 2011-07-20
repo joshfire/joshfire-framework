@@ -1,13 +1,37 @@
 /*!
- * Joshfire Framework 0.9.0
+ * Joshfire Framework 0.9.1
  * http://framework.joshfire.com/
  *
  * Copyright 2011, Joshfire
  * Dual licensed under the GPL Version 2 and a Commercial license.
  * http://framework.joshfire.com/license
  *
- * Date: Wed Jun 29 16:25:37 2011
+ * Date: Wed Jul 20 19:23:09 2011
  */
+
+
+/*!
+* Joshfire Framework 0.9.1
+* http://framework.joshfire.com/
+*
+* Copyright 2011, Joshfire
+* Dual licensed under the GPL Version 2 and a Commercial license.
+* http://framework.joshfire.com/license
+*
+* Date: Wed Jul 20 19:18:46 2011
+*/
+
+
+/*!
+* Joshfire Framework 0.9.0
+* http://framework.joshfire.com/
+*
+* Copyright 2011, Joshfire
+* Dual licensed under the GPL Version 2 and a Commercial license.
+* http://framework.joshfire.com/license
+*
+* Date: Wed Jun 29 16:25:37 2011
+*/
 
 
 Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list', 'joshfire/uielements/panel'], function(Class, UITree, List, Panel) {
@@ -23,7 +47,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/list
           orientation: 'left',        // change navigations properties of the grid
           dataPath: '/news',          // data which will be used to populate the list
           noMouseAutoFocus: true,     // deactivate focus on mouse hover
-          moveOnFocus: true,          // keep focused element on display 
+          moveOnFocus: true,          // keep focused element on display
           itemInnerTemplate:          // override default template for list items
               '<div class="clearfix">' +
               '    <h1 class="title"><%= item.title %></h1>' +

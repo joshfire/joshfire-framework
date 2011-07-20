@@ -104,6 +104,7 @@ def targz():
   local("cd export && tar xvf a.tar && rm a.tar")
   
   #fix some files
+  local("rm export/lib/uielements/forminput.js")
   
   local("cd export && tar czvf %s *" % finalname)
   
@@ -263,6 +264,16 @@ def fixjsstyle(files = 0):
         file.write("".join(lines))
         file.close()
 
+
+def preparerelease():
+    optimizeexamples()
+    jsdoc()
+    fixjsstyle()
+    fixjsstyle()
+    copyright()
+    bootstraps()
+    
+    #todo tests once more
 
 
 def copyright(files = 0):
