@@ -22,7 +22,7 @@ function Page() {
 }
 
 /**
-@extends Page
+@augments Page
 @constructor
 */
 function ThreeColumnPage() {

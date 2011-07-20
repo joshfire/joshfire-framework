@@ -3028,7 +3028,7 @@ function(UIElement, Class, _) {
     *Browser adapter, UI Element
     * @class
     * @name adapters_browser_uielement
-    * @extends uielement
+    * @augments uielement
     */
   var _id = function(elt) {
     return document.getElementById(elt);
@@ -3126,7 +3126,7 @@ function(UIElement, Class) {
   /**
    * @class
    * @name uielements_panel
-   * @extends uielement
+   * @augments uielement
    */
     return Class(UIElement, 
      /**
@@ -3166,7 +3166,7 @@ function(J, Class, Tree, _, Panel) {
   /**
   * @class
   * @name tree.ui
-  * @extends tree
+  * @augments tree
   */
   return Class(Tree,
       /**
@@ -3305,7 +3305,7 @@ function(Tree) {
   /**
   * @class
   * @name tree.data
-  * @extends tree
+  * @augments tree
   */
   return Tree;
 }
@@ -13522,7 +13522,7 @@ function(UIElement, Class, _) {
   /**
   * @class
   * @name uielements_list
-  * @extends uielement
+  * @augments uielement
   */
    return Class(UIElement, 
     /**
@@ -14849,7 +14849,7 @@ function(List, Class,Grid, _, iScrollPlugin) {
   *  List component for android adapter. Uses iScroll4 . iScroll object is reachable via this.iScroller
   * @class
   * @name adapters_android_uielements_list
-  * @extends uielements_list
+  * @augments uielements_list
   */
    return Class(List, 
     /**
@@ -15079,7 +15079,7 @@ function(UIElement, Class, Grid, $, _) {
   /**
   * @class
   * @name adapters_browser_uielements_mediacontrols
-  * @extends uielement
+  * @augments uielement
   */
    return Class(UIElement, 
     /**
@@ -15371,7 +15371,7 @@ function(UIElement, Class) {
    * A video, with basic interactions : play, pause, ..
    * @class
    * @name uielements_video
-   * @extends uielement
+   * @augments uielement
    */
     return Class(UIElement, 
      /**
@@ -15471,7 +15471,7 @@ function(Video, Class, _) {
    *  Video component on android
    * @class
    * @name adapters_android_uielements_video.medialement
-   * @extends uielements_video
+   * @augments uielements_video
    */
     return Class(Video, {
       playWithStaticUrl: function(options) {

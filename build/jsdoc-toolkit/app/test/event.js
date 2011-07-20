@@ -27,7 +27,7 @@
 /**
  * @name Bakery
  * @constructor
- * @extends Kitchen
+ * @augments Kitchen
  */
 
 /**

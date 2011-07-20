@@ -47,7 +47,7 @@ function Shape(){
 
 /**
  * Create a new Hexagon instance.
- * @extends Shape
+ * @augments Shape
  * @class Hexagon is a class that is a <i>logical</i> sublcass of 
  * {@link Shape} (thanks to the <code>&#64;extends</code> tag), but in 
  * reality it is completely unrelated to Shape.
@@ -287,7 +287,7 @@ Square.prototype.setHeight = function(height){
 /**
  * Create a new Circle instance based on a radius.
  * @class Circle class is another subclass of Shape
- * @extends Shape
+ * @augments Shape
  * @param {int} radius The optional radius of this {@link Circle }
  * @mixin Square.prototype.setWidth as this.setDiameter
  */
