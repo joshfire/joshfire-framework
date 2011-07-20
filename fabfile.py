@@ -104,6 +104,7 @@ def targz():
   local("cd export && tar xvf a.tar && rm a.tar")
   
   #fix some files
+  local("rm export/lib/uielements/forminput.js")
   
   local("cd export && tar czvf %s *" % finalname)
   
