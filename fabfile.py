@@ -287,17 +287,12 @@ def copyright(files = 0):
     files = files.split(" ") if not files==0 else list_js_files()
     for file in files:
         name = file
-        file = open(file, "r+")
-        lines = file.readlines()
-        if len(lines) < 5 or not lines[5].rstrip()==header[5].rstrip():
-            file.seek(0)
-            file.truncate()
-            file.write("\n".join(header))
-            file.write("".join(lines))
-            print fabric.colors.green("FIXED ", True) + name
-        else:
-            print fabric.colors.white("CLEAN ", True) + name 
-        file.close()
+        buf = open(file, "r+").read()
+        buf = "\n".join(header)+"\n"+re.compile("^\s*((\/\*\!(.*?)\*\/)\s*)*",re.DOTALL).sub("",buf)
+        open(file,"w").write(buf)
+
+        print fabric.colors.green("COPYRIGHTED ", True) + name
+        
 
 
 def __getCopyrightHeader():
