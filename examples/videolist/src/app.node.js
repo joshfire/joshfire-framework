@@ -6,7 +6,7 @@
  * Dual licensed under the GPL Version 2 and a Commercial license.
  * http://framework.joshfire.com/license
  *
- * Date: Wed Jul 20 20:19:42 2011
+ * Date: Wed Jul 20 20:23:43 2011
  */
 
 Joshfire.define(['joshfire/app', 'joshfire/class', 'joshfire/router', 'joshfire/tree.ui', './tree.data', 'templates_compiled/js/page', 'templates_compiled/js/index', 'templates_compiled/js/video'], function(App,Class,Router,UITree,Data,PageTemplate,IndexTemplate,VideoTemplate) {
