@@ -8,6 +8,14 @@
 
 <h2>Developers</h2>
 
+<h3>I've downloaded the Joshfire framework archive, extracted it, but the examples won't run</h3>
+<p>The current archive contains symbolic links, which some operating systems such as Windows have trouble dealing with. <br />
+	This issue will be fixed in a near future update.<br />
+	Currently, to overcome this, you should copy the <code>joshfire/lib</code> directory within the examples folders, and rename it <code>joshfire</code>.<br />
+	You should now have a <code>joshfire/examples/helloworld/joshfire/</code> folder, mirroring the <code>joshfire/lib/</code> one.<br />
+	If you encountered this bug on an unix-based system, or if the aboved instructions didn't fix it, please contact <a href='https://groups.google.com/group/joshfire-dev'>our support</a>
+</p>
+
 <h3>I've added a new file in an adapter but when I try to require it, only the base class gets loaded.</h3>
 
 <p>This is probably because you forgot to run <code>fab bootstraps</code> to rebuild the list of modules provided by the adapter.</p>
