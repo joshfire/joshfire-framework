@@ -9,11 +9,10 @@
  * Date: Wed Jul 20 20:23:43 2011
  */
 
-Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) {
+Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/video.mediaelement', 'joshfire/uielements/list'], function(Class, UITree, VideoMediaElement, List) {
   return Class(UITree, {
 
     buildTree: function() {
-
       // UI specialization : the video list scrolls from top to bottom only on iOS
       if (Joshfire.adapter === 'ios') {
         var bVerticalList = true;
@@ -27,7 +26,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
       var aUITree = [
         {
           id: 'player',
-          type: 'video.mediaelement',
+          type: VideoMediaElement,
           // path to the .swf player file, if needed
           mediaElementDefaultsPluginPath: './swf/',
           autoShow: false,
@@ -39,7 +38,7 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui'], function(Class, UITree) 
         },
         {
           id: 'videolist',
-          type: 'list',
+          type: List,
           // modify default content of the <li>. item correspond to the childrens of videos/ in the data tree
           itemInnerTemplate: '<figure><img src="<%= item.image %>"/><figcaption><%=item.label%></figcaption></figure>',
           scroller: true,
