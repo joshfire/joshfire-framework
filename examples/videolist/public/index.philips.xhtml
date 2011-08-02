@@ -18,13 +18,12 @@ function mylog(txt){
 	var date	=	new Date(),
 		content='<br />'+/*date.getHours()+':'+date.getMinutes()+' '+*/txt;
 //	document.getElementById('log').innerHTML += content;
-		document.getElementById('title').innerHTML += content;//.replace(/<br \/>/,' | ');
+		document.getElementById('log').innerHTML += content.replace(/<br \/>/,' | ');
 //		console.warn(content.replace(/<br \/>/,''));
 }
 function doSomething(){
 //	document.getElementById('video').play();
 	 Joshfire.require(['src/app.philips'], function(App) {
-       mylog('app required');
 		window._app = new App();
      });
 }

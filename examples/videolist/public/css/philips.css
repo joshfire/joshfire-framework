@@ -16,3 +16,10 @@ h1{
   font-size:14px;
   display:none;
 }
+  .focused{
+    border:1px solid orange;
+  }
+  .selected{
+    border:1px solid lightgreen;
+
+  }

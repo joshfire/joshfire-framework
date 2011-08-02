@@ -12,10 +12,7 @@
 Joshfire.define(['./app', 'joshfire/class'], function(App, Class) {
   return Class(App, {
     setup: function(callback) {
-      // alert('setup samsungtv');
-      mylog('app.philips start setup');
       this.__super(callback);
-      mylog('app.philips setup done');
 
     }
   });
