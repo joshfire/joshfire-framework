@@ -27,7 +27,7 @@
     "contributors": [],
     "dependencies": {
         "express": "2.3.x",
-        "mkdirp": "0.0.x",
+        "mkdirp": "0.0.5",
         "sharedjs": "0.0.x",
         "socket.io": "0.7.x"
     },
