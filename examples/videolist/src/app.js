@@ -22,7 +22,7 @@ Joshfire.define(['joshfire/app', 'joshfire/class', './tree.data', './tree.ui', '
           self.ui.element('/videolist').subscribe('data', _.once(function(ev, data) {
             self.ui.setState('focus', '/videolist');
             // Behaviour specialization : some environments should not autoplay the video, as it is fullscreen
-            if (Joshfire.adapter === 'samsungtv' || Joshfire.adapter === 'browser'){//   || Joshfire.adapter=='philips') {
+            if (Joshfire.adapter === 'samsungtv' || Joshfire.adapter === 'browser'  || Joshfire.adapter=='philips') {
               // retrieve the first element in the list and select it.
               // the onSelect method in tree.ui.js does the rest
               self.ui.element('/videolist').selectByIndex(0);
