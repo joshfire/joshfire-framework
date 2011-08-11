@@ -3,6 +3,7 @@ import fabric.colors
 import sys
 import os
 import json
+import platform
 
 import re,shutil
 
@@ -54,7 +55,7 @@ def compile(export_dir="export/"):
         # ugly patch to remove console call until issue 124 is resolved > https://github.com/mishoo/UglifyJS/issues/124
         fctmp = fc + ".tmp"
         local("%s/optimizer/uglify-js/bin/uglifyjs -b -ns --output %s %s" % (buildPath, fctmp, f))
-        local("sed -i '' 's/__JOSHFIRE_REMOVE_ME;//g' %s" % fctmp)
+        local("sed %s 's/__JOSHFIRE_REMOVE_ME;//g' %s" % ("-i ''" if 'Darwin' in platform.platform() else "-i''", fctmp))
 
         # --compilation_level ADVANCED_OPTIMIZATIONS
         local("java -jar %s/optimizer/closure-compiler/compiler.jar --js=%s --js_output_file=%s" % (buildPath, fctmp, fc))
