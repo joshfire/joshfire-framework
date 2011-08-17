@@ -151,7 +151,7 @@ def setup_remote_environment():
   
   # setups the directory structure
   run('mkdir -p %s' % (env.path))
-  run('cd %s; mkdir -p releases; mkdir -p shafabric.colors.red; mkdir -p packages;' % (env.path))
+  run('cd %s; mkdir -p releases; mkdir -p shared; mkdir -p packages;' % (env.path))
 
 def symlink_current_release():
   "Symlink our current release"
