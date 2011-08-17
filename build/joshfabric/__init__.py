@@ -141,9 +141,10 @@ def list_js_files(**args):
 # Helpers. These are called by other functions rather than directly
 def upload_tar_from_export():
 
-  local('cd %s && tar zcvf %s.tar.gz *' % (env.export_dir,env.release))
+  local('cd %s && tar zcvf ../%s.tar.gz .' % (env.export_dir,env.release))
   run('mkdir %s/releases/%s' % (env.path,env.release))
-  put('%s/%s.tar.gz' % (env.export_dir,env.release), '%s/packages/' % env.path)
+  put('%s.tar.gz' % (env.release), '%s/packages/' % env.path)
+  local('rm %s.tar.gz' % (env.release))
   run('cd %s/releases/%s && tar zxf ../../packages/%s.tar.gz' % (env.path,env.release,env.release))
   run('rm %s/packages/%s.tar.gz' % (env.path,env.release))
 
