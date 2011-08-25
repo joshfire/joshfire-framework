@@ -7,6 +7,8 @@ import platform
 
 import re,shutil
 
+import adapters
+
 
 def prod():
   """
@@ -33,7 +35,8 @@ def optimize():
 
   # Run optimizer
   buildPath = str(globals()["__path__"][0]) + "/.."
-  local("node %s/optimizer/concat.js build/build.js" % buildPath)
+  local("node %s/optimizer/concat.js build/optimize.js" % buildPath)
+
 
 
 def compile(export_dir="export/"):
@@ -41,7 +44,7 @@ def compile(export_dir="export/"):
   Generate compiled / minified version of the code
   """
 
-  outPath = __getOutput()
+  outPath = __getJSONFile("build/optimize.js")['dir']
   buildPath = str(globals()["__path__"][0]) + "/.."
 
   for f in os.listdir(export_dir):
@@ -75,12 +78,11 @@ def compile(export_dir="export/"):
 
 
 
-def __getBuildFile():
+def __getJSONFile(filename):
   """
   Get output directory from build file (quite an ugly hack)
   """
   try:
-    filename = "build/build.js"
     buildfile = open(filename, "r")
     tmpfile = open(filename + ".json", "w")
     tmpfile.write(buildfile.read().replace("'", "\'") + "; process.stdout.write(JSON.stringify(build));")
@@ -90,12 +92,14 @@ def __getBuildFile():
       output = local("node %s.json && rm %s.json" % (filename, filename), True)
     return json.loads(output)
   except IOError:
-    print "Error: Buildfile does not exists."
+    print "Error: file does not exists."
 
 
-def __getOutput():
-    return __getBuildFile()['dir']
 
+def export():
+  data = __getJSONFile("build/build.js")
+  for item in data["modules"]:
+    adapters.__dict__[item['adapter']].export(data, item)
 
 
 
@@ -205,8 +209,8 @@ def exportAdapterSamsungTV( finalZipPathRoot="./export/" ):
       if(filename.endswith('-samsungtv.css')):
         shutil.copyfile(sourceFiles+'/'+filename, finalZipPathRoot+'/css/yourapp.css')
     
-    # try to get the app requireJS id from the build.js file
-    modules = __getBuildFile()['modules']
+    # try to get the app requireJS id from the optimize.js file
+    modules = __getJSONFile("build/optimize.js")['modules']
     for module in modules:
       if(module['adapter'] == 'samsungtv'):
         appID = module['js']['include'][0]

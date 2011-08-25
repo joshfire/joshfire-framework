@@ -4,6 +4,7 @@ var exec = require('child_process').exec;
 
 
 var packageFile = process.ARGV[2];
+console.log(packageFile)
 
 var build;
 eval(fs.readFileSync(packageFile,"utf-8"));
