@@ -20,8 +20,14 @@ Browser::Browser(const QUrl& url)
 
     webview->load(url);
 
+
+    // Init JS bridge
+    bridge = new Bridge(this);
+    webview->page()->mainFrame()->addToJavaScriptWindowObject("QTBridge", bridge);
+
+
     if (Joshfire::appTitle != NULL)
-       setWindowTitle(Joshfire::appTitle);
+      setWindowTitle(Joshfire::appTitle);
     else
       connect(webview, SIGNAL(loadFinished(bool)), SLOT(loaded(bool)));
 
