@@ -1,6 +1,7 @@
 
 #include <QtGui>
 #include <QtWebKit>
+#include <QDesktopServices>
 
 #include "bridge.h"
 #include "browser.h"
@@ -20,3 +21,7 @@ void    Bridge::sizeNormal()
   browser->showNormal();
 }
 
+void    Bridge::openURL(QString const& url)
+{
+  QDesktopServices::openUrl(QUrl(url));
+}
