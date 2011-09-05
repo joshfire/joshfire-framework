@@ -11,6 +11,10 @@ def export(data, me):
   appDir = destDir +'/app/'
   srcDir = me['srcDir'] if 'srcDir' in me else data['srcDir']
 
+  version = me['version']
+  icon = me['icon']
+
+
   # Create dest dir
   local("rm -rf %s && mkdir -p %s" % (destDir, destDir))
   local("cp -r %s %s" % (srcDir, appDir))
@@ -21,8 +25,17 @@ def export(data, me):
 
   # Modify cpp files
   sed = "-i ''" if 'Darwin' in platform.platform() else "-i''" 
+
+  local("sed %s 's/JOSHFIRE_APP_NAME/%s/g'      %s" % (sed, data['appName'], destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_APP_ICON_MAC_PATH/%s/g'  %s" % (sed, icon['mac']['path'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_APP_ICON_MAC_NAME/%s/g'  %s" % (sed, icon['mac']['name'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_APP_ICON_WIN_PATH/%s/g'  %s" % (sed, icon['win']['path'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_APP_ICON_WIN_NAME/%s/g'  %s" % (sed, icon['win']['name'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_VERSION_MAJOR/%s/g' %s" % (sed, version['major'], destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_VERSION_MINOR/%s/g' %s" % (sed, version['minor'], destDir +'/CMakeLists.txt'))
+  local("sed %s 's/JOSHFIRE_VERSION_PATCH/%s/g' %s" % (sed, version['patch'], destDir +'/CMakeLists.txt'))
+
   local("sed %s 's/JOSHFIRE_APP_NAME/%s/g' %s" % (sed, data['appName'], destDir +'/Joshfire.desktop'))
-  local("sed %s 's/JOSHFIRE_APP_NAME/%s/g' %s" % (sed, data['appName'], destDir +'/CMakeLists.txt'))
   local("sed %s 's/JOSHFIRE_APP_NAME/\"%s\"/g' %s" % (sed, data['appName'], destDir +'/joshfire.h'))
   local("sed %s 's/JOSHFIRE_APP_PATH/\"qrc:\\/%s\"/g' %s" % (sed, me['index'], destDir +'/joshfire.h'))
 
