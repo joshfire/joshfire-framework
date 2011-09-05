@@ -26,8 +26,8 @@ SET(QT_USE_QTMAIN TRUE)
 
 # Ressources -------------------------------------------------------------------
  
-SET(SRCS browser.cpp main.cpp)
-SET(HEADERS browser.h joshfire.h)
+SET(SRCS main.cpp browser.cpp bridge.cpp)
+SET(HEADERS joshfire.h browser.h bridge.h)
 SET(RESOURCES app.qrc)
  
 QT4_WRAP_CPP(HEADERS_MOC ${HEADERS})

@@ -4,7 +4,8 @@
 #  include <QtGui>
 #  include <QWebView>
 
-//class QWebView;
+#  include "bridge.h"
+
 
 class Browser : public QMainWindow
 {
@@ -19,6 +20,7 @@ protected slots:
 
 private:
     QWebView*	webview;
+    Bridge*   bridge;
 };
 
 #endif // BROWSER_H
