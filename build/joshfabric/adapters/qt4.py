@@ -5,6 +5,19 @@ import re
 import platform
 
 
+sed = "-i ''" if 'Darwin' in platform.platform() else "-i''" 
+
+
+
+def __replace(filename, destDir, rlist):
+  for elem in rlist: 
+    content = elem[1]
+    if isinstance(content, str) or isinstance(content, unicode):
+      content = content.replace('/', '\\/')
+    local("sed %s 's/JOSHFIRE_%s/%s/g'      %s" % (sed, elem[0], content, destDir +'/'+ filename))
+
+
+
 def export(data, me):
 
   destDir = me['destDir'] if 'destDir' in me else data['destDir']
@@ -13,6 +26,7 @@ def export(data, me):
 
   version = me['version']
   icon = me['icon']
+  windows = me['windows']
 
 
   # Create dest dir
@@ -23,23 +37,76 @@ def export(data, me):
   templatePath = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) +"/../../adapters/qt4")
   local("cp -r %s/* %s" % (templatePath, destDir))
 
-  # Modify cpp files
-  sed = "-i ''" if 'Darwin' in platform.platform() else "-i''" 
 
-  local("sed %s 's/JOSHFIRE_APP_NAME/%s/g'      %s" % (sed, data['appName'], destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_APP_ICON_MAC_PATH/%s/g'  %s" % (sed, icon['mac']['path'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_APP_ICON_MAC_NAME/%s/g'  %s" % (sed, icon['mac']['name'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_APP_ICON_WIN_PATH/%s/g'  %s" % (sed, icon['win']['path'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_APP_ICON_WIN_NAME/%s/g'  %s" % (sed, icon['win']['name'].replace('/', '\\/'), destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_VERSION_MAJOR/%s/g' %s" % (sed, version['major'], destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_VERSION_MINOR/%s/g' %s" % (sed, version['minor'], destDir +'/CMakeLists.txt'))
-  local("sed %s 's/JOSHFIRE_VERSION_PATCH/%s/g' %s" % (sed, version['patch'], destDir +'/CMakeLists.txt'))
+  # OSX | LINUX | UNIX
+  # CMakeLists.txt
+  file = 'CMakeLists.txt'
+  list = [
+    ['APP_NAME',          data['appName']]
+  , ['APP_ICON_MAC_PATH', icon['mac']['path']]
+  , ['APP_ICON_MAC_NAME', icon['mac']['name']]
+  , ['APP_ICON_WIN_PATH', icon['win']['path']]
+  , ['APP_ICON_WIN_NAME', icon['win']['name']]
+  , ['VERION_MAJOR',      version['major']]
+  , ['VERION_MINOR',      version['minor']]
+  , ['VERION_PATCH',      version['patch']]
+  ]
+  __replace(file, destDir, list)
 
-  local("sed %s 's/JOSHFIRE_APP_NAME/%s/g' %s" % (sed, data['appName'], destDir +'/Joshfire.desktop'))
-  local("sed %s 's/JOSHFIRE_APP_NAME/\"%s\"/g' %s" % (sed, data['appName'], destDir +'/joshfire.h'))
-  local("sed %s 's/JOSHFIRE_APP_PATH/\"qrc:\\/%s\"/g' %s" % (sed, me['index'], destDir +'/joshfire.h'))
+  # WINDOWS
+  # joshfire_win.rc
+  file = 'joshfire_win.rc'
+  list = [
+    ['APP_ICON_WIN_PATH', icon['win']['path']]
+  , ['APP_ICON_WIN_NAME', icon['win']['name']]
+  ]
+  __replace(file, destDir, list)
 
-  # Generate qrc file
+  # Joshfire.pro
+  file = 'Joshfire.pro'
+  list = [
+    ['APP_NAME',          data['appName']]
+  , ['WIN_DESTDIR',       windows['exportPath']]
+  , ['WIN_SRCPATH',       ' '.join(windows['srcPath'])]
+  ]
+  __replace(file, destDir, list)
+
+
+  # Joshfire.iss
+  file = 'Joshfire.iss'
+  list = [
+    ['APP_NAME',          data['appName']]
+  , ['VERION_MAJOR',      version['major']]
+  , ['VERION_MINOR',      version['minor']]
+  , ['VERION_PATCH',      version['patch']]
+  ]
+  __replace(file, destDir, list)
+
+  dependencies = ''
+  for filename in windows['dependencies']:
+    dirname = os.path.dirname(filename)
+    if dirname:
+      dirname = '\\' + dirname.replace('/', '\\')
+    filename = filename.replace('/', '\\')
+    dependencies += 'Source: "%s"; DestDir: "{app}%s"\r\n' % (filename, dirname) 
+
+  file = open(destDir +'/'+ file, "a")
+  file.write(dependencies)
+  file.close()
+
+
+
+  # COMMON
+
+  # joshfire.h
+  file = 'joshfire.h'
+  list = [
+    ['APP_NAME',          data['appName']]
+  , ['APP_PATH',          me['index']]
+  ]
+  __replace(file, destDir, list)
+
+  # app.qrc generation
   content = ""
   tmp = ""
   rpath = "/"

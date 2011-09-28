@@ -33,9 +33,11 @@ Browser::Browser(const QUrl& url)
 
 
     // Menu
+    /*
     QMenu *menuHelp = menuBar()->addMenu(tr("&Help"));
     menuHelp->addAction(tr("Update"), this, SLOT(voidSlot()));
     menuHelp->addAction(tr("About"), this, SLOT(voidSlot()));
+    */
 
     setCentralWidget(webview);
     setUnifiedTitleAndToolBarOnMac(true);
