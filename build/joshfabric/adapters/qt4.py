@@ -47,9 +47,9 @@ def export(data, me):
   , ['APP_ICON_MAC_NAME', icon['mac']['name']]
   , ['APP_ICON_WIN_PATH', icon['win']['path']]
   , ['APP_ICON_WIN_NAME', icon['win']['name']]
-  , ['VERION_MAJOR',      version['major']]
-  , ['VERION_MINOR',      version['minor']]
-  , ['VERION_PATCH',      version['patch']]
+  , ['VERSION_MAJOR',     version['major']]
+  , ['VERSION_MINOR',     version['minor']]
+  , ['VERSION_PATCH',     version['patch']]
   ]
   __replace(file, destDir, list)
 
@@ -76,9 +76,9 @@ def export(data, me):
   file = 'Joshfire.iss'
   list = [
     ['APP_NAME',          data['appName']]
-  , ['VERION_MAJOR',      version['major']]
-  , ['VERION_MINOR',      version['minor']]
-  , ['VERION_PATCH',      version['patch']]
+  , ['VERSION_MAJOR',     version['major']]
+  , ['VERSION_MINOR',     version['minor']]
+  , ['VERSION_PATCH',     version['patch']]
   ]
   __replace(file, destDir, list)
 
