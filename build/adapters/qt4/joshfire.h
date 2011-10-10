@@ -3,8 +3,8 @@
 
 namespace Joshfire
 {
-  char const * const appTitle = JOSHFIRE_APP_NAME;
-  char const * const appPath = JOSHFIRE_APP_PATH;
+  char const * const appTitle = "JOSHFIRE_APP_NAME";
+  char const * const appPath = "qrc:/JOSHFIRE_APP_PATH";
 }
 
 #endif // JOSHFIRE_H
