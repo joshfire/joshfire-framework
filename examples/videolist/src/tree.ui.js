@@ -51,7 +51,6 @@ Joshfire.define(['joshfire/class', 'joshfire/tree.ui', 'joshfire/uielements/vide
           dataPath: '/videos/',
           autoScroll: true,
           onSelect: function(ui,evt,data) {
-            mylog('play video '+ ui.getDataById(data[0][0]).label)
             document.getElementById(app.ui.element('/player').htmlId).style.display = 'block';
             app.ui.element('/player').play(ui.getDataById(data[0][0]));
           }
