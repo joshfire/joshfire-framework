@@ -2,9 +2,7 @@ var fs = require("fs");
 var path = require("path");
 var exec = require('child_process').exec;
 
-
-var packageFile = process.ARGV[2];
-console.log(packageFile)
+var packageFile = process.argv[2];
 
 var build;
 eval(fs.readFileSync(packageFile,"utf-8"));
