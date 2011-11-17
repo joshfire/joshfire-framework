@@ -3,6 +3,7 @@
 
 #  include <QtGui>
 #  include <QWebView>
+#  include <QDialog>
 
 #  include "bridge.h"
 
@@ -12,7 +13,8 @@ class Browser : public QMainWindow
     Q_OBJECT
 
 public:
-    Browser(const QUrl& url);
+  Browser(const QUrl& url, bool showInspector);
+  virtual ~Browser();
 
 protected slots:
     void loaded(bool status);
@@ -21,6 +23,8 @@ protected slots:
 private:
     QWebView*	webview;
     Bridge*   bridge;
+
+    QDialog* inspectorDialog;
 };
 
 #endif // BROWSER_H
