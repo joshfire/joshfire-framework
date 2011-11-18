@@ -6,7 +6,8 @@
 #include "joshfire.h"
 
 
-Browser::Browser(const QUrl& url)
+Browser::Browser(const QUrl& url, bool showInspector)
+  : inspectorDialog(0)
 {
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
@@ -41,6 +42,27 @@ Browser::Browser(const QUrl& url)
 
     setCentralWidget(webview);
     setUnifiedTitleAndToolBarOnMac(true);
+
+    if (showInspector)
+    {
+      webview->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
+      this->inspectorDialog = new QDialog(this);
+      QHBoxLayout* layout = new QHBoxLayout(this->inspectorDialog);
+      QWebInspector* inspector = new QWebInspector(this->inspectorDialog);
+      layout->addWidget(inspector);
+
+      inspector->setPage(webview->page());
+
+      this->inspectorDialog->show();
+      this->inspectorDialog->raise();
+      this->inspectorDialog->activateWindow();
+    }
+}
+
+Browser::~Browser()
+{
+  delete this->inspectorDialog;
 }
 
 void    Browser::loaded(bool status)
