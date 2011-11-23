@@ -130,7 +130,7 @@ build.modules.forEach(function(mod) {
     var src = readRelative(baseFile,jsInclude);
     
     //Find the "Joshfire.define() call" and the function source
-    var m = src.match(/Joshfire\.define\(\s*(\[.*?\])\s*\,\s*([\s\S]+\})\)\;/);
+    var m = src.match(/Joshfire\.define\(\s*(\[[\s\S]*?\])\s*\,\s*([\s\S]+\})\)\;/);
     //[\s\S]
     
     dependencies = [];
