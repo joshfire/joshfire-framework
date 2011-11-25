@@ -17,6 +17,7 @@ public slots:
   void    sizeFullScreen();
   void    sizeNormal();
   void    openURL(QString const& url);
+  void    saveCookies();
 
 private:
     Browser*	browser;
