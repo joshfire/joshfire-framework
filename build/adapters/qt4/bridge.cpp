@@ -25,3 +25,8 @@ void    Bridge::openURL(QString const& url)
 {
   QDesktopServices::openUrl(QUrl(url));
 }
+
+void    Bridge::saveCookies()
+{
+  browser->storeCookies();
+}
