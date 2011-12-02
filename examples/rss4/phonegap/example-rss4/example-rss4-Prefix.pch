@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'example-rss4' target in the 'example-rss4' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif

@@ -16,6 +16,7 @@ doc/content/api/
 doc/.sass-cache/
 node_modules/
 examples/*/export/*
+examples/*/phonegap/www/*
 examples/*/.sass-cache/*
 doc/content/api/
 examples/videolist/joshfire/
