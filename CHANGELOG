@@ -1,3 +1,29 @@
+0.9.2 (??/12/2011)
+-------------------
+ - Improved list.scrollToNext/scrollToPrev methods, support for vertical lists
+ - Add phonegap build directory in examples/rss4
+ - Fixed bug on formInput onChange/onKeyUp
+ - Fix multi-line defines() breaking optimizer
+ - Split click and rightclick events in browser adapter
+ - Add a helloworld with samsungtv example
+ - Various cleanups
+ - Updated to Underscore.js 1.2.2
+ - Fix a few typos in documentation
+ - Added a small cookie util
+ - Added memory & localstorage caches for the data layer w/ pluggable API
+ - iOS adapter: Handle swipe events, touch event fixes
+ - remove npm mkdirp dependency
+ - Change list refocus behaviour
+ - Fix YouTube UIElement
+ - Fabric: Include hidden files in deployment tgz
+ - Fabric: fixed sed differents behaviour on unix/linux
+ - New formInput UIElement
+ - API change: UIElement.inserted => UIElement.set/getState("inserted")
+ - iScroll update & other scrolling fixes on mobile
+ - Android & iOS adapter: Finish switch from jQuery to Zepto
+ - New PhilipsTV adapter
+ - New Desktop binary adapter with Qt
+
 0.9.1 (20/07/2011)
 -------------------
  - Added [has/toggle/add/remove]HtmlClass methods to all UI Elements and a 'htmlClass' option
