@@ -1,1 +1,1 @@
-{"ios": ["app", "uielement", "inputs/touch", "uielements/list", "uielements/mediacontrols", "uielements/video.mediaelement", "uielements/video.youtube", "utils/datasource"]}
+{"ios": ["app", "uielement", "inputs/touch", "uielements/list", "uielements/mediacontrols", "uielements/panel", "uielements/video.mediaelement", "uielements/video.youtube", "utils/datasource"]}
