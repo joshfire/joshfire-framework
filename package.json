@@ -28,7 +28,8 @@
     "dependencies": {
         "express": "2.3.x",
         "sharedjs": "0.0.x",
-        "socket.io": "0.7.x"
+        "socket.io": "0.7.x",
+        "diveSync":"0.2.0"
     },
     "licenses": [
           {
