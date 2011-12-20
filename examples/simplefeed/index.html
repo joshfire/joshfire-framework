@@ -3,11 +3,19 @@
   <head>
     <meta charset="UTF-8">
     <title>Simple feed</title>
-    <script data-joshfire-bootstrap src="http://localhost:40021/bootstrap/4eeb72a641ef85ff07000280/auto/auto/"></script>
+    <script data-joshfire-bootstrap src="http://localhost:40021/bootstrap/4eeb72a641ef85ff07000280/auto/desktop/"></script>
   </head>
   <body>
     <div id="splashscreen"></div>
 
+
+    <ul id="simplefeedlist"></ul>
+
+    <script type="text/template" id="template-simplefeedlist">
+      <li><%= item.name %></li>
+    </script>
+
+    <script>Joshfire.debug=true;</script>
     <script data-main="app" src="../../lib/adapters/ios/bootstrap.js"></script>
   </body>
 </html>
