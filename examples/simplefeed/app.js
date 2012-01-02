@@ -1,11 +1,13 @@
-define(["joshlib!collection","joshlib!ui/list"],function(Collection, List) {
+define(["joshlib!collection","joshlib!factorycollection","joshlib!ui/list"],function(Collection, FactoryCollection, List) {
 	
-	var c = new Collection([],{datasource:Joshfire.factory.getDataSource("main")});
+	//var c = new Collection([],{datasource:Joshfire.factory.getDataSource("home")});
+	var c = FactoryCollection("home");
 
-	var l = new List({
+	new List({
 		el:"#simplefeedlist",
 		itemTemplateEl:"#template-simplefeedlist",
-		collection:c
+		collection:c,
+		scroller:true
 	});
 
 	c.fetch();
