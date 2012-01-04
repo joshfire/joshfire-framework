@@ -1,4 +1,0 @@
-Files explanation :
-- widgetlist.xml is an XML template used by the TV to know where your packaged applications are
-- structure/ is the content of the packaged application, used when the application is compiled to be sent to the emulator or packaged to go on the TV
-- Icon_set contains the official PSD files recommanded by Samsung if you need to make the 4 application icons that will be visible on the Smart Hub
