@@ -3,18 +3,20 @@ QT      +=  webkit network
 HEADERS = \  
     browser.h \
     joshfire.h \
-    bridge.h
+    bridge.h \
+    cookiejar.h
 SOURCES =   main.cpp \
     browser.cpp \
-    bridge.cpp
+    bridge.cpp \
+    cookiejar.cpp
 RESOURCES = \
     app.qrc
 
 
-DESTDIR    = JOSHFIRE_WIN_DESTDIR
+DESTDIR    = ../windows
 
 TARGETPATH = $(DESTDIR)
-TARGET     = JOSHFIRE_APP_NAME
+TARGET     = Jnuine
 
 CONFIG     += qt
 CONFIG     += release
@@ -26,7 +28,7 @@ win32:RC_FILE = joshfire_win.rc
 
 # install
 sources.files = $$SOURCES $$HEADERS $$RESOURCES *.pro
-sources.path += JOSHFIRE_WIN_SRCPATH
+sources.path += C:/Users/Joshfire/Documents/app C:/Qt/include
 target.path  += $$[QT_INSTALL_PLUGINS]/imageformats
 
 INSTALLS     += target sources

@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 2.8)
 
 # General ----------------------------------------------------------------------
 
-PROJECT(JOSHFIRE_APP_NAME)
+PROJECT(Jnuine)
 
 INCLUDE(${CMAKE_CURRENT_BINARY_DIR})
 
@@ -29,8 +29,8 @@ SET(QT_USE_QTMAIN TRUE)
 
 # Ressources -------------------------------------------------------------------
  
-SET(SRCS main.cpp browser.cpp bridge.cpp)
-SET(HEADERS joshfire.h browser.h bridge.h)
+SET(SRCS main.cpp browser.cpp bridge.cpp cookiejar.cpp)
+SET(HEADERS joshfire.h browser.h bridge.h cookiejar.h)
 SET(RESOURCES app.qrc)
  
 
@@ -59,11 +59,11 @@ ENDIF (WIN32)
 # For Apple set the icns file containing icons
 IF(APPLE)
   # set how it shows up in the Info.plist file
-  SET(MACOSX_BUNDLE_ICON_FILE JOSHFIRE_APP_ICON_MAC_NAME) 
+  SET(MACOSX_BUNDLE_ICON_FILE icon.icns) 
   # set where in the bundle to put the icns file
-  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/JOSHFIRE_APP_ICON_MAC_PATH/JOSHFIRE_APP_ICON_MAC_NAME PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  SET_SOURCE_FILES_PROPERTIES(${CMAKE_CURRENT_SOURCE_DIR}/app/icon.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   # include the icns file in the target
-  SET(SRCS ${SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/JOSHFIRE_APP_ICON_MAC_PATH/JOSHFIRE_APP_ICON_MAC_NAME)
+  SET(SRCS ${SRCS} ${CMAKE_CURRENT_SOURCE_DIR}/app/icon.icns)
 ENDIF(APPLE)
 
 
@@ -71,7 +71,7 @@ ENDIF(APPLE)
 IF(APPLE)
   ADD_CUSTOM_TARGET(dmg 
     COMMAND cpack -G DragNDrop ${CMAKE_CURRENT_BINARY_DIR}/CPackConfig.cmake
-    #COMMAND ${QT_BINARY_DIR}/macdeployqt ${CMAKE_CURRENT_BINARY_DIR}/JOSHFIRE_APP_NAME.app -no-plugins -dmg
+    #COMMAND ${QT_BINARY_DIR}/macdeployqt ${CMAKE_CURRENT_BINARY_DIR}/Jnuine.app -no-plugins -dmg
     WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
     DEPENDS ${PROJECT_NAME}
   )
@@ -80,7 +80,7 @@ ENDIF(APPLE)
 
 
 #  CMake's way of creating an executable
-ADD_EXECUTABLE(JOSHFIRE_APP_NAME MACOSX_BUNDLE #WIN32
+ADD_EXECUTABLE(Jnuine MACOSX_BUNDLE #WIN32
   ${SRCS}
   ${HEADERS_MOC}
   ${QRC_FILES}
@@ -88,7 +88,7 @@ ADD_EXECUTABLE(JOSHFIRE_APP_NAME MACOSX_BUNDLE #WIN32
 
 
 # Tell CMake which libraries we need to link our executable against.
-TARGET_LINK_LIBRARIES(JOSHFIRE_APP_NAME ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES})
+TARGET_LINK_LIBRARIES(Jnuine ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES} ${QT_QTNETWORK_LIBRARIES})
 
 
 
@@ -99,23 +99,23 @@ TARGET_LINK_LIBRARIES(JOSHFIRE_APP_NAME ${QT_LIBRARIES} ${QT_QTWEBKIT_LIBRARIES}
 
 SET(plugin_dest_dir bin/plugins)
 SET(qtconf_dest_dir bin)
-SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/JOSHFIRE_APP_NAME")
+SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/Jnuine")
 
 IF(APPLE)
-  SET(plugin_dest_dir JOSHFIRE_APP_NAME.app/Contents/PlugIns)
-  #SET(plugin_dest_dir JOSHFIRE_APP_NAME.app/Contents/MacOS)
-  SET(qtconf_dest_dir JOSHFIRE_APP_NAME.app/Contents/Resources)
-  SET(APPS "\${CMAKE_INSTALL_PREFIX}/JOSHFIRE_APP_NAME.app")
+  SET(plugin_dest_dir Jnuine.app/Contents/PlugIns)
+  #SET(plugin_dest_dir Jnuine.app/Contents/MacOS)
+  SET(qtconf_dest_dir Jnuine.app/Contents/Resources)
+  SET(APPS "\${CMAKE_INSTALL_PREFIX}/Jnuine.app")
 ENDIF(APPLE)
 
 IF(WIN32)
-  SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/JOSHFIRE_APP_NAME.exe")
+  SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/Jnuine.exe")
 ENDIF(WIN32)
 
 
 # Install the application, on Apple, the bundle is at the root of the
 # install tree, and on other platforms it'll go into the bin directory.
-INSTALL(TARGETS JOSHFIRE_APP_NAME 
+INSTALL(TARGETS Jnuine 
   BUNDLE DESTINATION . COMPONENT Runtime
   RUNTIME DESTINATION bin COMPONENT Runtime
 )
@@ -155,15 +155,15 @@ INSTALL(CODE "
   " COMPONENT Runtime)
 
 
-#SET(CPACK_PACKAGE_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/JOSHFIRE_APP_NAME")
-SET(CPACK_PACKAGE_VERSION_MAJOR "JOSHFIRE_VERSION_MAJOR")
-SET(CPACK_PACKAGE_VERSION_MINOR "JOSHFIRE_VERSION_MINOR")
-SET(CPACK_PACKAGE_VERSION_PATCH "JOSHFIRE_VERSION_PATCH")
+#SET(CPACK_PACKAGE_FILE_NAME "${CMAKE_CURRENT_BINARY_DIR}/Jnuine")
+SET(CPACK_PACKAGE_VERSION_MAJOR "1")
+SET(CPACK_PACKAGE_VERSION_MINOR "0")
+SET(CPACK_PACKAGE_VERSION_PATCH "0")
 IF(APPLE)
-  SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_ICON_MAC_PATH/JOSHFIRE_APP_ICON_MAC_NAME")
+  SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/app/icon.icns")
 ENDIF(APPLE)
 IF(WIN32)
-  SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_ICON_WIN_PATH/JOSHFIRE_APP_ICON_WIN_NAME")
+  SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/app/icon.ico")
 ENDIF(WIN32)
 
 

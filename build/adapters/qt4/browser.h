@@ -13,15 +13,13 @@ class Browser : public QMainWindow
     Q_OBJECT
 
 public:
-  Browser(const QUrl& url, bool showInspector);
-  virtual ~Browser();
+    Browser(const QUrl& url, bool showInspector);
+    virtual ~Browser();
 
 public:
-    void storeCookies(QUrl url = QUrl());
     QNetworkCookieJar* getNetworkCookieJar();
 
 protected slots:
-    void _restoreCookies();
     void loaded(bool status);
     void voidSlot() {}
 

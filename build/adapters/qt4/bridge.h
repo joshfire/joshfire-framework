@@ -14,10 +14,9 @@ public:
     Bridge(Browser* b);
 
 public slots:
-  void    sizeFullScreen();
-  void    sizeNormal();
-  void    openURL(QString const& url);
-  void    saveCookies();
+    void    sizeFullScreen();
+    void    sizeNormal();
+    void    openURL(QString const& url);
 
 private:
     Browser*	browser;
