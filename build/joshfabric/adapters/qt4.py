@@ -139,4 +139,5 @@ def export(data, me):
       for file in qrc['html']:
         local("sed %s 's/href=\"/href=\"qrc:\\//g' %s%s" % (sed, appDir, file))
         local("sed %s 's/src=\"/src=\"qrc:\\//g' %s%s" % (sed, appDir, file))
+        local("sed %s 's/src=\"qrc:\\/http/src=\"http/g' %s%s" % (sed, appDir, file))
 
