@@ -56,7 +56,7 @@ IF (WIN32)
 ENDIF (WIN32)
 
 # Set package name (ex: dmg name)
-CPACK_PACKAGE_FILE_NAME=JOSHFIRE_APP_NAME
+SET(CPACK_PACKAGE_FILE_NAME JOSHFIRE_APP_NAME)
 
 
 # For Apple set the icns file containing icons
