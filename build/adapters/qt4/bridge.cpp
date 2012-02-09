@@ -21,12 +21,6 @@ void    Bridge::sizeNormal()
   browser->showNormal();
 }
 
-void    Bridge::resize(int width, int height)
-{
-  browser->resize(width, height);
-}
-
-
 void    Bridge::openURL(QString const& url)
 {
   QDesktopServices::openUrl(QUrl(url));

@@ -27,6 +27,7 @@ def export(data, me):
   version = me['version']
   icon = me['icon']
   windows = me['windows']
+  size = me['size']
 
 
   # Create dest dir
@@ -103,6 +104,8 @@ def export(data, me):
   list = [
     ['APP_NAME',          data['appName']]
   , ['APP_PATH',          me['index']]
+  , ['APP_WIDTH',         size['width']]
+  , ['APP_HEIGHT',        size['height']]
   ]
   __replace(file, destDir, list)
 

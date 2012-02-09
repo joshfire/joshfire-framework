@@ -11,6 +11,8 @@ Browser::Browser(const QUrl& url, bool showInspector)
 {
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
+    resize(Joshfire::appWidth, Joshfire::appHeight);
+
     webview = new QWebView(this);
 
     webview->page()->networkAccessManager()->setCookieJar(new CookieJar(this));

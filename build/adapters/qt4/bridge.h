@@ -16,7 +16,6 @@ public:
 public slots:
     void    sizeFullScreen();
     void    sizeNormal();
-    void    resize(int width, int height);
     void    openURL(QString const& url);
 
 private:
