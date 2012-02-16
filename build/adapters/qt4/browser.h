@@ -7,6 +7,7 @@
 
 #  include "bridge.h"
 
+#   define DEBUG_FLAG ("--debug-js")
 
 class Browser : public QMainWindow
 {
@@ -18,6 +19,7 @@ public:
 
 public:
     QNetworkCookieJar* getNetworkCookieJar();
+    QWebFrame* getMainFrame();
 
 protected slots:
     void loaded(bool status);

@@ -31,10 +31,7 @@ Browser::Browser(const QUrl& url, bool showInspector)
     webview->page()->mainFrame()->addToJavaScriptWindowObject("QTBridge", bridge);
 
 
-    if (Joshfire::appTitle != NULL)
-      setWindowTitle(Joshfire::appTitle);
-    else
-      connect(webview, SIGNAL(loadFinished(bool)), SLOT(loaded(bool)));
+    connect(webview, SIGNAL(loadFinished(bool)), SLOT(loaded(bool)));
 
 
     // Menu
@@ -72,7 +69,15 @@ Browser::~Browser()
 void    Browser::loaded(bool status)
 {
   (void)status;
-  setWindowTitle(webview->title());
+  if (Joshfire::appTitle != NULL)
+    setWindowTitle(Joshfire::appTitle);
+  else
+    setWindowTitle(webview->title());
+
+  if (Joshfire::appUrlSchemeCallbackName != NULL
+          && QCoreApplication::arguments().length() > 1
+          && !QCoreApplication::arguments().contains(DEBUG_FLAG))
+    this->getMainFrame()->evaluateJavaScript(Joshfire::appUrlSchemeCallbackName + QString("(") + QCoreApplication::arguments().join(" ") + QString(");"));
 }
 
 QNetworkCookieJar* Browser::getNetworkCookieJar()
@@ -83,5 +88,14 @@ QNetworkCookieJar* Browser::getNetworkCookieJar()
   if (((page = webview->page()) != 0)
       && ((networkAccessManager = page->networkAccessManager()) != 0))
     return networkAccessManager->cookieJar();
+  return 0;
+}
+
+QWebFrame* Browser::getMainFrame()
+{
+  QWebPage* page;
+
+  if ((page = webview->page()) != 0)
+    return page->mainFrame();
   return 0;
 }

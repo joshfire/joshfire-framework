@@ -7,8 +7,6 @@ import platform
 
 sed = "-i ''" if 'Darwin' in platform.platform() else "-i''" 
 
-
-
 def __replace(filename, destDir, rlist):
   for elem in rlist: 
     content = elem[1]
@@ -28,6 +26,8 @@ def export(data, me):
   icon = me['icon']
   windows = me['windows']
   size = me['size']
+  if me['scheme'] is not None:
+    scheme = me['scheme']
 
 
   # Create dest dir
@@ -81,7 +81,6 @@ def export(data, me):
   , ['VERSION_MINOR',     version['minor']]
   , ['VERSION_PATCH',     version['patch']]
   ]
-  __replace(file, destDir, list)
 
   dependencies = ''
   for filename in windows['dependencies']:
@@ -91,9 +90,21 @@ def export(data, me):
     filename = filename.replace('/', '\\')
     dependencies += 'Source: "%s"; DestDir: "{app}%s"\r\n' % (filename, dirname) 
 
-  file = open(destDir +'/'+ file, "a")
-  file.write(dependencies)
-  file.close()
+  oFile = open(destDir +'/'+ file, "a")
+  oFile.write(dependencies)
+
+  if scheme is not None:    
+    list.append(['APP_PROTOCOL', scheme['protocol']])
+    oFile.write("\r\n\r\n[Registry]\r\n\
+Root: HKCR; Subkey: \"JOSHFIRE_APP_PROTOCOL\"; Flags: uninsclearvalue;\r\n\
+Root: HKCR; Subkey: \"JOSHFIRE_APP_PROTOCOL\"; ValueType: string; ValueName: \"\"; ValueData: \"URL:JOSHFIRE_APP_NAME-Protocol\"; Flags: uninsclearvalue;\r\n\
+Root: HKCR; Subkey: \"JOSHFIRE_APP_PROTOCOL\"; ValueType: string; ValueName: \"URL Protocol\"; ValueData: \"\"; Flags: uninsclearvalue;\r\n\
+Root: HKCR; Subkey: \"JOSHFIRE_APP_PROTOCOL\DefaultIcon\"; ValueType: string; ValueName: \"\"; ValueData: \"{app}\JOSHFIRE_APP_NAME.exe,0\"; Flags: uninsclearvalue;\r\n\
+Root: HKCR; Subkey: \"JOSHFIRE_APP_PROTOCOL\shell\open\command\"; ValueType: string; ValueName: \"\"; ValueData: \"{app}\JOSHFIRE_APP_NAME.exe \"\"%1\"\"\"; Flags: uninsclearvalue;\r\n\r\n")
+
+  oFile.close()
+
+  __replace(file, destDir, list)
 
 
 
@@ -107,6 +118,12 @@ def export(data, me):
   , ['APP_WIDTH',         size['width']]
   , ['APP_HEIGHT',        size['height']]
   ]
+
+  if scheme is not None:
+    list.append(['APP_CALLBACK_NAME', scheme['callbackName']])
+  else:
+    list.append(['APP_CALLBACK_NAME', ''])
+
   __replace(file, destDir, list)
 
   # app.qrc generation

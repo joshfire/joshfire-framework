@@ -12,7 +12,7 @@ int main(int argc, char** argv)
     QApplication::setGraphicsSystem("raster");
 
     QApplication app(argc, argv);
-    bool showInspector = QCoreApplication::arguments().contains("--debug-js");
+    bool showInspector = QCoreApplication::arguments().contains(DEBUG_FLAG);
 
     QUrl url(Joshfire::appPath);
 
