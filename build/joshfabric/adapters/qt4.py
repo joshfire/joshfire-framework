@@ -52,30 +52,6 @@ def export(data, me):
   , ['VERSION_MINOR',     version['minor']]
   , ['VERSION_PATCH',     version['patch']]
   ]
-
-  if scheme is not None:
-    oFile = open(destDir + "/Info.plist", "a")
-
-    oFile.write("<key>CFBundleURLTypes</key>\n\
-<array>\n\
-    <dict>\n\
-        <key>CFBundleURLName</key>\n\
-        <string>" + scheme['protocol'] + " url</string>\n\
-        <key>CFBundleURLSchemes</key>\n\
-        <array>\n\
-            <string>" + scheme['protocol'] + "</string>\n\
-        </array>\n\
-    </dict>\n\
-</array>\n\
-<key>NSUIElement</key>\n\
-<true/>\n")
-    oFile.close()
-    oFile = open(destDir +'/'+ file, "a")
-    oFile.write("IF(APPLE)\n\
-  SET(CPACK_BUNDLE_PLIST ./Info.plist)\n\
-ENDIF(APPLE)\n")
-    oFile.close()
-
   __replace(file, destDir, list)
 
   # WINDOWS
