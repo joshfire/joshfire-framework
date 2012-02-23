@@ -169,9 +169,63 @@ IF(WIN32)
   SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_ICON_WIN_PATH/JOSHFIRE_APP_ICON_WIN_NAME")
 ENDIF(WIN32)
 
-
-# To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
-# where CPackConfig.cmake is created by including CPack
-# And then there's ways to customize this as well
-SET(CPACK_BINARY_DRAGNDROP ON)
-include(CPack)
+IF(WIN32 OR UNIX)
+  # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
+  # where CPackConfig.cmake is created by including CPack
+  # And then there's ways to customize this as well
+  SET(CPACK_BINARY_DRAGNDROP ON)
+  include(CPack)
+ELSE(WIN32 OR UNIX)
+  ## Create the Info.plist file 
+  file(WRITE "${BUILD_DIR}/${CPACK_PACKAGE_FILE_NAME}.app/Contents/Info.plist" 
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+"<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">"
+"<plist version=\"1.0\">"
+"<dict>"
+"        <key>CFBundleDevelopmentRegion</key>"
+"        <string>English</string>"
+"        <key>CFBundleExecutable</key>"
+"        <string>${CPACK_PACKAGE_FILE_NAME}</string>"
+"        <key>CFBundleGetInfoString</key>"
+"        <string></string>"
+"        <key>CFBundleIconFile</key>"
+"        <string>${CPACK_PACKAGE_ICON}</string>"
+"        <key>CFBundleIdentifier</key>"
+"        <string></string>"
+"        <key>CFBundleInfoDictionaryVersion</key>"
+"        <string>6.0</string>"
+"        <key>CFBundleLongVersionString</key>"
+"        <string></string>"
+"        <key>CFBundleName</key>"
+"        <string></string>"
+"        <key>CFBundlePackageType</key>"
+"        <string>APPL</string>"
+"        <key>CFBundleShortVersionString</key>"
+"        <string></string>"
+"        <key>CFBundleSignature</key>"
+"        <string>????</string>"
+"        <key>CFBundleVersion</key>"
+"        <string></string>"
+"        <key>CSResourcesFileMapped</key>"
+"        <true/>"
+"        <key>LSRequiresCarbon</key>"
+"        <true/>"
+"        <key>NSHumanReadableCopyright</key>"
+"        <string></string>"
+"        <key>CFBundleURLTypes</key>"
+"        <array>"
+"            <dict>"
+"                <key>CFBundleURLName</key>"
+"                <string>${CPACK_PACKAGE_FILE_NAME} URL</string>"
+"                <key>CFBundleURLSchemes</key>"
+"                <array>"
+"                    <string>JOSHFIRE_APP_PROTOCOL</string>"
+"                </array>"
+"            </dict>"
+"        </array>"
+"        <key>NSUIElement</key>"
+"        <true/>"
+"</dict>"
+"</plist>"
+) 
+ENDIF(WIN32 OR UNIX)

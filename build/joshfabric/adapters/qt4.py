@@ -52,6 +52,10 @@ def export(data, me):
   , ['VERSION_MINOR',     version['minor']]
   , ['VERSION_PATCH',     version['patch']]
   ]
+
+  if scheme is not None:
+    list.append(['APP_PROTOCOL', scheme['protocol']])
+
   __replace(file, destDir, list)
 
   # WINDOWS
