@@ -58,6 +58,23 @@ def export(data, me):
 
   __replace(file, destDir, list)
 
+  # OSX
+  # Info.plist
+  file = 'Info.plist'
+  list = [
+    ['APP_NAME',          data['appName']]
+  , ['APP_ICON_MAC_PATH', icon['mac']['path']]
+  , ['APP_ICON_MAC_NAME', icon['mac']['name']]
+  , ['VERSION_MAJOR',     version['major']]
+  , ['VERSION_MINOR',     version['minor']]
+  , ['VERSION_PATCH',     version['patch']]
+  ]
+
+  if scheme is not None:
+    list.append(['APP_PROTOCOL', scheme['protocol']])
+
+  __replace(file, destDir, list)
+
   # WINDOWS
   # joshfire_win.rc
   file = 'joshfire_win.rc'
