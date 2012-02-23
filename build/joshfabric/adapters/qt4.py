@@ -72,7 +72,7 @@ def export(data, me):
     oFile.close()
     oFile = open(destDir +'/'+ file, "a")
     oFile.write("IF(APPLE)\n\
-  SET(MACOSX_BUNDLE_INFO_PLIST ./Info.plist)\n\
+  SET(CPACK_BUNDLE_PLIST ./Info.plist)\n\
 ENDIF(APPLE)\n")
     oFile.close()
 
