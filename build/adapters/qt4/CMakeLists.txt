@@ -177,8 +177,8 @@ IF(NOT APPLE)
   include(CPack)
 ELSE(NOT APPLE)
   ## Create the Info.plist file 
-  add_custom_command(OUTPUT Info.plist
+  add_custom_command(
+    TARGET do_info.plist
+    POST_BUILD
     COMMAND cp Info.plist "${CMAKE_SOURCE_DIR}/${CPACK_PACKAGE_FILE_NAME}.app/Contents/Info.plist")
-  add_custom_target(do_info.plist)
-  add_dependencies(JOSHFIRE_APP_NAME do_info.plist)
 ENDIF(NOT APPLE)
