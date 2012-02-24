@@ -169,13 +169,13 @@ IF(WIN32)
   SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_ICON_WIN_PATH/JOSHFIRE_APP_ICON_WIN_NAME")
 ENDIF(WIN32)
 
-IF(WIN32 OR UNIX)
+IF(WIN32)
 #   # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
 #   # where CPackConfig.cmake is created by including CPack
 #   # And then there's ways to customize this as well
   SET(CPACK_BINARY_DRAGNDROP ON)
   include(CPack)
-ENDIF(WIN32 OR UNIX)
+ENDIF(WIN32)
 
 IF(APPLE)
   ## Create the Info.plist file 
