@@ -169,13 +169,11 @@ IF(WIN32)
   SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_ICON_WIN_PATH/JOSHFIRE_APP_ICON_WIN_NAME")
 ENDIF(WIN32)
 
-IF(WIN32)
-#   # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
-#   # where CPackConfig.cmake is created by including CPack
-#   # And then there's ways to customize this as well
-  SET(CPACK_BINARY_DRAGNDROP ON)
-  include(CPack)
-ENDIF(WIN32)
+# To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
+# where CPackConfig.cmake is created by including CPack
+# And then there's ways to customize this as well
+SET(CPACK_BINARY_DRAGNDROP ON)
+include(CPack)
 
 IF(APPLE)
   ## Create the Info.plist file 
@@ -183,5 +181,5 @@ IF(APPLE)
     TARGET do_info.plist
     POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy Info.plist "${CMAKE_SOURCE_DIR}/${CPACK_PACKAGE_FILE_NAME}.app/Contents/Info.plist")
-  add_custom_target(do_info.plist ALL)
+  add_custom_target(do_info.plist DMG)
 ENDIF(APPLE)
