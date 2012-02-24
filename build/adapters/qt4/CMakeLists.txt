@@ -172,16 +172,14 @@ ENDIF(WIN32)
 # To Create a package, one can run "cpack -G DragNDrop CPackConfig.cmake" on Mac OS X
 # where CPackConfig.cmake is created by including CPack
 # And then there's ways to customize this as well
-SET(CPACK_BINARY_DRAGNDROP ON)
+#SET(CPACK_BINARY_DRAGNDROP ON)
 
 IF(APPLE)
-  ## Create the Info.plist file 
-  # add_custom_command(
-  #   TARGET do_info.plist
-  #   POST_BUILD
-  #   COMMAND ${CMAKE_COMMAND} -E copy Info.plist "${CMAKE_SOURCE_DIR}/${CPACK_PACKAGE_FILE_NAME}.app/Contents/Info.plist")
-  # add_custom_target(do_info.plist DMG)
-  SET(CPACK_BUNDLE_PLIST Info.plist)
+  SET(CPACK_BUNDLE_NAME JOSHFIRE_APP_NAME)
+  SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "JOSHFIRE_APP_NAME apps")
+  SET(CPACK_PACKAGE_VENDOR JOSHFIRE_APP_NAME)
+  SET(BUNDLE_LOCATION ${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_NAME.app)
+  SET(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/Info.plist")
 ENDIF(APPLE)
 
 include(CPack)
