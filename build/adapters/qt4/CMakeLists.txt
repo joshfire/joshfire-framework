@@ -173,13 +173,16 @@ ENDIF(WIN32)
 # where CPackConfig.cmake is created by including CPack
 # And then there's ways to customize this as well
 SET(CPACK_BINARY_DRAGNDROP ON)
-include(CPack)
 
 IF(APPLE)
   ## Create the Info.plist file 
-  add_custom_command(
-    TARGET do_info.plist
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy Info.plist "${CMAKE_SOURCE_DIR}/${CPACK_PACKAGE_FILE_NAME}.app/Contents/Info.plist")
-  add_custom_target(do_info.plist DMG)
+  # add_custom_command(
+  #   TARGET do_info.plist
+  #   POST_BUILD
+  #   COMMAND ${CMAKE_COMMAND} -E copy Info.plist "${CMAKE_SOURCE_DIR}/${CPACK_PACKAGE_FILE_NAME}.app/Contents/Info.plist")
+  # add_custom_target(do_info.plist DMG)
+  SET(CPACK_BUNDLE_PLIST Info.plist)
 ENDIF(APPLE)
+
+include(CPack)
+
