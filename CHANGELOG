@@ -1,5 +1,6 @@
-0.9.2 (??/12/2011)
+0.9.2 (27/02/2012)
 -------------------
+ - Switch to MIT License
  - Improved list.scrollToNext/scrollToPrev methods, support for vertical lists
  - Add phonegap build directory in examples/rss4
  - Fixed bug on formInput onChange/onKeyUp
@@ -22,7 +23,11 @@
  - iScroll update & other scrolling fixes on mobile
  - Android & iOS adapter: Finish switch from jQuery to Zepto
  - New PhilipsTV adapter
- - New Desktop binary adapter with Qt
+ - New Desktop (Windows, OSX, Linux) binary adapter with Qt
+ - 3D/WebGL Maps, using WebGLEarth library. Fallback on classic 2D maps.
+ - iOS adapter : fix hasTouchEvent() test to allow desktop testing on Chrome 17
+ - Multiselect in iOS & Android lists
+ - Templates can be used on Panels
 
 0.9.1 (20/07/2011)
 -------------------
