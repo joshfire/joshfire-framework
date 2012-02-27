@@ -104,7 +104,8 @@ def targz():
   local("cd export && tar xvf a.tar && rm a.tar")
   
   #fix some files
-  local("rm export/lib/uielements/forminput.js")
+  #local("rm export/lib/uielements/forminput.js")
+  
   
   #include optimized builds in examples
   optimizeexamples()
