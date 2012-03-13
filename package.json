@@ -21,12 +21,12 @@
           {
               "name": "Joshfire",
               "email": "contact@joshfire.com",
-              "web": "http://www.joshfire.com" 
-          } 
+              "web": "http://www.joshfire.com"
+          }
     ],
     "contributors": [],
     "dependencies": {
-        "express": "2.3.x",
+        "express": "> 2.3.x",
         "sharedjs": "0.0.x",
         "socket.io": "0.7.x",
         "diveSync":"0.2.0"
@@ -34,11 +34,11 @@
     "licenses": [
           {
               "type": "GPLv2",
-              "url": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" 
+              "url": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
           },
           {
               "type": "Commercial",
-              "url": "http://framework.joshfire.com/license" 
+              "url": "http://framework.joshfire.com/license"
           }
     ]
 }
