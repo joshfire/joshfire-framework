@@ -84,12 +84,13 @@ def __getJSONFile(filename):
   """
   try:
     buildfile = open(filename, "r")
-    tmpfile = open(filename + ".json", "w")
+    tmpfile = open(filename + ".tmp.js", "w")
     tmpfile.write(buildfile.read().replace("'", "\'") + "; process.stdout.write(JSON.stringify(build));")
     tmpfile.close()
     buildfile.close()
     with settings(hide("warnings", "running", "status", "stdout"), warn_only=True):
-      output = local("node %s.json && rm %s.json" % (filename, filename), True)
+      print 'file %s' % filename
+      output = local("node %s.tmp.js && rm %s.tmp.js" % (filename, filename), True)
     return json.loads(output)
   except IOError:
     print "Error: file does not exists."
