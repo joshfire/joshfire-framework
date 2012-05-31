@@ -1,4 +1,4 @@
-define(["joshlib!collection","joshlib!factorycollection","joshlib!ui/list"],function(Collection, FactoryCollection, List) {
+define(["joshlib!collection","joshlib!factorycollection","joshlib!ui/list","joshlib!router"],function(Collection, FactoryCollection, List, Router) {
 	
 	//var c = new Collection([],{datasource:Joshfire.factory.getDataSource("home")});
 	var c0 = FactoryCollection("main",false,0);
@@ -19,7 +19,24 @@ define(["joshlib!collection","joshlib!factorycollection","joshlib!ui/list"],func
 		scroller:true
 	});
 
-	c0.fetch();
-	c1.fetch();
+
+	var router = Router({
+		routes:{
+			"":"feed1",
+			"feed1":"feed1",
+			"feed2":"feed2"
+		},
+
+		feed1:function() {
+			c0.fetch();
+		},
+
+		feed2:function() {
+			c1.fetch();
+		}
+
+	});
+
+	router.historyStart();
 	
 });
