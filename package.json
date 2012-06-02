@@ -30,7 +30,8 @@
         "sharedjs": "0.0.x",
         "socket.io": "0.7.x",
         "diveSync":"0.2.0",
-        "requirejs":"2.0.1"
+        "requirejs":"2.0.1",
+        "cheerio":"0.7.x"
     },
     "licenses": [
           {

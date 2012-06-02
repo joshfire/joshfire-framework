@@ -14,24 +14,31 @@ http.createServer(function (req, res) {
     //parse startfile to find app startjs
     var startjs = "app.js";
 
+    var clientsideadapter = "ios"; //TODO detect from startfile
+
     if (typeof Joshfire == "undefined") {
       Joshfire = {};
     }
+    window = {};
+    navigator = {};
+    document = {};
     Joshfire.framework = {
-      "adapter":"ios" //TODO detect from startfile
+      "adapter":"node" 
     };
-    Joshfire.framework.adapterDeps = JSON.parse(fs.readFileSync("../../lib/adapters/"+Joshfire.framework.adapter+"/dependencies.json"));
-    Joshfire.framework.adapterModules = JSON.parse(fs.readFileSync("../../lib/adapters/"+Joshfire.framework.adapter+"/modules.json"));
+    Joshfire.framework.adapterDeps = [clientsideadapter].concat(JSON.parse(fs.readFileSync("../../lib/adapters/"+clientsideadapter+"/dependencies.json"))).concat(["serverside"]);
+
+    //works because currently all the adapters have the same modules.json file!!
+    Joshfire.framework.adapterModules = JSON.parse(fs.readFileSync("../../lib/adapters/"+clientsideadapter+"/modules.json"));
 
     var require_instance = requirejs.config({
       context: "ctx-"+Math.random(),
       config:{
-        "joshlib!view":{
-          "startfilecnt":startfilecnt
+        "joshlib!utils/dollar":{
+          "html":startfilecnt
         }
       },
       paths: {
-            //"joshfire-framework": "../../lib",
+            "joshlib-require": "../../lib",
             "joshlib":"../../lib/joshlib"
       }
     });

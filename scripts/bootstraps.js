@@ -33,7 +33,10 @@ for (var name in adaptermodules) {
 		deps = JSON.parse(fs.readFileSync("lib/adapters/"+name+"/dependencies.json","utf-8"));
 	}
 
-	var nsfile = globalnsfile+fs.readFileSync("lib/adapters/"+name+"/global.js", "utf-8");
+	var nsfile = globalnsfile;
+	try {
+		nsfile += fs.readFileSync("lib/adapters/"+name+"/global.js", "utf-8");
+	} catch (e) {}
 
 	nsfile = nsfile.replace("JOSHFIRE_REPLACEME_ADAPTER_MODULES",JSON.stringify(adaptermodules));
 	nsfile = nsfile.replace("JOSHFIRE_REPLACEME_ADAPTER_DEPS",JSON.stringify(deps));
