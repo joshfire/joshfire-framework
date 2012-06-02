@@ -3,7 +3,7 @@ var fs = require("fs"),
 	diveSync = require("diveSync");
 
 
-var js_require = fs.readFileSync("lib/vendor/require.js", "utf-8");
+var js_require = fs.readFileSync("node_modules/requirejs/require.js", "utf-8"); //("lib/vendor/require.js", "utf-8");
 var js_require_joshlib_plugin = fs.readFileSync("lib/joshlib.js","utf-8");
 
 var adapterlist = fs.readdirSync("lib/adapters");
@@ -12,6 +12,7 @@ var adaptermodules = {};
 for (var i=0;i<adapterlist.length;i++) {
 	var adapter = adapterlist[i];
 	var modules = [];
+	if (adapter.match(/^\./)) continue;
 	diveSync("lib/adapters/"+adapter,function(err,file) {
 		var f = file.substring(("lib/adapters/"+adapter).length+1);
 
