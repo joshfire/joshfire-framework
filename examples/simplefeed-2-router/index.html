@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Simple feed</title>
+    <script data-joshfire-bootstrap src="http://factory.joshfire.com/bootstrap/4fb8023d0f7dae0100000745/auto/phone/"></script>
+  </head>
+  <body>
+    <div id="splashscreen"></div>
+
+    <ul id="menu">
+      <li><a href="#feed1">Feed 1</a></li>
+      <li><a href="#feed2">Feed 2</a></li>
+    </ul>      
+
+    <div id="simplefeedlist-1" class="simplefeed"><ul></ul></div>
+
+    <div id="simplefeedlist-2" class="simplefeed"><ul></ul></div>
+
+    <script type="text/template" id="template-simplefeedlist">
+      <li><%= item.name %></li>
+    </script>
+
+    <script>Joshfire.debug=true;</script>
+    <script data-main="app" src="../../lib/adapters/ios/bootstrap.js"></script>
+  </body>
+</html>
