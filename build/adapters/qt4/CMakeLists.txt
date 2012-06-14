@@ -164,6 +164,15 @@ SET(CPACK_PACKAGE_VERSION_MAJOR "JOSHFIRE_VERSION_MAJOR")
 SET(CPACK_PACKAGE_VERSION_MINOR "JOSHFIRE_VERSION_MINOR")
 SET(CPACK_PACKAGE_VERSION_PATCH "JOSHFIRE_VERSION_PATCH")
 IF(APPLE)
+  # CPack/DragNDrop generate a new .plist which is inserted in the bundle.
+  # It is generated using a template which values are supposed to be set in this template.
+  # The following instruction switches the template plist to use the one we've previously
+  # generated which already contains all the correctly set options.
+  set_target_properties(JOSHFIRE_APP_NAME
+    PROPERTIES
+    MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/Info.plist"
+  )
+
   SET(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/JOSHFIRE_APP_ICON_MAC_PATH/JOSHFIRE_APP_ICON_MAC_NAME")
 ENDIF(APPLE)
 IF(WIN32)
