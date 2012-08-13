@@ -15,7 +15,7 @@ var mainfile = process.argv[3];
 var lib_path = path.join(__dirname, "../lib");
 
 var js_require = fs.readFileSync(lib_path+"/vendor/require.js", "utf-8");
-var js_almond = fs.readFileSync(lib_path+"/vendor/almond.min.js", "utf-8");
+var js_almond = fs.readFileSync(lib_path+"/vendor/almond.js", "utf-8");
 
 var js_require_r = fs.readFileSync(lib_path+"/vendor/require.r.js", "utf-8");
 
