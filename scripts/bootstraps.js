@@ -28,7 +28,7 @@ for (var name in adaptermodules) {
 
 	var deps = [];
 
-	if (path.existsSync("lib/adapters/"+name+"/dependencies.json")) {
+	if (fs.existsSync("lib/adapters/"+name+"/dependencies.json")) {
 		deps = JSON.parse(fs.readFileSync("lib/adapters/"+name+"/dependencies.json","utf-8"));
 	}
 

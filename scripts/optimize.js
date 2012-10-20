@@ -25,7 +25,7 @@ var globalnsfile = fs.readFileSync(lib_path+"/global.js", "utf-8");
 
 
 var deps = [];
-if (path.existsSync(lib_path+"/adapters/"+adapter+"/dependencies.json")) {
+if (fs.existsSync(lib_path+"/adapters/"+adapter+"/dependencies.json")) {
 	deps = JSON.parse(fs.readFileSync(lib_path+"/adapters/"+adapter+"/dependencies.json","utf-8"));
 }
 var adaptermodules = JSON.parse(fs.readFileSync(lib_path+"/adapters/"+adapter+"/modules.json","utf-8"));
@@ -44,13 +44,15 @@ var pathfix = "Joshfire={framework:{path:\""+lib_path+"\"}};";
 fs.writeFileSync("joshlib.js",pathfix+nsfile+js_require_joshlib_plugin,"utf-8");
 
 //optimize=none
-exec("node "+lib_path+"/vendor/require.r.js -o  out="+mainfile+".optimized.js name="+mainfile+" baseUrl=.",function(err,stdout,stderr) {
+exec("node "+lib_path+"/vendor/require.r.js -o  out="+mainfile+"."+adapter+".optimized.js name="+mainfile+" baseUrl=.",function(err,stdout,stderr) {
 	
+	console.log(stderr,stdout);
+
 	// then remove the pathfix!
-	var optimized = fs.readFileSync(mainfile+".optimized.js","utf-8");
+	var optimized = fs.readFileSync(mainfile+"."+adapter+".optimized.js","utf-8");
 	optimized = optimized.replace(pathfix.replace(";",""),"1");
 	optimized = js_almond + optimized;
-	fs.writeFileSync(mainfile+".optimized.js",optimized,"utf-8");
+	fs.writeFileSync(mainfile+"."+adapter+".optimized.js",optimized,"utf-8");
 	
 	console.error(stdout,stderr,err);
 	fs.unlink("joshlib.js",function() {
