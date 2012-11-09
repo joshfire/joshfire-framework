@@ -2,6 +2,9 @@ var fs = require("fs"),
 	path = require("path"),
 	exec = require('child_process').exec;
 
+// existsSync moved from "path" to "fs" in Node.js v0.8,
+// keeping the fallback so that the code remains compatible with v0.6
+var existsSync = fs.existsSync || path.existsSync;
 
 if (process.argv.length<=2) {
 	console.error("Format : optimize.js adapter main");
@@ -25,7 +28,7 @@ var globalnsfile = fs.readFileSync(lib_path+"/global.js", "utf-8");
 
 
 var deps = [];
-if (fs.existsSync(lib_path+"/adapters/"+adapter+"/dependencies.json")) {
+if (existsSync(lib_path+"/adapters/"+adapter+"/dependencies.json")) {
 	deps = JSON.parse(fs.readFileSync(lib_path+"/adapters/"+adapter+"/dependencies.json","utf-8"));
 }
 var adaptermodules = JSON.parse(fs.readFileSync(lib_path+"/adapters/"+adapter+"/modules.json","utf-8"));
