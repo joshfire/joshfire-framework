@@ -22,3 +22,4 @@ doc/content/api/
 examples/videolist/joshfire/
 examples/videolist/joshfire/*
 */.DS_Store
+*.sublime-*
