@@ -1,19 +1,8 @@
 Joshfire framework
 ------------------
+Open Source Multi-device JavaScript framework created and maintained by [Joshfire](http://www.joshfire.com).
 
-Framework website is at http://framework.joshfire.com/
+The new version of the framework is built upon [Backbone.js](http://backbonejs.org/).
 
+Documentation for the deprecated previous version is currently available at http://framework.joshfire.com but will move to another URL in early 2013.
 
-Documentation
--------------
-
-Please use our online documentation: http://framework.joshfire.com/doc/
-
-
-Installation
-------------
-
-http://framework.joshfire.com/doc/latest/gettingstarted/installation
-
-
-Please keep in mind that this is a developer preview ;-) Your feedback is welcome!
