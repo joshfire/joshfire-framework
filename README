@@ -4,5 +4,4 @@ Open Source Multi-device JavaScript framework created and maintained by [Joshfir
 
 The new version of the framework is built upon [Backbone.js](http://backbonejs.org/).
 
-Documentation for the deprecated previous version is currently available at http://framework.joshfire.com but will move to another URL in early 2013.
-
+Documentation of the deprecated previous version is not available online anymore. It can still be checked in the v0.9 branch: https://github.com/joshfire/joshfire-framework/tree/old-master
