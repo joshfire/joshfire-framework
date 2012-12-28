@@ -24,7 +24,7 @@ def bootstraps():
     """
 
     requirejs = open("lib/vendor/require.js").read()
-    requirejs_node = open("lib/vendor/require.node.js").read()
+    # requirejs_node = open("lib/vendor/require.node.js").read()
 
     namespace = open("lib/global.js").read()
 
@@ -73,10 +73,11 @@ def bootstraps():
         bootstrap = __getCopyrightHeader() + "\n\n"
 
         if c == "node":
-            bootstrap += patched_namespace + namespace_adapter + requirejs + requirejs_node + open("lib/adapters/%s/global.exec.js" % c).read()
+            print "We no longer handle node adapter"
+            # bootstrap += patched_namespace + namespace_adapter + requirejs + requirejs_node + open("lib/adapters/%s/global.exec.js" % c).read()
 
             # patch needed in require.js
-            bootstrap = bootstrap.replace("var require, define;", "")
+            # bootstrap = bootstrap.replace("var require, define;", "")
 
         else:
             bootstrap += requirejs + patched_namespace + namespace_adapter
