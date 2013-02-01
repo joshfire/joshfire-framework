@@ -1,44 +1,41 @@
 {
-   "name" : "joshfire",
-   "version" : "0.9.1",
-   "main" : "./lib/main",
-   "description": "Multi-device JavaScript Framework",
-   "keywords": [
-          "joshfire",
-          "framework",
-          "javascript",
-          "multidevice",
-          "multi-device",
-          "crossdevice",
-          "cross-device",
-          "nodejs",
-          "samsungtv",
-          "googletv",
-          "ios",
-          "android"
-    ],
-    "maintainers": [
-          {
-              "name": "Joshfire",
-              "email": "contact@joshfire.com",
-              "web": "http://www.joshfire.com"
-          }
-    ],
-    "contributors": [],
-    "dependencies": {
-        "express": "> 2.3.x",
-        "sharedjs": "0.0.x",
-        "socket.io": "0.7.x",
-        "diveSync":"0.2.0"
-    },
-    "licenses": [
-          {
-              "type": "GPLv2",
-              "url": "http://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
-          },
-          {
-              "type": "Commercial",
-              "url": "http://framework.joshfire.com/license"
-          }
-    ]
+  "name" : "joshfire",
+  "version" : "0.9.1",
+  "description": "Multi-device JavaScript Framework",
+  "keywords": [
+    "joshfire",
+    "framework",
+    "javascript",
+    "multidevice",
+    "multi-device",
+    "crossdevice",
+    "cross-device",
+    "nodejs",
+    "samsungtv",
+    "googletv",
+    "ios",
+    "android"
+  ],
+  "maintainers": [
+    {
+      "name": "Joshfire",
+      "email": "contact@joshfire.com",
+      "web": "http://www.joshfire.com"
+    }
+  ],
+  "contributors": [],
+  "dependencies": {
+    "express": "> 2.3.x",
+    "sharedjs": "0.0.x",
+    "socket.io": "0.7.x",
+    "diveSync":"0.2.0",
+    "woodman": "0.1.5",
+    "uglify-js": "2.2.4"
+  },
+  "licenses": [
+    {
+        "type": "MIT",
+        "url": "LICENSE"
+    }
+  ]
 }
