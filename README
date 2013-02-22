@@ -1,7 +1,0 @@
-Joshfire framework
-------------------
-Open Source Multi-device JavaScript framework created and maintained by [Joshfire](http://www.joshfire.com).
-
-The new version of the framework is built upon [Backbone.js](http://backbonejs.org/).
-
-Documentation of the deprecated previous version is not available online anymore. It can still be checked in the v0.9 branch: https://github.com/joshfire/joshfire-framework/tree/old-master
