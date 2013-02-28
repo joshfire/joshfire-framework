@@ -153,7 +153,7 @@ exec('node ' + libPath + '/vendor/require.r.js -o' +
     ]
   };
   if (traceLevels.length > 0) {
-    precompilerOptions.keepLevels = traceLevels;
+    precompilerOptions.keepLevel = traceLevels;
   }
   optimized = woodmanPrecompile(optimized, precompilerOptions);
   console.log('removing references to Woodman... done');
