@@ -29,7 +29,7 @@
     "sharedjs": "0.0.x",
     "socket.io": "0.7.x",
     "diveSync":"0.2.0",
-    "woodman": "0.1.5",
+    "woodman": "0.1.8",
     "uglify-js": "2.2.4"
   },
   "licenses": [
