@@ -134,8 +134,9 @@ exec('node ' + libPath + '/vendor/require.r.js -o' +
   // about the local filesystem that should not appear in the code
   console.log('removing temp path to Joshfire framework...');
   var optimized = fs.readFileSync(
-    mainfile + '.' + adapter + '.optimized.js', 'utf-8');
-  optimized = optimized.replace(pathfix.replace(';',''), '1');
+    mainfile + (adapter === 'none' ? '' : '.' + adapter) + '.optimized.js',
+    'utf-8');
+  optimized = optimized.replace(pathfix.replace(';', ''), '1');
   console.log('removing temp path to Joshfire framework... done');
 
   // Add Almond.js to define "define"
