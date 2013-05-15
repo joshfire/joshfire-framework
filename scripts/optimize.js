@@ -108,12 +108,14 @@ fs.writeFileSync('joshlib.js',
   pathfix + nsfile + js_require_joshlib_plugin,
   'utf-8');
 
+var adapterName = (adapter === 'none' ? '' : '.' + adapter)
+
 // Run require.js optimizer
 // Note the use of "mainConfigFile" option to have require.js read
 // the config from the main file.
 console.log('running require.js optimizer...');
 exec('node ' + libPath + '/vendor/require.r.js -o' +
-  ' out=' + mainfile + (adapter === 'none' ? '' : '.' + adapter) + '.optimized.js' +
+  ' out=' + mainfile + adapterName + '.optimized.js' +
   ' name=' + mainfile +
   ' mainConfigFile=' + mainfile + '.js' +
   ' baseUrl=.' +
@@ -134,7 +136,7 @@ exec('node ' + libPath + '/vendor/require.r.js -o' +
   // about the local filesystem that should not appear in the code
   console.log('removing temp path to Joshfire framework...');
   var optimized = fs.readFileSync(
-    mainfile + (adapter === 'none' ? '' : '.' + adapter) + '.optimized.js',
+    mainfile + adapterName + '.optimized.js',
     'utf-8');
   optimized = optimized.replace(pathfix.replace(';', ''), '1');
   console.log('removing temp path to Joshfire framework... done');
@@ -169,7 +171,7 @@ exec('node ' + libPath + '/vendor/require.r.js -o' +
   }
 
   // Write the resulting code
-  var outputFile = mainfile + '.' + adapter + '.optimized.js';
+  var outputFile = mainfile + adapterName + '.optimized.js';
   console.log('writing final file "' + outputFile + '"...');
   fs.writeFileSync(outputFile, optimized, 'utf-8');
   console.log('writing final file "' + outputFile + '"... done');
