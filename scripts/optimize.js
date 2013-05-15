@@ -113,7 +113,7 @@ fs.writeFileSync('joshlib.js',
 // the config from the main file.
 console.log('running require.js optimizer...');
 exec('node ' + libPath + '/vendor/require.r.js -o' +
-  ' out=' + mainfile + '.' + adapter + '.optimized.js' +
+  ' out=' + mainfile + (adapter === 'none' ? '' : '.' + adapter) + '.optimized.js' +
   ' name=' + mainfile +
   ' mainConfigFile=' + mainfile + '.js' +
   ' baseUrl=.' +
