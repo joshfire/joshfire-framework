@@ -43,6 +43,11 @@ define([
     }])
   });
 
+  categories.add({
+    name : 'Empty category',
+    books : new Backbone.Collection()
+  });
+
   onReady(function () {
     var list = new List({
       collection : categories,
