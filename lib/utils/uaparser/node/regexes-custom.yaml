@@ -1,0 +1,12 @@
+device_parsers:
+  ##########
+  # Samsung Smart TV
+  ##########
+  - regex: 'SEC_HHP_TV|SMART-TV'
+    device_replacement: 'SamsungTV'
+
+  ##########
+  # Philips NETTV
+  ##########
+  - regex: 'NETTV'
+    device_replacement: 'Philips TV'

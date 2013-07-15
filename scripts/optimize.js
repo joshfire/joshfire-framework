@@ -37,6 +37,7 @@ var path = require('path');
 var exec = require('child_process').exec;
 var woodmanPrecompile = require('woodman/precompile/precompile');
 var UglifyJS = require('uglify-js');
+var UAParser = require('../lib/utils/uaparser/node/parse');
 
 // existsSync moved from "path" to "fs" in Node.js v0.8,
 // keeping the fallback so that the code remains compatible with v0.6
@@ -71,6 +72,10 @@ if (process.argv[4]) {
 var traceLevels = [];
 if (process.argv[5]) {
   traceLevels = process.argv[5].split(',');
+}
+var useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36';
+if (process.argv[6]) {
+  useragent = process.argv[6];
 }
 
 var libPath = path.join(__dirname, '../lib');
@@ -108,7 +113,23 @@ fs.writeFileSync('joshlib.js',
   pathfix + nsfile + js_require_joshlib_plugin,
   'utf-8');
 
-var adapterName = (adapter === 'none' ? '' : '.' + adapter)
+/**
+* CREATE THE RUNTIME FILE
+*
+* This is used by the devicedetect plugin. At optimization, it creates and includes a runtime file
+* which contains meta infos about the wished expected of the optimized app. We do this so
+* when the app runs, it doesn't have to parse the UA again and (possibly wrongfuly) load files accordingly.
+* It will load files according to the present fixed configuration.
+**/
+var runtimeFile = 'runtime.js';
+console.log('writing runtime file "' + runtimeFile + '"...');
+fs.writeFileSync(runtimeFile, 'define(' + JSON.stringify(UAParser.parse(useragent)) + ')', 'utf-8');
+console.log('writing runtime file "' + runtimeFile + '"... done');
+/**
+* END CREATE THE RUNTIME FILE
+**/
+
+var adapterName = (adapter === 'none' ? '' : '.' + adapter);
 
 // Run require.js optimizer
 // Note the use of "mainConfigFile" option to have require.js read
@@ -118,70 +139,77 @@ exec('node ' + libPath + '/vendor/require.r.js -o' +
   ' out=' + mainfile + adapterName + '.optimized.js' +
   ' name=' + mainfile +
   ' mainConfigFile=' + mainfile + '.js' +
+  ' paths.runtime=' + runtimeFile.split('.')[0] +
+  ' paths.devicedetect=' + libPath + '/devicedetect' +
   ' baseUrl=.' +
   ' optimize=none', function (err, stdout, stderr) {
-  // Report the result to the console
-  if (err) {
-    console.error(err);
-    console.error('Optimization failed. See above error for details.');
-    process.exit(1);
-  }
-  if (stderr) {
-    console.error(stderr);
-  }
-  if (stdout) console.log(stdout);
-  console.log('running require.js optimizer... done');
 
-  // Remove the path to the Joshfire framework since it contains information
-  // about the local filesystem that should not appear in the code
-  console.log('removing temp path to Joshfire framework...');
-  var optimized = fs.readFileSync(
-    mainfile + adapterName + '.optimized.js',
-    'utf-8');
-  optimized = optimized.replace(pathfix.replace(';', ''), '1');
-  console.log('removing temp path to Joshfire framework... done');
+  console.log('Removing temp runtime file ...');
+  fs.unlink(runtimeFile, function () {
+    console.log('Removing temp runtime file ... Done.');
+    // Report the result to the console
+    if (err) {
+      console.error(err);
+      console.error('Optimization failed. See above error for details.');
+      process.exit(1);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
+    if (stdout) console.log(stdout);
+    console.log('running require.js optimizer... done');
 
-  // Add Almond.js to define "define"
-  optimized = js_almond + optimized;
+    // Remove the path to the Joshfire framework since it contains information
+    // about the local filesystem that should not appear in the code
+    console.log('removing temp path to Joshfire framework...');
+    var optimized = fs.readFileSync(
+      mainfile + adapterName + '.optimized.js',
+      'utf-8');
+    optimized = optimized.replace(pathfix.replace(';', ''), '1');
+    console.log('removing temp path to Joshfire framework... done');
 
-  // Run Woodman's precompiler
-  console.log('removing references to Woodman...');
-  var precompilerOptions = {
-    globalNames: [],
-    depNames: [
-      'joshlib!utils/woodman',
-      'joshlib!utils/woodmanbase',
-      'joshfire-framework/utils/woodman',
-      'joshfire-framework/utils/woodmanbase'
-    ]
-  };
-  if (traceLevels.length > 0) {
-    precompilerOptions.keepLevel = traceLevels;
-  }
-  optimized = woodmanPrecompile(optimized, precompilerOptions);
-  console.log('removing references to Woodman... done');
+    // Add Almond.js to define "define"
+    optimized = js_almond + optimized;
 
-  // Minify the resulting code unless told not to
-  var uglifyResult = null;
-  if (minify) {
-    console.log('minifying code...');
-    uglifyResult = UglifyJS.minify(optimized, { fromString: true });
-    optimized = uglifyResult.code;
-    console.log('minifying code... done');
-  }
+    // Run Woodman's precompiler
+    console.log('removing references to Woodman...');
+    var precompilerOptions = {
+      globalNames: [],
+      depNames: [
+        'joshlib!utils/woodman',
+        'joshlib!utils/woodmanbase',
+        'joshfire-framework/utils/woodman',
+        'joshfire-framework/utils/woodmanbase'
+      ]
+    };
+    if (traceLevels.length > 0) {
+      precompilerOptions.keepLevel = traceLevels;
+    }
+    //optimized = woodmanPrecompile(optimized, precompilerOptions);
+    console.log('removing references to Woodman... done');
 
-  // Write the resulting code
-  var outputFile = mainfile + adapterName + '.optimized.js';
-  console.log('writing final file "' + outputFile + '"...');
-  fs.writeFileSync(outputFile, optimized, 'utf-8');
-  console.log('writing final file "' + outputFile + '"... done');
+    // Minify the resulting code unless told not to
+    var uglifyResult = null;
+    if (!minify) {
+      console.log('minifying code...');
+      uglifyResult = UglifyJS.minify(optimized, { fromString: true });
+      optimized = uglifyResult.code;
+      console.log('minifying code... done');
+    }
 
-  // Remove the dedicated "joshlib" library we created for the optimization
-  console.log('removing temp joshlib library...');
-  fs.unlink('joshlib.js', function () {
-    console.log('removing temp joshlib library... done');
-    console.log('Optimization complete!');
-    process.exit(0);
+    // Write the resulting code
+    var outputFile = mainfile + adapterName + '.optimized.js';
+    console.log('writing final file "' + outputFile + '"...');
+    fs.writeFileSync(outputFile, optimized, 'utf-8');
+    console.log('writing final file "' + outputFile + '"... done');
+
+    // Remove the dedicated "joshlib" library we created for the optimization
+    console.log('removing temp joshlib library...');
+    fs.unlink('joshlib.js', function () {
+      console.log('removing temp joshlib library... done');
+      console.log('Optimization complete!');
+      process.exit(0);
+    });
   });
 });
 
