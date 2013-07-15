@@ -30,7 +30,8 @@
     "socket.io": "0.7.x",
     "diveSync":"0.2.0",
     "woodman": "0.1.8",
-    "uglify-js": "2.2.4"
+    "uglify-js": "2.2.4",
+    "commander": "1.3.x"
   },
   "licenses": [
     {
