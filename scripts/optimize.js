@@ -281,7 +281,7 @@ exec('node ' + libPath + '/vendor/require.r.js -o' +
 
     // Minify the resulting code unless told not to
     var uglifyResult = null;
-    if (!minify) {
+    if (minify) {
       console.log('minifying code...');
       uglifyResult = UglifyJS.minify(optimized, { fromString: true });
       optimized = uglifyResult.code;
