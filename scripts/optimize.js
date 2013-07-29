@@ -44,7 +44,7 @@ var args = require('commander');
 args.version('0.1.0')
     .option('-a, --adapter [adapter]'           , 'Required. The adapter which should be used.')
     .option('-i, --input [input]'               , 'Required. The main file of the app.')
-    .option('-m, --minify [minify]'             , 'Whether to minify or not the outputted code')
+    .option('-m, --minify'                      , 'Whether to minify or not the outputted code')
     .option('-w, --woodman [woodman]'           , 'Which levels of woodman should be kept after optimization. (Omit to remove them all)')
     .option('-u, --useragent [useragent]'       , 'A specific user agent that matches the target device\'s. Used by the devicedetect plugin.')
     .option('-d, --device [device]'             , 'The target device family (devicedetect) — i.e. : iPhone, Nexus 4...')
