@@ -44,7 +44,7 @@ var args = require('commander');
 args.version('0.1.0')
     .option('-a, --adapter [adapter]'           , 'Required. The adapter which should be used.')
     .option('-i, --input [input]'               , 'Required. The main file of the app.')
-    .option('-m, --minify'                      , 'Whether to minify or not the outputted code')
+    .option('-p, --prettyprint'                 , 'Whether to \'prettyprint\' or not the outputted code, minified by default')
     .option('-w, --woodman [woodman]'           , 'Which levels of woodman should be kept after optimization. (Omit to remove them all)')
     .option('-u, --useragent [useragent]'       , 'A specific user agent that matches the target device\'s. Used by the devicedetect plugin.')
     .option('-d, --device [device]'             , 'The target device family (devicedetect) — i.e. : iPhone, Nexus 4...')
@@ -123,7 +123,7 @@ if (process.argv.length > 2 && !args.adapter && !args.mainfile) {
 
   adapter             = args.adapter;   // These two are the minimum requirement.
   mainfile            = args.input;     // Can't set them as required yet because compatibility.
-  minify              = args.minify ? args.minify : minify;
+  minify              = !args.prettyprint;
   traceLevels         = args.woodman ? args.woodman.split(',') : traceLevels;
   useragent           = args.useragent ? args.useragent : useragent;
   device              = args.device;
